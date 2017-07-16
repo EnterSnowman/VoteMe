@@ -19,7 +19,7 @@ class UserRepository private constructor(){
         }
     }
 
-    fun getCurrentUser() : FirebaseUser? = mAuth?.currentUser
+    fun getCurrentUser() : FirebaseUser? = mAuth.currentUser
 
     fun signIn(email: String, password: String, callback: DataSource.SignInCallback){
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener {

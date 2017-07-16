@@ -20,6 +20,7 @@ class LoginRegistrationPresenter(override var view: LoginRegistrationContract.Vi
             override fun onSignInCompleted() {
                 view.makeToast("Login completed")
                 view.hideLoading()
+                view.goToVotesActivity()
             }
 
             override fun onSignInFailure(exception: Exception?) {
@@ -35,6 +36,7 @@ class LoginRegistrationPresenter(override var view: LoginRegistrationContract.Vi
             override fun onSignUpCompleted() {
                 view.makeToast("New user registered")
                 view.hideLoading()
+                view.goToVotesActivity()
             }
 
             override fun onSignUpFailure(exception: Exception?) {
@@ -42,6 +44,10 @@ class LoginRegistrationPresenter(override var view: LoginRegistrationContract.Vi
                 view.hideLoading()
             }
         })
+    }
+
+    override fun autoLogin() {
+        if (mUserRepository?.getCurrentUser()!= null) view.goToVotesActivity()
     }
 
 

@@ -2,6 +2,7 @@ package com.example.android.voteme.loginregistration
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -12,6 +13,7 @@ import android.widget.Toast
 
 import com.example.android.voteme.R
 import com.example.android.voteme.base.BaseView
+import com.example.android.voteme.votes.VotesActivity
 import kotlinx.android.synthetic.main.fragment_login_registration.*
 /**
  * A simple [Fragment] subclass.
@@ -29,6 +31,7 @@ class LoginRegistrationFragment : Fragment(),LoginRegistrationContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mProgressDialog = ProgressDialog(context)
+        mPresenter?.autoLogin()
     }
     override fun setPresenter(presenter: LoginRegistrationContract.Presenter) {
         mPresenter = presenter;
@@ -47,6 +50,12 @@ class LoginRegistrationFragment : Fragment(),LoginRegistrationContract.View {
     override fun makeToast(msg: String) {
         Toast.makeText(context,msg,Toast.LENGTH_SHORT).show()
     }
+
+    override fun goToVotesActivity() {
+        startActivity(Intent(context,VotesActivity::class.java))
+        activity.finish()
+    }
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment

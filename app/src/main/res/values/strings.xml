@@ -12,4 +12,12 @@
     <string name="registration">Registration</string>
     <string name="signIn">Sign In...</string>
     <string name="signUp">Sign Up...</string>
+    <string name="title_activity_votes">VotesActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_3">Tab 3</string>
+    <string name="logout">Log Out</string>
+    <string name="signOut">Sign Out</string>
+    <string name="all_votes">All votes</string>
+    <string name="my_votes">My Votes</string>
 </resources>

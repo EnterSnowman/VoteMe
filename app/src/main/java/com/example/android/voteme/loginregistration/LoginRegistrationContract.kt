@@ -13,10 +13,14 @@ interface LoginRegistrationContract {
         fun showLoading(msg : String)
 
         fun hideLoading()
+
+        fun goToVotesActivity()
     }
     interface Presenter : BasePresenter<View>{
         fun signIn(email: String,password : String)
 
         fun signUp(email: String,password : String)
+
+        fun autoLogin()
     }
 }
