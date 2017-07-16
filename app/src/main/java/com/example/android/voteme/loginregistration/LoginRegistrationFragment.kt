@@ -35,7 +35,8 @@ class LoginRegistrationFragment : Fragment(),LoginRegistrationContract.View {
 
     }
 
-    override fun showLoading() {
+    override fun showLoading( msg : String) {
+        mProgressDialog?.setMessage(msg)
         mProgressDialog?.show()
     }
 
@@ -57,11 +58,12 @@ class LoginRegistrationFragment : Fragment(),LoginRegistrationContract.View {
         super.onViewCreated(view, savedInstanceState)
         login.setOnClickListener{
             mPresenter?.signIn(emailEdit.text.toString(),passwordEdit.text.toString())
-            showLoading()
+            showLoading(getString(R.string.signIn))
             //Toast.makeText(context,"Login click",Toast.LENGTH_SHORT).show()
         }
         registration.setOnClickListener{
             mPresenter?.signUp(emailEdit.text.toString(),passwordEdit.text.toString())
+            showLoading(getString(R.string.signUp))
         }
     }
 

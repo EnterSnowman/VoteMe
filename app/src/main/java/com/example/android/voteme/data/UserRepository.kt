@@ -23,9 +23,13 @@ class UserRepository private constructor(){
 
     fun signIn(email: String, password: String, callback: DataSource.SignInCallback){
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener {
-            task -> if (task.isSuccessful) callback.onSignInCompleted() else callback.onSignInFailure()
+            task -> if (task.isSuccessful) callback.onSignInCompleted() else callback.onSignInFailure(task.exception)
             }
         }
+
+    fun signUp(email: String, password: String, callback: DataSource.SignUpCallback){
+        mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener { task -> if (task.isSuccessful) callback.onSignUpCompleted() else callback.onSignUpFailure(task.exception) }
+    }
     }
 
 

@@ -10,7 +10,7 @@ interface LoginRegistrationContract {
     interface View : BaseView<Presenter>{
         fun makeToast(msg: String)
 
-        fun showLoading()
+        fun showLoading(msg : String)
 
         fun hideLoading()
     }

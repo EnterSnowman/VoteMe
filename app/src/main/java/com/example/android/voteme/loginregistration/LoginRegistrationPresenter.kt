@@ -2,6 +2,7 @@ package com.example.android.voteme.loginregistration
 
 import com.example.android.voteme.data.DataSource
 import com.example.android.voteme.data.UserRepository
+import java.lang.Exception
 
 /**
  * Created by Valentin on 15.07.2017.
@@ -14,12 +15,14 @@ class LoginRegistrationPresenter(override var view: LoginRegistrationContract.Vi
     }
     override fun signIn(email: String, password: String) {
         mUserRepository?.signIn(email,password,object : DataSource.SignInCallback{
+
+
             override fun onSignInCompleted() {
                 view.makeToast("Login completed")
                 view.hideLoading()
             }
 
-            override fun onSignInFailure() {
+            override fun onSignInFailure(exception: Exception?) {
                 view.makeToast("Login failure")
                 view.hideLoading()
             }
@@ -28,7 +31,17 @@ class LoginRegistrationPresenter(override var view: LoginRegistrationContract.Vi
     }
 
     override fun signUp(email: String, password: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        mUserRepository?.signUp(email,password,object : DataSource.SignUpCallback{
+            override fun onSignUpCompleted() {
+                view.makeToast("New user registered")
+                view.hideLoading()
+            }
+
+            override fun onSignUpFailure(exception: Exception?) {
+                view.makeToast("Sign up failed")
+                view.hideLoading()
+            }
+        })
     }
 
 

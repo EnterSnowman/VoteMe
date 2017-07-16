@@ -10,4 +10,6 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="login">Login</string>
     <string name="registration">Registration</string>
+    <string name="signIn">Sign In...</string>
+    <string name="signUp">Sign Up...</string>
 </resources>
