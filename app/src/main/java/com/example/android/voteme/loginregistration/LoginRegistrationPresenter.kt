@@ -7,7 +7,7 @@ import java.lang.Exception
 /**
  * Created by Valentin on 15.07.2017.
  */
-class LoginRegistrationPresenter(override var view: LoginRegistrationContract.View) : LoginRegistrationContract.Presenter{
+class LoginRegistrationPresenter(override var mView: LoginRegistrationContract.View) : LoginRegistrationContract.Presenter{
     var mUserRepository : UserRepository? = null
     constructor(view: LoginRegistrationContract.View, userRepository: UserRepository) : this(view){
         view.setPresenter(this)
@@ -18,14 +18,14 @@ class LoginRegistrationPresenter(override var view: LoginRegistrationContract.Vi
 
 
             override fun onSignInCompleted() {
-                view.makeToast("Login completed")
-                view.hideLoading()
-                view.goToVotesActivity()
+                mView.makeToast("Login completed")
+                mView.hideLoading()
+                mView.goToVotesActivity()
             }
 
             override fun onSignInFailure(exception: Exception?) {
-                view.makeToast("Login failure")
-                view.hideLoading()
+                mView.makeToast("Login failure")
+                mView.hideLoading()
             }
 
         })
@@ -34,20 +34,20 @@ class LoginRegistrationPresenter(override var view: LoginRegistrationContract.Vi
     override fun signUp(email: String, password: String) {
         mUserRepository?.signUp(email,password,object : DataSource.SignUpCallback{
             override fun onSignUpCompleted() {
-                view.makeToast("New user registered")
-                view.hideLoading()
-                view.goToVotesActivity()
+                mView.makeToast("New user registered")
+                mView.hideLoading()
+                mView.goToVotesActivity()
             }
 
             override fun onSignUpFailure(exception: Exception?) {
-                view.makeToast("Sign up failed")
-                view.hideLoading()
+                mView.makeToast("Sign up failed")
+                mView.hideLoading()
             }
         })
     }
 
     override fun autoLogin() {
-        if (mUserRepository?.getCurrentUser()!= null) view.goToVotesActivity()
+        if (mUserRepository?.getCurrentUser()!= null) mView.goToVotesActivity()
     }
 
 

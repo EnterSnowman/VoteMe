@@ -1,5 +1,6 @@
 package com.example.android.voteme.votes
 
+import android.content.Intent
 import android.support.design.widget.TabLayout
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
@@ -20,6 +21,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 import com.example.android.voteme.R
+import com.example.android.voteme.addvote.AddVoteActivity
 import com.example.android.voteme.data.UserRepository
 import com.example.android.voteme.votes.dummy.DummyContent
 
@@ -62,8 +64,8 @@ class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInterac
 
         val fab = findViewById<View>(R.id.fab) as FloatingActionButton
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+            startActivity(Intent(this,AddVoteActivity::class.java))
+            //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show()
         }
 
     }

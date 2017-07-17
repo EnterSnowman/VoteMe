@@ -22,7 +22,10 @@
         <activity
             android:name=".votes.VotesActivity"
             android:label="@string/title_activity_votes"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".addvote.AddVoteActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

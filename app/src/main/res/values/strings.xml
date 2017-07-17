@@ -20,4 +20,8 @@
     <string name="signOut">Sign Out</string>
     <string name="all_votes">All votes</string>
     <string name="my_votes">My Votes</string>
+    <string name="new_vote">New vote</string>
+    <string name="input_vote_title">Input tile of vote</string>
+    <string name="add">Add</string>
+    <string name="delete">Delete</string>
 </resources>
