@@ -1,5 +1,6 @@
 package com.example.android.voteme.addvote
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
@@ -22,12 +23,13 @@ import kotlinx.android.synthetic.main.fragment_add_vote.*
  */
 class AddVoteFragment : Fragment(), AddVoteContract.View {
 
-
     // TODO: Rename and change types of parameters
 
     private var mPresenter: AddVoteContract.Presenter? = null
     private var mListener: OnFragmentInteractionListener? = null
     private var mAdapter : VariantsAdapter? = null
+    private var mProgressDialog : ProgressDialog? = null
+
     override fun setPresenter(presenter: AddVoteContract.Presenter) {
         mPresenter = presenter
     }
@@ -36,6 +38,18 @@ class AddVoteFragment : Fragment(), AddVoteContract.View {
         mAdapter?.mVariants?.removeAt(positon)
         mAdapter?.notifyDataSetChanged()
     }
+    override fun addVote() {
+        mPresenter?.addVote(voteTitleEdit.text.toString(), mAdapter!!.mVariants)
+    }
+
+    override fun showLoading() {
+        mProgressDialog?.show()
+    }
+
+    override fun hideLoading() {
+        mProgressDialog?.hide()
+    }
+
 
 
     override fun showAddedVariant(variant: String) {
@@ -49,6 +63,7 @@ class AddVoteFragment : Fragment(), AddVoteContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mProgressDialog = ProgressDialog(context)
         if (arguments != null) {
 
         }

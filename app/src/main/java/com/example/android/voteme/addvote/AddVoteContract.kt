@@ -11,11 +11,19 @@ interface AddVoteContract {
         fun showAddedVariant(variant: String)
 
         fun deleteVarinat(positon: Int)
+
+        fun addVote()
+
+        fun showLoading()
+
+        fun hideLoading()
     }
 
     interface Presenter : BasePresenter<View>{
         fun addVarinat(variant : String)
 
         fun deleteVariant(positon : Int)
+
+        fun addVote(title: String,variants : ArrayList<String>)
     }
 }

@@ -18,4 +18,16 @@ class VotesRepository private constructor(){
 
         }
     }
+
+    fun addVote(title:String,variants: ArrayList<String>,callback:DataSource.VoteAddedCallback){
+        var id =  mDatabase.push().key
+        var vote = HashMap<String,Any>()
+        vote.put(Constants.TITLE,title)
+        var vars = HashMap<String,Int>()
+        for (v in variants)
+            vars.put(v,0)
+        vote.put(Constants.VARIANTS,vars)
+        mDatabase.child(id).setValue(vote).addOnCompleteListener{task -> if (task.isSuccessful) callback.onComplete() else callback.onFailure(task.exception) }
+
+    }
 }

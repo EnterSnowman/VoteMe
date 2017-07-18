@@ -17,4 +17,10 @@ interface DataSource {
 
         fun onSignUpFailure(exception : Exception?)
     }
+
+    interface VoteAddedCallback{
+        fun onComplete()
+
+        fun onFailure(exception : Exception?)
+    }
 }

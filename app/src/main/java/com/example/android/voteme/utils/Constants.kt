@@ -6,6 +6,8 @@ package com.example.android.voteme.utils
 class Constants {
     companion object {
         val VOTES : String = "votes"
+        val TITLE : String = "title"
+        val VARIANTS : String  = "variants"
     }
 
 }
