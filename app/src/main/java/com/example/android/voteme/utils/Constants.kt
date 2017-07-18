@@ -5,9 +5,13 @@ package com.example.android.voteme.utils
  */
 class Constants {
     companion object {
-        val VOTES : String = "votes"
-        val TITLE : String = "title"
-        val VARIANTS : String  = "variants"
+        val VOTES = "votes"
+        val TITLE = "title"
+        val VARIANTS = "variants"
+        //error types
+        val NON_UNIQUE_VARIANT  = 1
+        val EMPTY_TITLE = 2
+        val NOT_FULL_LIST  = 3
     }
 
 }

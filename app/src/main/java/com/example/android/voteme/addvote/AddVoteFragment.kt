@@ -4,14 +4,17 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.provider.SyncStateContract
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 
 import com.example.android.voteme.R
+import com.example.android.voteme.utils.Constants
 import kotlinx.android.synthetic.main.fragment_add_vote.*
 /**
  * A simple [Fragment] subclass.
@@ -23,12 +26,21 @@ import kotlinx.android.synthetic.main.fragment_add_vote.*
  */
 class AddVoteFragment : Fragment(), AddVoteContract.View {
 
-    // TODO: Rename and change types of parameters
 
     private var mPresenter: AddVoteContract.Presenter? = null
     private var mListener: OnFragmentInteractionListener? = null
     private var mAdapter : VariantsAdapter? = null
     private var mProgressDialog : ProgressDialog? = null
+
+    override fun showError(type: Int) {
+        when (type){
+            Constants.NON_UNIQUE_VARIANT -> variantEdit.error = "Please, input unique option"
+            Constants.EMPTY_TITLE -> voteTitleEdit.error = getString(R.string.please_input_vote_title)
+            Constants.NOT_FULL_LIST -> Toast.makeText(context,R.string.two_variants,Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun isVariantExists(variant: String): Boolean  = mAdapter!!.mVariants.contains(variant)
 
     override fun setPresenter(presenter: AddVoteContract.Presenter) {
         mPresenter = presenter
@@ -55,6 +67,7 @@ class AddVoteFragment : Fragment(), AddVoteContract.View {
     override fun showAddedVariant(variant: String) {
         mAdapter?.mVariants?.add(variant)
         mAdapter?.notifyDataSetChanged()
+        variantEdit.setText("")
     }
 
     interface OnDeleteListener{

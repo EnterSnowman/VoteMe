@@ -17,6 +17,10 @@ interface AddVoteContract {
         fun showLoading()
 
         fun hideLoading()
+
+        fun isVariantExists(variant: String) : Boolean
+
+        fun showError(type : Int)
     }
 
     interface Presenter : BasePresenter<View>{

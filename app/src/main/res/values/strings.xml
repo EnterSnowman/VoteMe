@@ -25,4 +25,6 @@
     <string name="add">Add</string>
     <string name="delete">Delete</string>
     <string name="add_vote">Add vote</string>
+    <string name="please_input_vote_title">Please, input title</string>
+    <string name="two_variants">Must be at least two variants</string>
 </resources>
