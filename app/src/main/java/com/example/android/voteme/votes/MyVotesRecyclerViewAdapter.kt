@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.example.android.voteme.R
+import com.example.android.voteme.model.Vote
 
 import com.example.android.voteme.votes.MyVotesFragment.OnListFragmentInteractionListener
 import com.example.android.voteme.votes.dummy.DummyContent.DummyItem
@@ -15,7 +16,7 @@ import com.example.android.voteme.votes.dummy.DummyContent.DummyItem
  * specified [OnListFragmentInteractionListener].
  * TODO: Replace the implementation with code for your data type.
  */
-class MyVotesRecyclerViewAdapter(private val mValues: List<DummyItem>, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<MyVotesRecyclerViewAdapter.ViewHolder>() {
+class MyVotesRecyclerViewAdapter(var mVotes: List<Vote>, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<MyVotesRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -24,9 +25,8 @@ class MyVotesRecyclerViewAdapter(private val mValues: List<DummyItem>, private v
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.mItem = mValues[position]
-        holder.mIdView.text = mValues[position].id
-        holder.mContentView.text = mValues[position].content
+        holder.mItem = mVotes[position]
+        holder.mContentView.text = mVotes[position].title
 
         holder.mView.setOnClickListener {
             mListener?.onMyVotesListFragmentInteraction(holder.mItem as DummyItem)
@@ -34,16 +34,15 @@ class MyVotesRecyclerViewAdapter(private val mValues: List<DummyItem>, private v
     }
 
     override fun getItemCount(): Int {
-        return mValues.size
+        return mVotes.size
     }
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val mIdView: TextView
         val mContentView: TextView
-        var mItem: DummyItem? = null
+        var mItem: Vote? = null
 
         init {
-            mIdView = mView.findViewById<TextView>(R.id.id) //as TextView
+            //mIdView = mView.findViewById<TextView>(R.id.id) //as TextView
             mContentView = mView.findViewById<TextView>(R.id.content) //as TextView
         }
 

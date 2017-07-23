@@ -74,6 +74,8 @@ class AddVoteFragment : Fragment(), AddVoteContract.View {
         fun deleteVariant(position : Int)
     }
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mProgressDialog = ProgressDialog(context)

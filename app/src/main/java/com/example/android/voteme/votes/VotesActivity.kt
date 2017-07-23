@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -37,6 +38,7 @@ class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInterac
      * [android.support.v4.app.FragmentStatePagerAdapter].
      */
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
+    private var mMyVotesPresenter : MyVotesPresenter? = null
 
     /**
      * The [ViewPager] that will host the section contents.
@@ -67,6 +69,10 @@ class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInterac
             startActivity(Intent(this,AddVoteActivity::class.java))
             //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show()
         }
+        /*mMyVotesPresenter  = MyVotesPresenter(mSectionsPagerAdapter!!.getItem(1) as MyVotesContract.View)
+
+        Log.d("VIEW",(mSectionsPagerAdapter!!.getItem(1) as MyVotesContract.View).toString())*/
+
 
     }
     override fun onMyVotesListFragmentInteraction(item: DummyContent.DummyItem) {
@@ -102,7 +108,7 @@ class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInterac
     /**
      * A placeholder fragment containing a simple view.
      */
-    class PlaceholderFragment : Fragment() {
+   /* class PlaceholderFragment : Fragment() {
 
         override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                                   savedInstanceState: Bundle?): View? {
@@ -131,7 +137,7 @@ class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInterac
                 return fragment
             }
         }
-    }
+    }*/
 
     /**
      * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -145,7 +151,7 @@ class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInterac
             when (position){
                 0 -> return AllVotesFragment.newInstance(1)
                 1 -> return MyVotesFragment.newInstance(1)
-                else ->  return PlaceholderFragment.newInstance(position + 1)
+                else ->  return MyVotesFragment.newInstance(1)
             }
 
         }

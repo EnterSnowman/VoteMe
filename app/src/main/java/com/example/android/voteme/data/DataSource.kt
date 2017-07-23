@@ -1,5 +1,6 @@
 package com.example.android.voteme.data
 
+import com.example.android.voteme.model.Vote
 import java.lang.Exception
 
 /**
@@ -22,5 +23,15 @@ interface DataSource {
         fun onComplete()
 
         fun onFailure(exception : Exception?)
+    }
+
+    interface VotesCallback{
+        fun onComplete(votes : ArrayList<Vote>?)
+
+        fun onFailure(exception : Exception?)
+    }
+
+    interface SingleVoteLoadCallback{
+        fun onLoad(vote:Vote)
     }
 }

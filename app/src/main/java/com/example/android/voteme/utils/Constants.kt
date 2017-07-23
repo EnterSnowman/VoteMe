@@ -8,6 +8,8 @@ class Constants {
         val VOTES = "votes"
         val TITLE = "title"
         val VARIANTS = "variants"
+        val USERS = "users"
+        val CREATED = "created"
         //error types
         val NON_UNIQUE_VARIANT  = 1
         val EMPTY_TITLE = 2
