@@ -27,7 +27,9 @@ import com.example.android.voteme.data.UserRepository
 import com.example.android.voteme.votes.dummy.DummyContent
 
 class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInteractionListener,MyVotesFragment.OnListFragmentInteractionListener {
+    override fun onMyVotesListFragmentInteraction(id: String) {
 
+    }
 
     /**
      * The [android.support.v4.view.PagerAdapter] that will provide
@@ -73,9 +75,6 @@ class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInterac
 
         Log.d("VIEW",(mSectionsPagerAdapter!!.getItem(1) as MyVotesContract.View).toString())*/
 
-
-    }
-    override fun onMyVotesListFragmentInteraction(item: DummyContent.DummyItem) {
 
     }
 

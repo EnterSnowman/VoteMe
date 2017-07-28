@@ -5,6 +5,7 @@ import com.example.android.voteme.model.Vote
 import com.example.android.voteme.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import java.lang.Exception
 
 /**
  * Created by Valentin on 16.07.2017.
@@ -49,6 +50,10 @@ class VotesRepository private constructor(){
                 var size  = p0?.childrenCount
                 p0?.children?.forEach {
                     getVoteById(it.key,object : DataSource.SingleVoteLoadCallback{
+                        override fun onFailure(exception: Exception) {
+
+                        }
+
                         override fun onLoad(vote: Vote) {
                             count++
                             votes.add(vote)
@@ -72,7 +77,9 @@ class VotesRepository private constructor(){
             }
 
             override fun onDataChange(p0: DataSnapshot?) {
-                callback.onLoad(p0?.getValue(Vote::class.java)!!)
+                var vote = p0?.getValue(Vote::class.java)!!
+                vote.id = p0.key
+                callback.onLoad(vote)
             }
 
         })

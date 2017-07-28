@@ -1,6 +1,7 @@
 package com.example.android.voteme.votes
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
@@ -14,6 +15,8 @@ import android.widget.Toast
 
 import com.example.android.voteme.R
 import com.example.android.voteme.model.Vote
+import com.example.android.voteme.utils.Constants
+import com.example.android.voteme.vote.VoteActivity
 import com.example.android.voteme.votes.dummy.DummyContent
 import com.example.android.voteme.votes.dummy.DummyContent.DummyItem
 import kotlinx.android.synthetic.main.fragment_my_votes_list.*
@@ -57,9 +60,11 @@ class MyVotesFragment : Fragment() ,MyVotesContract.View{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         var presenter = MyVotesPresenter(this)
-        mAdapter = MyVotesRecyclerViewAdapter(ArrayList<Vote>(),object : OnListFragmentInteractionListener{
-            override fun onMyVotesListFragmentInteraction(item: DummyItem) {
-
+        mAdapter = MyVotesRecyclerViewAdapter(ArrayList<Vote>(),object : OnVoteClickListener{
+            override fun onClick(id:String) {
+                var intent = Intent(context, VoteActivity::class.java)
+                intent.putExtra(Constants.VOTE_ID,id)
+                context.startActivity(intent)
             }
         })
         if (arguments != null) {
@@ -131,7 +136,11 @@ class MyVotesFragment : Fragment() ,MyVotesContract.View{
      */
     interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onMyVotesListFragmentInteraction(item: DummyItem)
+        fun onMyVotesListFragmentInteraction(id:String)
+    }
+
+    interface OnVoteClickListener{
+        fun onClick(id:String)
     }
 
     companion object {

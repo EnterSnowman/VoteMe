@@ -16,7 +16,7 @@ import com.example.android.voteme.votes.dummy.DummyContent.DummyItem
  * specified [OnListFragmentInteractionListener].
  * TODO: Replace the implementation with code for your data type.
  */
-class MyVotesRecyclerViewAdapter(var mVotes: List<Vote>, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<MyVotesRecyclerViewAdapter.ViewHolder>() {
+class MyVotesRecyclerViewAdapter(var mVotes: List<Vote>, private val mListener: MyVotesFragment.OnVoteClickListener?) : RecyclerView.Adapter<MyVotesRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -29,7 +29,7 @@ class MyVotesRecyclerViewAdapter(var mVotes: List<Vote>, private val mListener: 
         holder.mContentView.text = mVotes[position].title
 
         holder.mView.setOnClickListener {
-            mListener?.onMyVotesListFragmentInteraction(holder.mItem as DummyItem)
+            mListener?.onClick(mVotes.get(position).id)
         }
     }
 

@@ -33,5 +33,7 @@ interface DataSource {
 
     interface SingleVoteLoadCallback{
         fun onLoad(vote:Vote)
+
+        fun onFailure(exception: Exception)
     }
 }
