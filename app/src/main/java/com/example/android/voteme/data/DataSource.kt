@@ -36,4 +36,10 @@ interface DataSource {
 
         fun onFailure(exception: Exception)
     }
+
+    interface ElectCallback{
+        fun onElected()
+
+        fun onFailure(exception: Exception)
+    }
 }

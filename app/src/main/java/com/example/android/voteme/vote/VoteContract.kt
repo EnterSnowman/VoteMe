@@ -14,6 +14,8 @@ interface VoteContract {
 
     interface Presenter : BasePresenter<View>{
         fun loadVote(id: String)
+
+        fun chooseVariant(voteId: String,variant:String)
     }
 
 

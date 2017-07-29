@@ -17,6 +17,8 @@ import com.github.mikephil.charting.data.PieEntry
 import kotlinx.android.synthetic.main.fragment_vote.*
 import android.R.attr.entries
 import android.app.ProgressDialog
+import android.widget.RadioButton
+import android.widget.RelativeLayout
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
 
@@ -53,15 +55,22 @@ class VoteFragment : Fragment(),VoteContract.View {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         mPresenter?.loadVote(mVoteId!!)
+        vote_button.setOnClickListener{
+            var r  = vote_variants.findViewById<RadioButton>(vote_variants.checkedRadioButtonId)
+            mPresenter?.chooseVariant(mVoteId!!,r.text.toString())
+        }
         mProgressDialog?.show()
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun showVote(vote: Vote) {
-        mProgressDialog?.hide()
+
         var pieChartData = ArrayList<PieEntry>()
         for (v in vote.variants.entries){
             pieChartData.add(PieEntry(v.value.toFloat(),v.key))
+            val r = RadioButton(context)
+            r.setText(v.key)
+            vote_variants.addView(r)
         }
 
         val set = PieDataSet(pieChartData, "Election Results")
@@ -69,6 +78,8 @@ class VoteFragment : Fragment(),VoteContract.View {
         val data = PieData(set)
         vote_stats_chart.setData(data)
         vote_stats_chart.invalidate()
+        vote_stats_chart.layoutParams = RelativeLayout.LayoutParams(vote_stats_chart.width,vote_stats_chart.width)
+        mProgressDialog?.hide()
     }
 
     override fun setPresenter(presenter: VoteContract.Presenter) {

@@ -16,6 +16,10 @@ class VotesRepository private constructor(){
             .getReference(Constants.USERS)
             .child(FirebaseAuth.getInstance().currentUser?.uid)
             .child(Constants.CREATED)
+    var mUserDatabaseVoted : DatabaseReference = FirebaseDatabase.getInstance()
+            .getReference(Constants.USERS)
+            .child(FirebaseAuth.getInstance().currentUser?.uid)
+            .child(Constants.VOTED)
     companion object {
         private var repository : VotesRepository? = null
         fun getInstance(): VotesRepository {
@@ -83,5 +87,14 @@ class VotesRepository private constructor(){
             }
 
         })
+    }
+
+    fun makeElect(id:String,variant:String,callback:DataSource.ElectCallback){
+        mUserDatabaseVoted.child(id).setValue(variant).addOnCompleteListener{task ->
+            if(task.isSuccessful)
+                callback.onElected()
+            else
+                callback.onFailure(task.exception!!)
+        }
     }
 }

@@ -14,5 +14,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </com.github.mikephil.charting.charts.PieChart>
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/vote_button"
+        android:text="@string/choose"
+        android:layout_below="@+id/vote_stats_chart"
+        android:layout_centerHorizontal="true"/>
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/vote_button"
+        android:id="@+id/vote_variants"></RadioGroup>
 </RelativeLayout>
