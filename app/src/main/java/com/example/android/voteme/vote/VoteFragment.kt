@@ -17,8 +17,10 @@ import com.github.mikephil.charting.data.PieEntry
 import kotlinx.android.synthetic.main.fragment_vote.*
 import android.R.attr.entries
 import android.app.ProgressDialog
+import android.util.Log
 import android.widget.RadioButton
 import android.widget.RelativeLayout
+import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
 
@@ -33,11 +35,14 @@ import com.github.mikephil.charting.utils.ColorTemplate
  */
 class VoteFragment : Fragment(),VoteContract.View {
 
+
     // TODO: Rename and change types of parameters
     private var mVoteId: String? = null
     private var mPresenter: VoteContract.Presenter? = null
     private var mListener: OnFragmentInteractionListener? = null
     private var mProgressDialog: ProgressDialog? = null
+    private var mPieChartData : ArrayList<PieEntry>? = null
+    private var mVote : Vote? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
@@ -64,16 +69,16 @@ class VoteFragment : Fragment(),VoteContract.View {
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun showVote(vote: Vote) {
-
-        var pieChartData = ArrayList<PieEntry>()
+        mVote = vote
+        mPieChartData = ArrayList<PieEntry>()
         for (v in vote.variants.entries){
-            pieChartData.add(PieEntry(v.value.toFloat(),v.key))
+            mPieChartData!!.add(PieEntry(v.value.toFloat(),v.key))
             val r = RadioButton(context)
             r.setText(v.key)
             vote_variants.addView(r)
         }
 
-        val set = PieDataSet(pieChartData, "Election Results")
+        val set = PieDataSet(mPieChartData, "Election Results")
         set.colors = ColorTemplate.MATERIAL_COLORS.asList()
         val data = PieData(set)
         vote_stats_chart.setData(data)
@@ -81,7 +86,19 @@ class VoteFragment : Fragment(),VoteContract.View {
         vote_stats_chart.layoutParams = RelativeLayout.LayoutParams(vote_stats_chart.width,vote_stats_chart.width)
         mProgressDialog?.hide()
     }
-
+    override fun updateVote(variant: String, newCount: Int) {
+        /*var index = mPieChartData?.indexOf(PieEntry(mVote?.variants?.get(variant)!!.toFloat(),variant))
+        Log.d("INDEX",index.toString())
+        mPieChartData?.set(index!!,PieEntry(newCount.toFloat(),variant))*/
+        mVote?.variants?.put(variant,newCount)
+        mPieChartData?.clear()
+        for (v in mVote?.variants?.entries!!){
+            mPieChartData!!.add(PieEntry(v.value.toFloat(),v.key))
+        }
+        vote_stats_chart.data.notifyDataChanged()
+        vote_stats_chart.notifyDataSetChanged()
+        vote_stats_chart.invalidate()
+    }
     override fun setPresenter(presenter: VoteContract.Presenter) {
         mPresenter = presenter
     }

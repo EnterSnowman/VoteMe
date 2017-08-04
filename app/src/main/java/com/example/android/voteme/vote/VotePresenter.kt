@@ -27,6 +27,11 @@ class VotePresenter(override var mView: VoteContract.View) : VoteContract.Presen
 
             override fun onLoad(vote: Vote) {
                 mView.showVote(vote)
+                mVotesRepository.addChildListener(id,object : DataSource.RefreshVoteCallback{
+                    override fun onVoteUpdated(varinat: String, newCount: Int) {
+                        mView.updateVote(varinat,newCount)
+                    }
+                })
             }
 
         })

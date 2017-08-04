@@ -77,9 +77,7 @@ class VotesRepository private constructor(){
     fun getVoteById(id : String,callback: DataSource.SingleVoteLoadCallback){
         mDatabase.child(id).addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onCancelled(p0: DatabaseError?) {
-
             }
-
             override fun onDataChange(p0: DataSnapshot?) {
                 var vote = p0?.getValue(Vote::class.java)!!
                 vote.id = p0.key
@@ -96,5 +94,33 @@ class VotesRepository private constructor(){
             else
                 callback.onFailure(task.exception!!)
         }
+    }
+
+    fun addChildListener(id:String,callback: DataSource.RefreshVoteCallback){
+        mDatabase.child(id).child(Constants.VARIANTS).addChildEventListener(object : ChildEventListener{
+            override fun onCancelled(p0: DatabaseError?) {
+
+            }
+
+            override fun onChildMoved(p0: DataSnapshot?, p1: String?) {
+
+            }
+
+            override fun onChildChanged(p0: DataSnapshot?, p1: String?) {
+                if (p0 != null) {
+                    Log.d("FIREBASE LOG","Child updated {$id} ")
+                    var c = p0.value as Long
+                    callback.onVoteUpdated(p0.key, c.toInt())
+                }
+            }
+
+            override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
+
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot?) {
+
+            }
+        })
     }
 }

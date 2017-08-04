@@ -42,4 +42,8 @@ interface DataSource {
 
         fun onFailure(exception: Exception)
     }
+
+    interface RefreshVoteCallback{
+        fun onVoteUpdated(varinat: String,newCount : Int)
+    }
 }
