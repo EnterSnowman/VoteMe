@@ -19,12 +19,15 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 
 import android.widget.TextView
 
 import com.example.android.voteme.R
 import com.example.android.voteme.addvote.AddVoteActivity
 import com.example.android.voteme.data.UserRepository
+import com.example.android.voteme.utils.Constants
+import com.example.android.voteme.vote.VoteActivity
 import com.example.android.voteme.votes.dummy.DummyContent
 
 class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInteractionListener,MyVotesFragment.OnListFragmentInteractionListener {
@@ -108,6 +111,19 @@ class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInterac
             }
 
             R.id.join_vote ->{
+                var alertDialogBuilder  = AlertDialog.Builder(this)
+                alertDialogBuilder.setTitle(R.string.join_vote)
+                alertDialogBuilder.setView(R.layout.input_link_form)
+                alertDialogBuilder.setMessage(R.string.input_link)
+                alertDialogBuilder.setPositiveButton(android.R.string.ok)
+                {dialogInterface, i ->
+                    var linkEdit = (dialogInterface as AlertDialog).findViewById<EditText>(R.id.link_input)
+                    var intent  = Intent(this,VoteActivity::class.java)
+                    /*intent.putExtra(Constants.VOTE_ID,linkEdit!!.text.toString())
+                    startActivity(intent)*/
+                }
+                        .setNegativeButton(android.R.string.cancel){dialogInterface, i ->}
+                alertDialogBuilder.create().show()
                 return true
             }
 

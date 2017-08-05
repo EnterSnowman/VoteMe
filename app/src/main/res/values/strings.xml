@@ -30,4 +30,7 @@
     <string name="choose">Choose</string>
     <string name="join_vote">Join vote by link</string>
     <string name="confirm_logout">Do you want logout?</string>
+    <string name="input_link">Input vote link</string>
+    <string name="copy_link">Copy link</string>
+    <string name="id">ID</string>
 </resources>

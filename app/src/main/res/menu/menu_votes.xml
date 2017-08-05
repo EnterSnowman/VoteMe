@@ -10,7 +10,7 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/join_vote"
-        android:orderInCategory="101"
+        android:orderInCategory="99"
         android:title="@string/join_vote"
         android:icon="@mipmap/ic_open_in_new"
         app:showAsAction="ifRoom"
