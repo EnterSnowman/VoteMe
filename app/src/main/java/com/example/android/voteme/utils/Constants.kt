@@ -12,6 +12,7 @@ class Constants {
         val CREATED = "created"
         val VOTE_ID = "vote_id"
         val VOTED = "voted"
+        val JOINED = "joined"
         //error types
         val NON_UNIQUE_VARIANT  = 1
         val EMPTY_TITLE = 2

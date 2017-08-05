@@ -70,6 +70,7 @@ class VoteFragment : Fragment(),VoteContract.View {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun showVote(vote: Vote) {
         mVote = vote
+        //mListener?.setActionBarTitle(mVote!!.title)
         mPieChartData = ArrayList<PieEntry>()
         for (v in vote.variants.entries){
             mPieChartData!!.add(PieEntry(v.value.toFloat(),v.key))
@@ -87,9 +88,6 @@ class VoteFragment : Fragment(),VoteContract.View {
         mProgressDialog?.hide()
     }
     override fun updateVote(variant: String, newCount: Int) {
-        /*var index = mPieChartData?.indexOf(PieEntry(mVote?.variants?.get(variant)!!.toFloat(),variant))
-        Log.d("INDEX",index.toString())
-        mPieChartData?.set(index!!,PieEntry(newCount.toFloat(),variant))*/
         mVote?.variants?.put(variant,newCount)
         mPieChartData?.clear()
         for (v in mVote?.variants?.entries!!){
@@ -105,11 +103,7 @@ class VoteFragment : Fragment(),VoteContract.View {
 
 
     // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        if (mListener != null) {
-            mListener!!.onFragmentInteraction(uri)
-        }
-    }
+
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -135,8 +129,7 @@ class VoteFragment : Fragment(),VoteContract.View {
      * See the Android Training lesson [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html) for more information.
      */
     interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
+        //fun setActionBarTitle(title:String)
     }
 
 

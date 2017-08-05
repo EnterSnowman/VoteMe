@@ -29,7 +29,7 @@ class MyVotesRecyclerViewAdapter(var mVotes: List<Vote>, private val mListener: 
         holder.mContentView.text = mVotes[position].title
 
         holder.mView.setOnClickListener {
-            mListener?.onClick(mVotes.get(position).id)
+            mListener?.onClick(mVotes.get(position).id,mVotes.get(position).title)
         }
     }
 

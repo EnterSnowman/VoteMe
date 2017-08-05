@@ -28,4 +28,6 @@
     <string name="please_input_vote_title">Please, input title</string>
     <string name="two_variants">Must be at least two variants</string>
     <string name="choose">Choose</string>
+    <string name="join_vote">Join vote by link</string>
+    <string name="confirm_logout">Do you want logout?</string>
 </resources>

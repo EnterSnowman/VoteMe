@@ -4,6 +4,7 @@ import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.SyncStateContract
+import android.view.MenuItem
 import com.example.android.voteme.R
 import com.example.android.voteme.data.UserRepository
 import com.example.android.voteme.loginregistration.LoginRegistrationFragment
@@ -16,6 +17,8 @@ class VoteActivity : AppCompatActivity(),VoteFragment.OnFragmentInteractionListe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vote)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = intent.getStringExtra(Constants.TITLE);
         var view = VoteFragment.newInstance(intent.getStringExtra(Constants.VOTE_ID))
         supportFragmentManager.beginTransaction()
                 .add(R.id.vote_container,view)
@@ -23,8 +26,16 @@ class VoteActivity : AppCompatActivity(),VoteFragment.OnFragmentInteractionListe
         mPresenter = VotePresenter(view)
     }
 
-    override fun onFragmentInteraction(uri: Uri) {
-
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId){
+            android.R.id.home->{
+                onBackPressed()
+                return true;
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
+
+
 
 }

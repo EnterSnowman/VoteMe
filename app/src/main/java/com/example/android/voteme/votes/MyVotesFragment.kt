@@ -61,9 +61,10 @@ class MyVotesFragment : Fragment() ,MyVotesContract.View{
         super.onCreate(savedInstanceState)
         var presenter = MyVotesPresenter(this)
         mAdapter = MyVotesRecyclerViewAdapter(ArrayList<Vote>(),object : OnVoteClickListener{
-            override fun onClick(id:String) {
+            override fun onClick(id:String,title:String) {
                 var intent = Intent(context, VoteActivity::class.java)
                 intent.putExtra(Constants.VOTE_ID,id)
+                intent.putExtra(Constants.TITLE,title)
                 context.startActivity(intent)
             }
         })
@@ -86,20 +87,6 @@ class MyVotesFragment : Fragment() ,MyVotesContract.View{
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_my_votes_list, container, false)
-
-        // Set the adapter
-
-        /*if (view is RecyclerView) {
-            val context = view.getContext()
-            val recyclerView = view
-            if (mColumnCount <= 1) {
-                recyclerView.layoutManager = LinearLayoutManager(context)
-            } else {
-                recyclerView.layoutManager = GridLayoutManager(context, mColumnCount)
-            }
-            recyclerView.adapter = MyVotesRecyclerViewAdapter(DummyContent.ITEMS, mListener)
-        }*/
-
         return view
     }
 
@@ -135,12 +122,11 @@ class MyVotesFragment : Fragment() ,MyVotesContract.View{
      * See the Android Training lesson [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html) for more information.
      */
     interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onMyVotesListFragmentInteraction(id:String)
+
     }
 
     interface OnVoteClickListener{
-        fun onClick(id:String)
+        fun onClick(id:String,title:String)
     }
 
     companion object {

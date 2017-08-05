@@ -20,6 +20,10 @@ class VotesRepository private constructor(){
             .getReference(Constants.USERS)
             .child(FirebaseAuth.getInstance().currentUser?.uid)
             .child(Constants.VOTED)
+    var mUserDatabaseJoined : DatabaseReference = FirebaseDatabase.getInstance()
+            .getReference(Constants.USERS)
+            .child(FirebaseAuth.getInstance().currentUser?.uid)
+            .child(Constants.JOINED)
     companion object {
         private var repository : VotesRepository? = null
         fun getInstance(): VotesRepository {
@@ -42,6 +46,37 @@ class VotesRepository private constructor(){
 
     }
 
+    fun getVotesJoinedByUser(callback: DataSource.VotesCallback){
+        mUserDatabaseJoined.addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(p0: DatabaseError?) {
+                callback.onFailure(p0?.toException())
+            }
+
+            override fun onDataChange(p0: DataSnapshot?) {
+                var votes  = ArrayList<Vote>()
+                var count : Long = 0
+                var size  = p0?.childrenCount
+                p0?.children?.forEach {
+                    getVoteById(it.key,object : DataSource.SingleVoteLoadCallback{
+                        override fun onFailure(exception: Exception) {
+
+                        }
+                        override fun onLoad(vote: Vote) {
+                            count++
+                            votes.add(vote)
+                            Log.d("FIRE",vote.title)
+                            if (count==size){
+                                Log.d("FIRE","Loading votes completed")
+                                callback.onComplete(votes)
+                            }
+                        }
+                    })
+                }
+
+            }
+        })
+    }
+
     fun getVotesCreatedByUser(callback: DataSource.VotesCallback){
         mUserDatabase.addValueEventListener(object : ValueEventListener{
             override fun onCancelled(p0: DatabaseError?) {
@@ -57,7 +92,6 @@ class VotesRepository private constructor(){
                         override fun onFailure(exception: Exception) {
 
                         }
-
                         override fun onLoad(vote: Vote) {
                             count++
                             votes.add(vote)

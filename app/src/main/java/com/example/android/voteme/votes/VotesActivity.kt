@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
@@ -27,9 +28,8 @@ import com.example.android.voteme.data.UserRepository
 import com.example.android.voteme.votes.dummy.DummyContent
 
 class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInteractionListener,MyVotesFragment.OnListFragmentInteractionListener {
-    override fun onMyVotesListFragmentInteraction(id: String) {
 
-    }
+
 
     /**
      * The [android.support.v4.view.PagerAdapter] that will provide
@@ -78,9 +78,7 @@ class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInterac
 
     }
 
-    override fun onAllVotesListFragmentInteraction(item: DummyContent.DummyItem) {
 
-    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -94,14 +92,30 @@ class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInterac
         // as you specify a parent activity in AndroidManifest.xml.
         val id = item.itemId
 
+        when(id){
+            R.id.signout->{
+                var alertDialogBuilder  = AlertDialog.Builder(this)
+                alertDialogBuilder.setTitle(R.string.logout)
+                alertDialogBuilder.setMessage(R.string.confirm_logout)
+                alertDialogBuilder.setPositiveButton(android.R.string.ok)
+                {dialogInterface, i ->
+                    UserRepository.getInstance().mAuth.signOut()
+                    finish()
+                }
+                        .setNegativeButton(android.R.string.cancel){dialogInterface, i ->}
+                alertDialogBuilder.create().show()
+                return true
+            }
 
-        if (id == R.id.signout) {
-            UserRepository.getInstance().mAuth.signOut()
-            finish()
-            return true
+            R.id.join_vote ->{
+                return true
+            }
+
+            else -> return super.onOptionsItemSelected(item)
         }
 
-        return super.onOptionsItemSelected(item)
+
+
     }
 
     /**
