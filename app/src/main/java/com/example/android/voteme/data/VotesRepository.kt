@@ -167,4 +167,29 @@ class VotesRepository private constructor(){
         if (mChildEventListener!=null)
             mDatabase.child(id).child(Constants.VARIANTS).removeEventListener(mChildEventListener)
     }
+
+    fun joinToVote(id:String){
+        mUserDatabase.child(id).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError?) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot?) {
+                if (!p0!!.exists()){
+                    mUserDatabaseJoined.child(id).addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onCancelled(p0: DatabaseError?) {            }
+
+                        override fun onDataChange(p0: DataSnapshot?) {
+                            if (!p0!!.exists()){
+                                p0.ref.setValue(Constants.JOINED)
+                            }
+                        }
+                    })
+                }
+            }
+        })
+
+    }
+
+
 }

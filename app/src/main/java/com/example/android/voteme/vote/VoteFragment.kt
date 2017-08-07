@@ -68,6 +68,7 @@ class VoteFragment : Fragment(),VoteContract.View {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         mPresenter?.loadVote(mVoteId!!)
+        mPresenter?.joinToVote(mVoteId!!)
         vote_button.setOnClickListener{
             var r  = vote_variants.findViewById<RadioButton>(vote_variants.checkedRadioButtonId)
             mPresenter?.chooseVariant(mVoteId!!,r.text.toString())

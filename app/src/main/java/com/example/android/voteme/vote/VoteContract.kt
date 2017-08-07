@@ -24,6 +24,8 @@ interface VoteContract {
         fun chooseVariant(voteId: String,variant:String)
 
         fun removeChildListener(id: String)
+
+        fun joinToVote(id:String)
     }
 
 

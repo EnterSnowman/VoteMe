@@ -55,4 +55,8 @@ class VotePresenter(override var mView: VoteContract.View) : VoteContract.Presen
     override fun removeChildListener(id: String) {
         mVotesRepository.removeChilEventListener(id)
     }
+
+    override fun joinToVote(id: String) {
+        mVotesRepository.joinToVote(id)
+    }
 }
