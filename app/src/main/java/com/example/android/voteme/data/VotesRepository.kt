@@ -24,6 +24,7 @@ class VotesRepository private constructor(){
             .getReference(Constants.USERS)
             .child(FirebaseAuth.getInstance().currentUser?.uid)
             .child(Constants.JOINED)
+    var mChildEventListener : ChildEventListener? = null
     companion object {
         private var repository : VotesRepository? = null
         fun getInstance(): VotesRepository {
@@ -42,12 +43,16 @@ class VotesRepository private constructor(){
         for (v in variants)
             vars.put(v,0)
         vote.put(Constants.VARIANTS,vars)
-        mDatabase.child(id).setValue(vote).addOnCompleteListener{task -> if (task.isSuccessful) callback.onComplete() else callback.onFailure(task.exception) }
+        mDatabase.child(id).setValue(vote).addOnCompleteListener{task -> if (task.isSuccessful) {
+            callback.onComplete()
+            mUserDatabase.child(id).setValue(Constants.CREATED)
+        }
+        else callback.onFailure(task.exception) }
 
     }
 
     fun getVotesJoinedByUser(callback: DataSource.VotesCallback){
-        mUserDatabaseJoined.addValueEventListener(object : ValueEventListener{
+        mUserDatabaseJoined.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onCancelled(p0: DatabaseError?) {
                 callback.onFailure(p0?.toException())
             }
@@ -78,7 +83,7 @@ class VotesRepository private constructor(){
     }
 
     fun getVotesCreatedByUser(callback: DataSource.VotesCallback){
-        mUserDatabase.addValueEventListener(object : ValueEventListener{
+        mUserDatabase.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onCancelled(p0: DatabaseError?) {
                 callback.onFailure(p0?.toException())
             }
@@ -131,7 +136,7 @@ class VotesRepository private constructor(){
     }
 
     fun addChildListener(id:String,callback: DataSource.RefreshVoteCallback){
-        mDatabase.child(id).child(Constants.VARIANTS).addChildEventListener(object : ChildEventListener{
+        mChildEventListener =  mDatabase.child(id).child(Constants.VARIANTS).addChildEventListener(object : ChildEventListener{
             override fun onCancelled(p0: DatabaseError?) {
 
             }
@@ -156,5 +161,10 @@ class VotesRepository private constructor(){
 
             }
         })
+    }
+
+    fun removeChilEventListener(id:String){
+        if (mChildEventListener!=null)
+            mDatabase.child(id).child(Constants.VARIANTS).removeEventListener(mChildEventListener)
     }
 }

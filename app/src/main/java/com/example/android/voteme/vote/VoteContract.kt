@@ -12,12 +12,18 @@ interface VoteContract {
         fun showVote(vote: Vote)
 
         fun updateVote(variant : String,newCount : Int)
+
+        fun showProgressBar()
+
+        fun hideProgressBar()
     }
 
     interface Presenter : BasePresenter<View>{
         fun loadVote(id: String)
 
         fun chooseVariant(voteId: String,variant:String)
+
+        fun removeChildListener(id: String)
     }
 
 

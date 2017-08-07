@@ -119,8 +119,8 @@ class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInterac
                 {dialogInterface, i ->
                     var linkEdit = (dialogInterface as AlertDialog).findViewById<EditText>(R.id.link_input)
                     var intent  = Intent(this,VoteActivity::class.java)
-                    /*intent.putExtra(Constants.VOTE_ID,linkEdit!!.text.toString())
-                    startActivity(intent)*/
+                    intent.putExtra(Constants.VOTE_ID,linkEdit!!.text.toString())
+                    startActivity(intent)
                 }
                         .setNegativeButton(android.R.string.cancel){dialogInterface, i ->}
                 alertDialogBuilder.create().show()

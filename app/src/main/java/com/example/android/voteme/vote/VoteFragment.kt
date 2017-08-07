@@ -36,6 +36,7 @@ import com.github.mikephil.charting.utils.ColorTemplate
 class VoteFragment : Fragment(),VoteContract.View {
 
 
+
     // TODO: Rename and change types of parameters
     private var mVoteId: String? = null
     private var mPresenter: VoteContract.Presenter? = null
@@ -45,6 +46,7 @@ class VoteFragment : Fragment(),VoteContract.View {
     private var mVote : Vote? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("VoteFragment","onCreate")
         if (arguments != null) {
             mVoteId = arguments.getString(VOTE_ID)
         }
@@ -54,7 +56,13 @@ class VoteFragment : Fragment(),VoteContract.View {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+        Log.d("VoteFragment","onCreateView")
         return inflater!!.inflate(R.layout.fragment_vote, container, false)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mPresenter!!.removeChildListener(mVoteId!!)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -67,10 +75,19 @@ class VoteFragment : Fragment(),VoteContract.View {
         mProgressDialog?.show()
     }
 
+    override fun showProgressBar() {
+        mListener!!.showLoadingBar()
+    }
+
+    override fun hideProgressBar() {
+        mListener!!.hideLoadingBar()
+    }
+
     @RequiresApi(Build.VERSION_CODES.N)
     override fun showVote(vote: Vote) {
         mVote = vote
-        //mListener?.setActionBarTitle(mVote!!.title)
+
+        mListener?.showVoteTitle(mVote!!.title)
         mPieChartData = ArrayList<PieEntry>()
         for (v in vote.variants.entries){
             mPieChartData!!.add(PieEntry(v.value.toFloat(),v.key))
@@ -130,6 +147,12 @@ class VoteFragment : Fragment(),VoteContract.View {
      */
     interface OnFragmentInteractionListener {
         //fun setActionBarTitle(title:String)
+
+        fun showLoadingBar()
+
+        fun hideLoadingBar()
+
+        fun showVoteTitle(title:String)
     }
 
 

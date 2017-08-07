@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.provider.SyncStateContract
 import android.view.Menu
 import android.view.MenuItem
+import android.view.Window
 import android.widget.Toast
 import com.example.android.voteme.R
 import com.example.android.voteme.data.UserRepository
@@ -21,15 +22,31 @@ class VoteActivity : AppCompatActivity(),VoteFragment.OnFragmentInteractionListe
     var mPresenter: VotePresenter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_vote)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = intent.getStringExtra(Constants.TITLE);
+        if (intent.getStringExtra(Constants.TITLE)!=null)
+        supportActionBar?.title = intent.getStringExtra(Constants.TITLE)
         var view = VoteFragment.newInstance(intent.getStringExtra(Constants.VOTE_ID))
         supportFragmentManager.beginTransaction()
                 .add(R.id.vote_container,view)
                 .commit()
         mPresenter = VotePresenter(view)
+
     }
+
+    override fun showLoadingBar() {
+        setSupportProgressBarIndeterminateVisibility(true)
+    }
+
+    override fun hideLoadingBar() {
+        setSupportProgressBarIndeterminateVisibility(false)
+    }
+
+    override fun showVoteTitle(title: String) {
+        supportActionBar?.title = title
+    }
+
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId){

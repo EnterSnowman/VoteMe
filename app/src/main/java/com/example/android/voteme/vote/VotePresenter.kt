@@ -12,6 +12,7 @@ import java.lang.Exception
 class VotePresenter(override var mView: VoteContract.View) : VoteContract.Presenter {
 
 
+
     var mVotesRepository : VotesRepository
 
     init {
@@ -38,14 +39,20 @@ class VotePresenter(override var mView: VoteContract.View) : VoteContract.Presen
     }
 
     override fun chooseVariant(voteId: String, variant: String) {
+        mView.showProgressBar()
         mVotesRepository.makeElect(voteId,variant,object : DataSource.ElectCallback{
             override fun onElected() {
+                mView.hideProgressBar()
                 Log.d("FIREBASE","VARIANT ELECTED")
             }
 
             override fun onFailure(exception: Exception) {
-
+                mView.hideProgressBar()
             }
         })
+    }
+
+    override fun removeChildListener(id: String) {
+        mVotesRepository.removeChilEventListener(id)
     }
 }
