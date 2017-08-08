@@ -17,12 +17,13 @@ import com.example.android.voteme.loginregistration.LoginRegistrationFragment
 import com.example.android.voteme.loginregistration.LoginRegistrationPresenter
 import com.example.android.voteme.utils.Constants
 
+
 class VoteActivity : AppCompatActivity(),VoteFragment.OnFragmentInteractionListener {
 
     var mPresenter: VotePresenter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
         setContentView(R.layout.activity_vote)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         if (intent.getStringExtra(Constants.TITLE)!=null)
@@ -35,13 +36,13 @@ class VoteActivity : AppCompatActivity(),VoteFragment.OnFragmentInteractionListe
 
     }
 
-    override fun showLoadingBar() {
-        setSupportProgressBarIndeterminateVisibility(true)
+/*    override fun showLoadingBar() {
+
     }
 
     override fun hideLoadingBar() {
-        setSupportProgressBarIndeterminateVisibility(false)
-    }
+
+    }*/
 
     override fun showVoteTitle(title: String) {
         supportActionBar?.title = title

@@ -118,9 +118,26 @@ class VotesRepository private constructor(){
             override fun onCancelled(p0: DatabaseError?) {
             }
             override fun onDataChange(p0: DataSnapshot?) {
+                Log.d("FIREBASE",p0?.key)
                 var vote = p0?.getValue(Vote::class.java)!!
                 vote.id = p0.key
                 callback.onLoad(vote)
+            }
+
+        })
+    }
+
+    fun isVoted(id:String,callback: DataSource.IsVotedCallback){
+        mUserDatabaseVoted.child(id).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(p0: DataSnapshot?) {
+                if (p0 != null) {
+                    if (p0.exists()) callback.onResult(true) else callback.onResult(false)
+
+                }
+            }
+
+            override fun onCancelled(p0: DatabaseError?) {
+
             }
 
         })

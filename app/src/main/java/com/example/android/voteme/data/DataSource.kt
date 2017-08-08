@@ -46,4 +46,8 @@ interface DataSource {
     interface RefreshVoteCallback{
         fun onVoteUpdated(varinat: String,newCount : Int)
     }
+
+    interface IsVotedCallback{
+        fun onResult(isVoted: Boolean)
+    }
 }

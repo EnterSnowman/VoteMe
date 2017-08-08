@@ -9,7 +9,7 @@ import com.example.android.voteme.model.Vote
  */
 interface VoteContract {
     interface View : BaseView<Presenter>{
-        fun showVote(vote: Vote)
+        fun showVote(vote: Vote,isVoted:Boolean)
 
         fun updateVote(variant : String,newCount : Int)
 

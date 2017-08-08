@@ -77,17 +77,17 @@ class VoteFragment : Fragment(),VoteContract.View {
     }
 
     override fun showProgressBar() {
-        mListener!!.showLoadingBar()
+        electing_progressBar.visibility = View.VISIBLE
+
     }
 
     override fun hideProgressBar() {
-        mListener!!.hideLoadingBar()
+        electing_progressBar.visibility = View.INVISIBLE
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    override fun showVote(vote: Vote) {
+    override fun showVote(vote: Vote,isVoted:Boolean) {
         mVote = vote
-
         mListener?.showVoteTitle(mVote!!.title)
         mPieChartData = ArrayList<PieEntry>()
         for (v in vote.variants.entries){
@@ -96,7 +96,10 @@ class VoteFragment : Fragment(),VoteContract.View {
             r.setText(v.key)
             vote_variants.addView(r)
         }
-
+        if (isVoted){
+            vote_variants.visibility = View.GONE
+            vote_button.visibility  =View.GONE
+        }
         val set = PieDataSet(mPieChartData, "Election Results")
         set.colors = ColorTemplate.MATERIAL_COLORS.asList()
         val data = PieData(set)
@@ -149,9 +152,9 @@ class VoteFragment : Fragment(),VoteContract.View {
     interface OnFragmentInteractionListener {
         //fun setActionBarTitle(title:String)
 
-        fun showLoadingBar()
+        /*fun showLoadingBar()
 
-        fun hideLoadingBar()
+        fun hideLoadingBar()*/
 
         fun showVoteTitle(title:String)
     }

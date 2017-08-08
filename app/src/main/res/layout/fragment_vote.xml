@@ -23,4 +23,15 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/vote_button"
         android:id="@+id/vote_variants"></RadioGroup>
+
+    <ProgressBar
+        android:id="@+id/electing_progressBar"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/vote_stats_chart"
+        android:layout_toEndOf="@+id/vote_button"
+        android:layout_toRightOf="@+id/vote_button"
+        android:indeterminate="true"
+        android:visibility="gone" />
 </RelativeLayout>
