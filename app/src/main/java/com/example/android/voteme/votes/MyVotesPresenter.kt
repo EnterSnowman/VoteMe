@@ -1,5 +1,6 @@
 package com.example.android.voteme.votes
 
+import android.util.Log
 import com.example.android.voteme.data.DataSource
 import com.example.android.voteme.data.VotesRepository
 import com.example.android.voteme.model.Vote
@@ -13,6 +14,7 @@ class MyVotesPresenter(override var mView: MyVotesContract.View) : MyVotesContra
 
     init {
         mVotesRepository = VotesRepository.getInstance()
+        Log.d("MyVotes", mVotesRepository.toString())
         mView.setPresenter(this)
     }
     override fun loadVotes() {
@@ -21,6 +23,11 @@ class MyVotesPresenter(override var mView: MyVotesContract.View) : MyVotesContra
                 if (votes != null) {
                     mView.showVotes(votes)
                 }
+                mVotesRepository.addChildEventListenerCreated(object : DataSource.ListRefreshCallback {
+                    override fun onVoteAdded(newVote: Vote) {
+                        mView.showAddedVote(newVote)
+                    }
+                })
                 mView.showError("Loading completed")
             }
 

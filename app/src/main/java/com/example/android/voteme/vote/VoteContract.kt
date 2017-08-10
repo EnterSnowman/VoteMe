@@ -16,6 +16,8 @@ interface VoteContract {
         fun showProgressBar()
 
         fun hideProgressBar()
+
+        fun hideVotingPanel()
     }
 
     interface Presenter : BasePresenter<View>{

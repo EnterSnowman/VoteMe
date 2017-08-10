@@ -12,6 +12,8 @@ interface AllVotesContract {
         fun showVotes(votes:ArrayList<Vote>)
 
         fun showError(msg:String?)
+
+        fun showAddedVote(vote: Vote)
     }
 
     interface Presenter : BasePresenter<View>{

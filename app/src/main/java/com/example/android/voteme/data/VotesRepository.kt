@@ -3,9 +3,11 @@ package com.example.android.voteme.data
 import android.util.Log
 import com.example.android.voteme.model.Vote
 import com.example.android.voteme.utils.Constants
+import com.example.android.voteme.utils.Utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import java.lang.Exception
+import kotlin.concurrent.fixedRateTimer
 
 /**
  * Created by Valentin on 16.07.2017.
@@ -25,6 +27,11 @@ class VotesRepository private constructor(){
             .child(FirebaseAuth.getInstance().currentUser?.uid)
             .child(Constants.JOINED)
     var mChildEventListener : ChildEventListener? = null
+    var mChildEventListenerCreated : ArrayList<ChildEventListener>?
+    var mChildEventListenerJoined : ChildEventListener? = null
+    init {
+        mChildEventListenerCreated = ArrayList<ChildEventListener>()
+    }
     companion object {
         private var repository : VotesRepository? = null
         fun getInstance(): VotesRepository {
@@ -40,7 +47,8 @@ class VotesRepository private constructor(){
         var vote = HashMap<String,Any>()
         vote.put(Constants.TITLE,title)
         var vars = HashMap<String,Int>()
-        for (v in variants)
+        var newVariants = Utils.addKeySuffix(variants)
+        for (v in newVariants)
             vars.put(v,0)
         vote.put(Constants.VARIANTS,vars)
         mDatabase.child(id).setValue(vote).addOnCompleteListener{task -> if (task.isSuccessful) {
@@ -120,6 +128,7 @@ class VotesRepository private constructor(){
             override fun onDataChange(p0: DataSnapshot?) {
                 Log.d("FIREBASE",p0?.key)
                 var vote = p0?.getValue(Vote::class.java)!!
+                vote.variants = Utils.removeKeySuffix(vote.variants) as HashMap<String, Int>
                 vote.id = p0.key
                 callback.onLoad(vote)
             }
@@ -144,7 +153,7 @@ class VotesRepository private constructor(){
     }
 
     fun makeElect(id:String,variant:String,callback:DataSource.ElectCallback){
-        mUserDatabaseVoted.child(id).setValue(variant).addOnCompleteListener{task ->
+        mUserDatabaseVoted.child(id).setValue(variant.plus(Constants.KEY)).addOnCompleteListener{task ->
             if(task.isSuccessful)
                 callback.onElected()
             else
@@ -166,7 +175,7 @@ class VotesRepository private constructor(){
                 if (p0 != null) {
                     Log.d("FIREBASE LOG","Child updated {$id} ")
                     var c = p0.value as Long
-                    callback.onVoteUpdated(p0.key, c.toInt())
+                    callback.onVoteUpdated(p0.key.substring(0,p0.key.length-4), c.toInt())
                 }
             }
 
@@ -178,6 +187,83 @@ class VotesRepository private constructor(){
 
             }
         })
+    }
+
+    fun addChildEventListenerCreated(callback: DataSource.ListRefreshCallback){
+        mChildEventListenerCreated!!.add(mUserDatabase.addChildEventListener(object : ChildEventListener {
+            override fun onCancelled(p0: DatabaseError?) {
+
+            }
+
+            override fun onChildMoved(p0: DataSnapshot?, p1: String?) {
+
+            }
+
+            override fun onChildChanged(p0: DataSnapshot?, p1: String?) {
+
+            }
+
+            override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
+                getVoteById(p0!!.key,object : DataSource.SingleVoteLoadCallback {
+                    override fun onFailure(exception: Exception) {
+
+                    }
+
+                    override fun onLoad(vote:Vote) {
+                        callback.onVoteAdded(vote)
+                    }
+
+                })
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot?) {
+
+            }
+        }))
+    }
+
+    fun addChildEventListenerJoined(callback: DataSource.ListRefreshCallback){
+        mChildEventListenerJoined = mUserDatabaseJoined.addChildEventListener(object : ChildEventListener {
+            override fun onCancelled(p0: DatabaseError?) {
+
+            }
+
+            override fun onChildMoved(p0: DataSnapshot?, p1: String?) {
+
+            }
+
+            override fun onChildChanged(p0: DataSnapshot?, p1: String?) {
+
+            }
+
+            override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
+                getVoteById(p0!!.key,object : DataSource.SingleVoteLoadCallback {
+                    override fun onFailure(exception: Exception) {
+
+                    }
+
+                    override fun onLoad(vote:Vote) {
+                        callback.onVoteAdded(vote)
+                    }
+
+                })
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot?) {
+
+            }
+        })
+    }
+
+    fun removeChildEventListenersCreated(){
+        if (mChildEventListenerCreated!!.size>0)
+            for (l in mChildEventListenerCreated!!)
+                mDatabase.removeEventListener(l)
+    }
+
+    fun removeChildEventListenerJoined(){
+        if (mChildEventListenerJoined!=null)
+            mUserDatabaseJoined.removeEventListener(mChildEventListenerJoined)
     }
 
     fun removeChilEventListener(id:String){

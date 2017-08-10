@@ -96,10 +96,9 @@ class VoteFragment : Fragment(),VoteContract.View {
             r.setText(v.key)
             vote_variants.addView(r)
         }
-        if (isVoted){
-            vote_variants.visibility = View.GONE
-            vote_button.visibility  =View.GONE
-        }
+        if (isVoted)
+            hideVotingPanel()
+
         val set = PieDataSet(mPieChartData, "Election Results")
         set.colors = ColorTemplate.MATERIAL_COLORS.asList()
         val data = PieData(set)
@@ -108,6 +107,12 @@ class VoteFragment : Fragment(),VoteContract.View {
         vote_stats_chart.layoutParams = RelativeLayout.LayoutParams(vote_stats_chart.width,vote_stats_chart.width)
         mProgressDialog?.hide()
     }
+
+    override fun hideVotingPanel() {
+        vote_variants.visibility = View.GONE
+        vote_button.visibility  =View.GONE
+    }
+
     override fun updateVote(variant: String, newCount: Int) {
         mVote?.variants?.put(variant,newCount)
         mPieChartData?.clear()

@@ -82,6 +82,11 @@ class AllVotesFragment : Fragment(),AllVotesContract.View {
         mAdapter!!.notifyDataSetChanged()
     }
 
+    override fun showAddedVote(vote: Vote) {
+        mAdapter?.mVotes?.add(vote)
+        mAdapter?.notifyDataSetChanged()
+    }
+
     override fun showError(msg: String?) {
         Toast.makeText(context,msg, Toast.LENGTH_LONG).show()
     }

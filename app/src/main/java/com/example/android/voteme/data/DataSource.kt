@@ -50,4 +50,8 @@ interface DataSource {
     interface IsVotedCallback{
         fun onResult(isVoted: Boolean)
     }
+
+    interface ListRefreshCallback{
+        fun onVoteAdded(newVote: Vote)
+    }
 }

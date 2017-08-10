@@ -48,6 +48,7 @@ class VotePresenter(override var mView: VoteContract.View) : VoteContract.Presen
         mVotesRepository.makeElect(voteId,variant,object : DataSource.ElectCallback{
             override fun onElected() {
                 mView.hideProgressBar()
+                mView.hideVotingPanel()
                 Log.d("FIREBASE","VARIANT ELECTED")
             }
 

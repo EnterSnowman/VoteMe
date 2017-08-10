@@ -33,6 +33,7 @@ import kotlinx.android.synthetic.main.fragment_my_votes_list.*
  */
 class MyVotesFragment : Fragment() ,MyVotesContract.View{
 
+
     // TODO: Customize parameters
     private var mColumnCount = 1
     private var mListener: OnListFragmentInteractionListener? = null
@@ -49,6 +50,11 @@ class MyVotesFragment : Fragment() ,MyVotesContract.View{
             Log.d("VIEW",vote.title)
         }
         mAdapter?.mVotes = votes
+        mAdapter?.notifyDataSetChanged()
+    }
+
+    override fun showAddedVote(vote: Vote) {
+        mAdapter?.mVotes?.add(vote)
         mAdapter?.notifyDataSetChanged()
     }
 
