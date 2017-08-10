@@ -18,21 +18,23 @@ class MyVotesPresenter(override var mView: MyVotesContract.View) : MyVotesContra
         mView.setPresenter(this)
     }
     override fun loadVotes() {
-        mVotesRepository.getVotesCreatedByUser(object : DataSource.VotesCallback{
+        /*mVotesRepository.getVotesCreatedByUser(object : DataSource.VotesCallback{
             override fun onComplete(votes: ArrayList<Vote>?) {
                 if (votes != null) {
                     mView.showVotes(votes)
                 }
-                mVotesRepository.addChildEventListenerCreated(object : DataSource.ListRefreshCallback {
-                    override fun onVoteAdded(newVote: Vote) {
-                        mView.showAddedVote(newVote)
-                    }
-                })
+
                 mView.showError("Loading completed")
             }
 
             override fun onFailure(exception: Exception?) {
                     mView.showError(exception?.message)
+            }
+        })*/
+
+        mVotesRepository.addChildEventListenerCreated(object : DataSource.ListRefreshCallback {
+            override fun onVoteAdded(newVote: Vote) {
+                mView.showAddedVote(newVote)
             }
         })
     }

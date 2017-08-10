@@ -190,6 +190,7 @@ class VotesRepository private constructor(){
     }
 
     fun addChildEventListenerCreated(callback: DataSource.ListRefreshCallback){
+        Log.d("FIREBASE","addChildEventListenerCreated ok")
         mChildEventListenerCreated!!.add(mUserDatabase.addChildEventListener(object : ChildEventListener {
             override fun onCancelled(p0: DatabaseError?) {
 
@@ -204,6 +205,8 @@ class VotesRepository private constructor(){
             }
 
             override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
+
+                Log.d("Child List Created","onChildAdded")
                 getVoteById(p0!!.key,object : DataSource.SingleVoteLoadCallback {
                     override fun onFailure(exception: Exception) {
 
@@ -223,6 +226,7 @@ class VotesRepository private constructor(){
     }
 
     fun addChildEventListenerJoined(callback: DataSource.ListRefreshCallback){
+        Log.d("FIREBASE","addChildEventListenerJoined ok")
         mChildEventListenerJoined = mUserDatabaseJoined.addChildEventListener(object : ChildEventListener {
             override fun onCancelled(p0: DatabaseError?) {
 
@@ -237,6 +241,7 @@ class VotesRepository private constructor(){
             }
 
             override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
+                Log.d("Child List Joined","onChildAdded")
                 getVoteById(p0!!.key,object : DataSource.SingleVoteLoadCallback {
                     override fun onFailure(exception: Exception) {
 

@@ -19,22 +19,13 @@ class AllVotesPresenter(override var mView: AllVotesContract.View) : AllVotesCon
         mView.setPresenter(this)
     }
     override fun loadVotes() {
-        mVotesRepository.getVotesCreatedByUser(object : DataSource.VotesCallback{
+        /*mVotesRepository.getVotesCreatedByUser(object : DataSource.VotesCallback{
             override fun onComplete(votes: ArrayList<Vote>?) {
                 if (votes != null) {
                     mView.showVotes(votes)
 
                 }
-                mVotesRepository.addChildEventListenerCreated(object : DataSource.ListRefreshCallback {
-                    override fun onVoteAdded(newVote: Vote) {
-                        mView.showAddedVote(newVote)
-                    }
-                })
-                mVotesRepository.addChildEventListenerJoined(object : DataSource.ListRefreshCallback {
-                    override fun onVoteAdded(newVote: Vote) {
-                        mView.showAddedVote(newVote)
-                    }
-                })
+
                 mView.showError("Loading completed created")
             }
 
@@ -53,6 +44,17 @@ class AllVotesPresenter(override var mView: AllVotesContract.View) : AllVotesCon
 
             override fun onFailure(exception: Exception?) {
                 mView.showError(exception?.message)
+            }
+        })*/
+
+        mVotesRepository.addChildEventListenerCreated(object : DataSource.ListRefreshCallback {
+            override fun onVoteAdded(newVote: Vote) {
+                mView.showAddedVote(newVote)
+            }
+        })
+        mVotesRepository.addChildEventListenerJoined(object : DataSource.ListRefreshCallback {
+            override fun onVoteAdded(newVote: Vote) {
+                mView.showAddedVote(newVote)
             }
         })
     }
