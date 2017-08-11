@@ -17,8 +17,6 @@ import com.example.android.voteme.R
 import com.example.android.voteme.model.Vote
 import com.example.android.voteme.utils.Constants
 import com.example.android.voteme.vote.VoteActivity
-import com.example.android.voteme.votes.dummy.DummyContent
-import com.example.android.voteme.votes.dummy.DummyContent.DummyItem
 import kotlinx.android.synthetic.main.fragment_my_votes_list.*
 /**
  * A fragment representing a list of Items.
@@ -40,9 +38,15 @@ class MyVotesFragment : Fragment() ,MyVotesContract.View{
     private var mPresenter: MyVotesContract.Presenter? = null
     private var mAdapter : MyVotesRecyclerViewAdapter? = null
     override fun setPresenter(presenter: MyVotesContract.Presenter) {
-        mPresenter = presenter;
+        mPresenter = presenter
 
     }
+
+    override fun hideLoadingPanel() {
+        if (loadingPanel.visibility == View.VISIBLE)
+        loadingPanel.visibility = View.GONE
+    }
+
 
     override fun showVotes(votes: ArrayList<Vote>) {
         Log.d("VIEW","showVotes")
@@ -100,6 +104,18 @@ class MyVotesFragment : Fragment() ,MyVotesContract.View{
         super.onViewCreated(view, savedInstanceState)
         list.adapter  = mAdapter
         list.layoutManager = LinearLayoutManager(context)
+        list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0) {
+                    // Scroll Down
+                    mListener!!.hideFab()
+                } else if (dy < 0) {
+                    // Scroll Up
+                    mListener!!.showFab()
+                }
+            }
+        })
     }
 
 
@@ -128,7 +144,9 @@ class MyVotesFragment : Fragment() ,MyVotesContract.View{
      * See the Android Training lesson [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html) for more information.
      */
     interface OnListFragmentInteractionListener {
+        fun showFab()
 
+        fun hideFab()
     }
 
     interface OnVoteClickListener{

@@ -15,6 +15,8 @@ interface MyVotesContract {
         fun showError(msg:String?)
 
         fun showAddedVote(vote: Vote)
+
+        fun hideLoadingPanel()
     }
 
     interface Presenter : BasePresenter<View> {

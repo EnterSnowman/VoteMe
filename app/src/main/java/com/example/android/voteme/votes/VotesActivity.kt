@@ -29,6 +29,7 @@ import com.example.android.voteme.data.UserRepository
 import com.example.android.voteme.utils.Constants
 import com.example.android.voteme.vote.VoteActivity
 import com.example.android.voteme.votes.dummy.DummyContent
+import kotlinx.android.synthetic.main.activity_votes.*
 
 class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInteractionListener,MyVotesFragment.OnListFragmentInteractionListener {
 
@@ -82,7 +83,15 @@ class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInterac
     }
 
 
+    override fun showFab() {
+        if(!fab.isShown)
+            fab.show()
+    }
 
+    override fun hideFab() {
+        if(fab.isShown)
+            fab.hide()
+    }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_votes, menu)

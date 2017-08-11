@@ -50,11 +50,13 @@ class AllVotesPresenter(override var mView: AllVotesContract.View) : AllVotesCon
         mVotesRepository.addChildEventListenerCreated(object : DataSource.ListRefreshCallback {
             override fun onVoteAdded(newVote: Vote) {
                 mView.showAddedVote(newVote)
+                mView.hideLoadingPanel()
             }
         })
         mVotesRepository.addChildEventListenerJoined(object : DataSource.ListRefreshCallback {
             override fun onVoteAdded(newVote: Vote) {
                 mView.showAddedVote(newVote)
+                mView.hideLoadingPanel()
             }
         })
     }
