@@ -33,4 +33,7 @@
     <string name="input_link">Input vote link</string>
     <string name="copy_link">Copy link</string>
     <string name="id">ID</string>
+    <string name="set_up_a_vote">Set up a vote</string>
+    <string name="vote_again">Users can vote again</string>
+    <string name="open_results">Open results, even user didn\'t vote</string>
 </resources>

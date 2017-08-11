@@ -49,7 +49,7 @@ class VoteActivity : AppCompatActivity(),VoteFragment.OnFragmentInteractionListe
     }
 
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    /*override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId){
             android.R.id.home->{
                 onBackPressed()
@@ -69,7 +69,7 @@ class VoteActivity : AppCompatActivity(),VoteFragment.OnFragmentInteractionListe
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_vote,menu)
         return true
-    }
+    }*/
 
 
 

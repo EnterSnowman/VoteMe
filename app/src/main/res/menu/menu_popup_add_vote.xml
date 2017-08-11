@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/isRevotable"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/vote_again"/>
+    <item android:id="@+id/isOpen"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/open_results"/>
+</menu>

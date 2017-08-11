@@ -29,22 +29,5 @@ class AddVoteActivity : AppCompatActivity(),AddVoteFragment.OnFragmentInteractio
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_add_vote, menu)
-        return true
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId){
-            android.R.id.home -> { onBackPressed()
-            return true
-            }
-            R.id.add_vote ->{
-                mView?.addVote()
-                return true
-            }
-            else ->  return super.onOptionsItemSelected(item)
-        }
-    }
 }

@@ -28,6 +28,7 @@ class AddVotePresenter(override var mView: AddVoteContract.View) : AddVoteContra
                 mVotesRepository.addVote(title,variants,object : DataSource.VoteAddedCallback{
                     override fun onComplete() {
                         mView.hideLoading()
+                        mView.finish()
                     }
 
                     override fun onFailure(exception: Exception?) {

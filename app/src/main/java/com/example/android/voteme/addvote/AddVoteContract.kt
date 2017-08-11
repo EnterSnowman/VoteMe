@@ -21,6 +21,8 @@ interface AddVoteContract {
         fun isVariantExists(variant: String) : Boolean
 
         fun showError(type : Int)
+
+        fun finish()
     }
 
     interface Presenter : BasePresenter<View>{

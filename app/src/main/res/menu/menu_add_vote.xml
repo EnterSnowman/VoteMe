@@ -7,4 +7,9 @@
         android:title="@string/add_vote"
         android:icon="@mipmap/ic_check_circle_outline"
         app:showAsAction="always" />
+    <item android:id="@+id/tune_vote"
+        android:title="@string/set_up_a_vote"
+        android:icon="@mipmap/ic_tune"
+        android:orderInCategory="99"
+        app:showAsAction="always" />
 </menu>

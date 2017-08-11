@@ -7,15 +7,18 @@ import android.os.Bundle
 import android.provider.SyncStateContract
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.PopupMenu
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import android.widget.Toast
 
 import com.example.android.voteme.R
 import com.example.android.voteme.utils.Constants
 import kotlinx.android.synthetic.main.fragment_add_vote.*
+import android.support.v4.view.MenuItemCompat
+
+
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
@@ -31,6 +34,7 @@ class AddVoteFragment : Fragment(), AddVoteContract.View {
     private var mListener: OnFragmentInteractionListener? = null
     private var mAdapter : VariantsAdapter? = null
     private var mProgressDialog : ProgressDialog? = null
+    private var mPopupMenu: PopupMenu? = null
 
     override fun showError(type: Int) {
         when (type){
@@ -62,6 +66,10 @@ class AddVoteFragment : Fragment(), AddVoteContract.View {
         mProgressDialog?.hide()
     }
 
+    override fun finish() {
+        activity.finish()
+    }
+
 
 
     override fun showAddedVariant(variant: String) {
@@ -87,10 +95,12 @@ class AddVoteFragment : Fragment(), AddVoteContract.View {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+        setHasOptionsMenu(true)
         return inflater!!.inflate(R.layout.fragment_add_vote, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        Log.d("AddVoteFrag","onViewCreated")
         super.onViewCreated(view, savedInstanceState)
         mAdapter = VariantsAdapter(ArrayList<String>(),object : OnDeleteListener{
             override fun deleteVariant(position: Int) {
@@ -104,6 +114,83 @@ class AddVoteFragment : Fragment(), AddVoteContract.View {
             mPresenter?.addVarinat(variantEdit.text.toString())
         }
 
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        Log.d("AddVoteFrag","onActivityCreated")
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu,inflater: MenuInflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        inflater.inflate(R.menu.menu_add_vote, menu)
+        Log.d("AddVoteFrag","onCreateOptionsMenu")
+
+    }
+
+
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        Log.d("AddVoteFrag","onOptionsItemSelected")
+        when(item?.itemId){
+            android.R.id.home -> {
+                activity.onBackPressed()
+                return true
+            }
+            R.id.add_vote ->{
+                addVote()
+                return true
+            }
+            R.id.tune_vote->{
+                if (mPopupMenu==null)
+                    createPopupMenu(activity.findViewById(R.id.tune_vote))
+                showPopupMenu()
+                return true
+            }
+            else ->  return super.onOptionsItemSelected(item)
+        }
+    }
+
+
+
+    fun createPopupMenu(v:View){
+        mPopupMenu = PopupMenu(activity, v)
+        mPopupMenu!!.inflate(R.menu.menu_popup_add_vote)
+        mPopupMenu!!.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener {
+            override fun onMenuItemClick(item: MenuItem?): Boolean {
+                when(item?.itemId){
+                    R.id.isOpen->{
+                        item.isChecked = !item.isChecked
+                        mPopupMenu!!.show()
+
+                    }
+                    R.id.isRevotable->{
+                        item.isChecked = !item.isChecked
+                        mPopupMenu!!.show()
+
+                    }
+
+                }
+                item!!.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW)
+                item!!.setActionView(View(context))
+                MenuItemCompat.setOnActionExpandListener(item, object : MenuItemCompat.OnActionExpandListener {
+                    override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+                        return false
+                    }
+
+                    override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+                        return false
+                    }
+                })
+                return false
+            }
+
+        })
+    }
+
+    fun showPopupMenu(){
+
+        mPopupMenu!!.show()
     }
 
     // TODO: Rename method, update argument and hook method into UI event

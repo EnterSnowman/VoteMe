@@ -6,9 +6,6 @@ import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 
 import com.example.android.voteme.R
 import com.example.android.voteme.model.Vote
@@ -17,9 +14,14 @@ import com.github.mikephil.charting.data.PieEntry
 import kotlinx.android.synthetic.main.fragment_vote.*
 import android.R.attr.entries
 import android.app.ProgressDialog
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.util.Log
+import android.view.*
 import android.widget.RadioButton
 import android.widget.RelativeLayout
+import android.widget.Toast
+import com.example.android.voteme.utils.Constants
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
@@ -57,6 +59,7 @@ class VoteFragment : Fragment(),VoteContract.View {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         Log.d("VoteFragment","onCreateView")
+        setHasOptionsMenu(true)
         return inflater!!.inflate(R.layout.fragment_vote, container, false)
     }
 
@@ -125,6 +128,28 @@ class VoteFragment : Fragment(),VoteContract.View {
     }
     override fun setPresenter(presenter: VoteContract.Presenter) {
         mPresenter = presenter
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId){
+            android.R.id.home->{
+                activity.onBackPressed()
+                return true
+            }
+            R.id.copy_link->{
+                var clipboard = activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                var clip = ClipData.newPlainText(getString(R.string.id),activity.intent.getStringExtra(Constants.VOTE_ID))
+                clipboard.setPrimaryClip(clip)
+                Toast.makeText(activity,"Link copied ot clipboard", Toast.LENGTH_SHORT).show()
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?,  inflater:MenuInflater) {
+        inflater.inflate(R.menu.menu_vote,menu)
+
     }
 
 
