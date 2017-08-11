@@ -13,6 +13,8 @@ class Constants {
         val VOTE_ID = "vote_id"
         val VOTED = "voted"
         val JOINED = "joined"
+        val IS_OPEN = "isOpen"
+        val IS_REVOTABLE = "isRevotable"
         //error types
         val NON_UNIQUE_VARIANT  = 1
         val EMPTY_TITLE = 2

@@ -29,6 +29,7 @@ class VotePresenter(override var mView: VoteContract.View) : VoteContract.Presen
             override fun onLoad(vote: Vote) {
                 mVotesRepository.isVoted(id, object : DataSource.IsVotedCallback {
                     override fun onResult(isVoted: Boolean) {
+                        Log.d("FIREBASE","Voted? {$id} {$isVoted}")
                         mView.showVote(vote,isVoted)
                         mVotesRepository.addChildListener(id,object : DataSource.RefreshVoteCallback{
                             override fun onVoteUpdated(varinat: String, newCount: Int) {
@@ -48,7 +49,8 @@ class VotePresenter(override var mView: VoteContract.View) : VoteContract.Presen
         mVotesRepository.makeElect(voteId,variant,object : DataSource.ElectCallback{
             override fun onElected() {
                 mView.hideProgressBar()
-                mView.hideVotingPanel()
+                mView.hideVotingPanel(true)
+                mView.showPieChart(true)
                 Log.d("FIREBASE","VARIANT ELECTED")
             }
 

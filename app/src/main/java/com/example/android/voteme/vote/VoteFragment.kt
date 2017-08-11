@@ -93,15 +93,17 @@ class VoteFragment : Fragment(),VoteContract.View {
         mVote = vote
         mListener?.showVoteTitle(mVote!!.title)
         mPieChartData = ArrayList<PieEntry>()
-        for (v in vote.variants.entries){
-            mPieChartData!!.add(PieEntry(v.value.toFloat(),v.key))
+        for (v in vote.variants.entries) {
+            mPieChartData!!.add(PieEntry(v.value.toFloat(), v.key))
             val r = RadioButton(context)
             r.setText(v.key)
             vote_variants.addView(r)
         }
-        if (isVoted)
-            hideVotingPanel()
-
+        Log.d("FIREBASE isVoted", isVoted.toString().plus(" "+vote.id))
+        hideVotingPanel(isVoted)
+        showPieChart(isVoted)
+        Log.d("FIREBASE isOpen",mVote!!.isOpen.toString())
+        Log.d("FIREBASE isRevotable",mVote!!.isRevotable.toString())
         val set = PieDataSet(mPieChartData, "Election Results")
         set.colors = ColorTemplate.MATERIAL_COLORS.asList()
         val data = PieData(set)
@@ -111,9 +113,17 @@ class VoteFragment : Fragment(),VoteContract.View {
         mProgressDialog?.hide()
     }
 
-    override fun hideVotingPanel() {
+    override fun hideVotingPanel(isVoted:Boolean) {
+        if (!mVote!!.isRevotable&&isVoted){
         vote_variants.visibility = View.GONE
         vote_button.visibility  =View.GONE
+        }
+    }
+
+    override fun showPieChart(isVoted: Boolean) {
+        if(mVote!!.isOpen||isVoted)
+            vote_stats_chart.visibility = View.VISIBLE
+
     }
 
     override fun updateVote(variant: String, newCount: Int) {

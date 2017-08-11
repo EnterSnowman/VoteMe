@@ -42,15 +42,18 @@ class VotesRepository private constructor(){
         }
     }
 
-    fun addVote(title:String,variants: ArrayList<String>,callback:DataSource.VoteAddedCallback){
+    fun addVote(title:String,variants: ArrayList<String>,isOpen:Boolean,isRevotable:Boolean,callback:DataSource.VoteAddedCallback){
         var id =  mDatabase.push().key
         var vote = HashMap<String,Any>()
         vote.put(Constants.TITLE,title)
+
         var vars = HashMap<String,Int>()
         var newVariants = Utils.addKeySuffix(variants)
         for (v in newVariants)
             vars.put(v,0)
         vote.put(Constants.VARIANTS,vars)
+        vote.put(Constants.IS_OPEN,isOpen)
+        vote.put(Constants.IS_REVOTABLE,isRevotable)
         mDatabase.child(id).setValue(vote).addOnCompleteListener{task -> if (task.isSuccessful) {
             callback.onComplete()
             mUserDatabase.child(id).setValue(Constants.CREATED)
@@ -130,6 +133,8 @@ class VotesRepository private constructor(){
                 var vote = p0?.getValue(Vote::class.java)!!
                 vote.variants = Utils.removeKeySuffix(vote.variants) as HashMap<String, Int>
                 vote.id = p0.key
+                vote.isOpen = p0.child(Constants.IS_OPEN)?.getValue(Boolean::class.java)!!
+                vote.isRevotable = p0.child(Constants.IS_REVOTABLE)?.getValue(Boolean::class.java)!!
                 callback.onLoad(vote)
             }
 

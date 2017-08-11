@@ -30,6 +30,6 @@ interface AddVoteContract {
 
         fun deleteVariant(positon : Int)
 
-        fun addVote(title: String,variants : ArrayList<String>)
+        fun addVote(title: String,variants : ArrayList<String>,isOpen:Boolean,isRevotable:Boolean)
     }
 }

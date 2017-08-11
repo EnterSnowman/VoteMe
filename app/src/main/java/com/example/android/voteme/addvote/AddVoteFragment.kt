@@ -35,7 +35,8 @@ class AddVoteFragment : Fragment(), AddVoteContract.View {
     private var mAdapter : VariantsAdapter? = null
     private var mProgressDialog : ProgressDialog? = null
     private var mPopupMenu: PopupMenu? = null
-
+    private var mOpen:Boolean = true
+    private var mRevotable:Boolean = true
     override fun showError(type: Int) {
         when (type){
             Constants.NON_UNIQUE_VARIANT -> variantEdit.error = "Please, input unique option"
@@ -55,7 +56,7 @@ class AddVoteFragment : Fragment(), AddVoteContract.View {
         mAdapter?.notifyDataSetChanged()
     }
     override fun addVote() {
-        mPresenter?.addVote(voteTitleEdit.text.toString(), mAdapter!!.mVariants)
+        mPresenter?.addVote(voteTitleEdit.text.toString(), mAdapter!!.mVariants,mOpen,mRevotable)
     }
 
     override fun showLoading() {
@@ -161,15 +162,12 @@ class AddVoteFragment : Fragment(), AddVoteContract.View {
                 when(item?.itemId){
                     R.id.isOpen->{
                         item.isChecked = !item.isChecked
-                        mPopupMenu!!.show()
-
+                        mOpen = item.isChecked
                     }
                     R.id.isRevotable->{
                         item.isChecked = !item.isChecked
-                        mPopupMenu!!.show()
-
+                        mRevotable =  item.isChecked;
                     }
-
                 }
                 item!!.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW)
                 item!!.setActionView(View(context))
@@ -189,7 +187,6 @@ class AddVoteFragment : Fragment(), AddVoteContract.View {
     }
 
     fun showPopupMenu(){
-
         mPopupMenu!!.show()
     }
 
