@@ -36,4 +36,5 @@
     <string name="set_up_a_vote">Set up a vote</string>
     <string name="vote_again">Users can vote again</string>
     <string name="open_results">Open results, even user didn\'t vote</string>
+    <string name="make_choise">Select one of the options to see the results of the voting</string>
 </resources>

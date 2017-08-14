@@ -100,16 +100,16 @@ class VoteFragment : Fragment(),VoteContract.View {
             vote_variants.addView(r)
         }
         Log.d("FIREBASE isVoted", isVoted.toString().plus(" "+vote.id))
-        hideVotingPanel(isVoted)
-        showPieChart(isVoted)
+
         Log.d("FIREBASE isOpen",mVote!!.isOpen.toString())
         Log.d("FIREBASE isRevotable",mVote!!.isRevotable.toString())
         val set = PieDataSet(mPieChartData, "Election Results")
         set.colors = ColorTemplate.MATERIAL_COLORS.asList()
         val data = PieData(set)
         vote_stats_chart.setData(data)
-        vote_stats_chart.invalidate()
         vote_stats_chart.layoutParams = RelativeLayout.LayoutParams(vote_stats_chart.width,vote_stats_chart.width)
+        hideVotingPanel(isVoted)
+        showPieChart(isVoted)
         mProgressDialog?.hide()
     }
 
@@ -121,8 +121,14 @@ class VoteFragment : Fragment(),VoteContract.View {
     }
 
     override fun showPieChart(isVoted: Boolean) {
-        if(mVote!!.isOpen||isVoted)
-            vote_stats_chart.visibility = View.VISIBLE
+        if(mVote!!.isOpen||isVoted){
+            vote_stats_chart.centerText = ""
+            vote_stats_chart.invalidate()
+        }
+        else{
+            vote_stats_chart.centerText = getString(R.string.make_choise)
+            vote_stats_chart.setCenterTextSize(20F)
+        }
 
     }
 

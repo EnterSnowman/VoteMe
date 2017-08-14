@@ -9,7 +9,6 @@
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/vote_stats_chart"
         android:layout_width="match_parent"
-        android:visibility="invisible"
         android:layout_height="match_parent">
     </com.github.mikephil.charting.charts.PieChart>
     <Button
