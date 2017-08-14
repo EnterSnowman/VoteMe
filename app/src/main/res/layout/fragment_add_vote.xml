@@ -22,22 +22,32 @@
         android:id="@+id/listOfVariants">
 
     </android.support.v7.widget.RecyclerView>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
+        android:layout_margin="4dp"
+        android:background="@drawable/edit_text_drawable"
+>
         <EditText
             android:layout_width="match_parent"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:id="@+id/variantEdit"
-            android:inputType="" />
-        <Button
-            android:layout_width="match_parent"
+            android:backgroundTint="@color/transparent"
+            android:inputType=""
+            android:layout_marginLeft="4dp"
+            android:layout_toLeftOf="@+id/addVariantButton"
+            android:layout_toStartOf="@+id/addVariantButton" />
+        <ImageButton
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/addVariantButton"
-            android:layout_weight="1"
-            android:text="@string/add"/>
-    </LinearLayout>
+            android:src="@mipmap/ic_plus"
+            android:layout_marginRight="4dp"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/button_selector"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
 </RelativeLayout>
