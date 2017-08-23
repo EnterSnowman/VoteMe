@@ -95,7 +95,7 @@ class VoteFragment : Fragment(),VoteContract.View {
         mPieChartData = ArrayList<PieEntry>()
         for (v in vote.variants.entries) {
             mPieChartData!!.add(PieEntry(v.value.toFloat(), v.key))
-            val r = RadioButton(context)
+            val r  = activity.layoutInflater.inflate(R.layout.custom_radiobutton,null) as RadioButton
             r.setText(v.key)
             vote_variants.addView(r)
         }
