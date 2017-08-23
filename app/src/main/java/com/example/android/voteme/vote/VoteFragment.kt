@@ -22,6 +22,8 @@ import android.widget.RadioButton
 import android.widget.RelativeLayout
 import android.widget.Toast
 import com.example.android.voteme.utils.Constants
+import com.example.android.voteme.utils.MyPieChartValueFormatter
+import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
@@ -99,15 +101,25 @@ class VoteFragment : Fragment(),VoteContract.View {
             r.setText(v.key)
             vote_variants.addView(r)
         }
-        Log.d("FIREBASE isVoted", isVoted.toString().plus(" "+vote.id))
-
+        /*Log.d("FIREBASE isVoted", isVoted.toString().plus(" "+vote.id))
         Log.d("FIREBASE isOpen",mVote!!.isOpen.toString())
-        Log.d("FIREBASE isRevotable",mVote!!.isRevotable.toString())
+        Log.d("FIREBASE isRevotable",mVote!!.isRevotable.toString())*/
         val set = PieDataSet(mPieChartData, "Election Results")
+        set.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
         set.colors = ColorTemplate.MATERIAL_COLORS.asList()
+
         val data = PieData(set)
+        data.setValueTextSize(16f)
+        data.setValueFormatter(MyPieChartValueFormatter())
         vote_stats_chart.setData(data)
+        vote_stats_chart.setEntryLabelColor(R.color.colorPrimaryDark)
+        vote_stats_chart.setEntryLabelTextSize(16f)
         vote_stats_chart.layoutParams = RelativeLayout.LayoutParams(vote_stats_chart.width,vote_stats_chart.width)
+        var d = Description()
+        d.text = ""
+        vote_stats_chart.description = d
+        vote_stats_chart.holeRadius = 100F
+        vote_stats_chart.transparentCircleRadius= 100F
         hideVotingPanel(isVoted)
         showPieChart(isVoted)
         mProgressDialog?.hide()
@@ -122,6 +134,9 @@ class VoteFragment : Fragment(),VoteContract.View {
 
     override fun showPieChart(isVoted: Boolean) {
         if(mVote!!.isOpen||isVoted){
+            vote_stats_chart.holeRadius = 25F
+            vote_stats_chart.transparentCircleRadius= 30F
+            vote_stats_chart.setUsePercentValues(true)
             vote_stats_chart.centerText = ""
             vote_stats_chart.invalidate()
         }
