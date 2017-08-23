@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import com.example.android.voteme.R
 import com.example.android.voteme.votes.AllVotesFragment
@@ -31,7 +32,7 @@ class VariantsAdapter(var mVariants: ArrayList<String>,  val mListener: AddVoteF
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView){
         val mVarinat : TextView
-        val mDeleteButton : Button
+        val mDeleteButton : ImageButton
         init {
             mVarinat = mView.findViewById(R.id.variant)
             mDeleteButton = mView.findViewById(R.id.deleteVariantButton)
