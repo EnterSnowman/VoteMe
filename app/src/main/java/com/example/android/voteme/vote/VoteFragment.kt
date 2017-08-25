@@ -24,6 +24,7 @@ import android.widget.Toast
 import com.example.android.voteme.utils.Constants
 import com.example.android.voteme.utils.MyPieChartValueFormatter
 import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
@@ -104,7 +105,7 @@ class VoteFragment : Fragment(),VoteContract.View {
         /*Log.d("FIREBASE isVoted", isVoted.toString().plus(" "+vote.id))
         Log.d("FIREBASE isOpen",mVote!!.isOpen.toString())
         Log.d("FIREBASE isRevotable",mVote!!.isRevotable.toString())*/
-        val set = PieDataSet(mPieChartData, "Election Results")
+        val set = PieDataSet(mPieChartData, "")
         set.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
         set.colors = ColorTemplate.MATERIAL_COLORS.asList()
 
@@ -114,6 +115,9 @@ class VoteFragment : Fragment(),VoteContract.View {
         vote_stats_chart.setData(data)
         vote_stats_chart.setEntryLabelColor(R.color.colorPrimaryDark)
         vote_stats_chart.setEntryLabelTextSize(16f)
+        vote_stats_chart.legend.form = Legend.LegendForm.CIRCLE
+        vote_stats_chart.legend.textSize = 16f
+        vote_stats_chart.legend.position = Legend.LegendPosition.BELOW_CHART_CENTER
         vote_stats_chart.layoutParams = RelativeLayout.LayoutParams(vote_stats_chart.width,vote_stats_chart.width)
         var d = Description()
         d.text = ""
