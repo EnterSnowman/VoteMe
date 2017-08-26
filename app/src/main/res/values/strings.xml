@@ -37,4 +37,5 @@
     <string name="vote_again">Users can vote again</string>
     <string name="open_results">Open results, even user didn\'t vote</string>
     <string name="make_choise">Select one of the options to see the results of the voting</string>
+    <string name="select_option">Please, choose a variant</string>
 </resources>

@@ -76,8 +76,13 @@ class VoteFragment : Fragment(),VoteContract.View {
         mPresenter?.loadVote(mVoteId!!)
         mPresenter?.joinToVote(mVoteId!!)
         vote_button.setOnClickListener{
+            if(vote_variants.checkedRadioButtonId!=-1){
             var r  = vote_variants.findViewById<RadioButton>(vote_variants.checkedRadioButtonId)
             mPresenter?.chooseVariant(mVoteId!!,r.text.toString())
+            }
+            else
+                Toast.makeText(context,R.string.select_option,Toast.LENGTH_SHORT).show()
+
         }
         mProgressDialog?.show()
     }
