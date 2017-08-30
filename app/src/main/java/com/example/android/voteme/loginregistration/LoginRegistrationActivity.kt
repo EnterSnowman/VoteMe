@@ -24,7 +24,6 @@ class LoginRegistrationActivity : AppCompatActivity(),LoginRegistrationFragment.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
         var view = LoginRegistrationFragment.newInstance()
         supportFragmentManager.beginTransaction()
                 .add(R.id.login_registration_frame,view)

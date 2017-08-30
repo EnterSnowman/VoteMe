@@ -48,6 +48,7 @@ class VoteFragment : Fragment(),VoteContract.View {
     private var mListener: OnFragmentInteractionListener? = null
     private var mProgressDialog: ProgressDialog? = null
     private var mPieChartData : ArrayList<PieEntry>? = null
+    private var mPieDataSet: PieDataSet? = null
     private var mVote : Vote? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,11 +111,9 @@ class VoteFragment : Fragment(),VoteContract.View {
         /*Log.d("FIREBASE isVoted", isVoted.toString().plus(" "+vote.id))
         Log.d("FIREBASE isOpen",mVote!!.isOpen.toString())
         Log.d("FIREBASE isRevotable",mVote!!.isRevotable.toString())*/
-        val set = PieDataSet(mPieChartData, "")
-        set.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
-        set.colors = ColorTemplate.MATERIAL_COLORS.asList()
-
-        val data = PieData(set)
+        mPieDataSet = PieDataSet(mPieChartData, "")
+        mPieDataSet!!.colors = ColorTemplate.MATERIAL_COLORS.asList()
+        val data = PieData(mPieDataSet)
         data.setValueTextSize(16f)
         data.setValueFormatter(MyPieChartValueFormatter())
         vote_stats_chart.setData(data)
@@ -144,6 +143,7 @@ class VoteFragment : Fragment(),VoteContract.View {
     override fun showPieChart(isVoted: Boolean) {
         if(mVote!!.isOpen||isVoted){
             vote_stats_chart.holeRadius = 25F
+            mPieDataSet!!.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
             vote_stats_chart.transparentCircleRadius= 30F
             vote_stats_chart.setUsePercentValues(true)
             vote_stats_chart.centerText = ""

@@ -19,6 +19,6 @@ class MyPieChartValueFormatter : IValueFormatter {
     }
     override fun getFormattedValue(value: Float, entry: Entry?, dataSetIndex: Int, viewPortHandler: ViewPortHandler?): String {
         Log.d("PieChart",entry?.x.toString()+" "+entry?.y.toString())
-        return mDecimalFormat.format(entry?.y)+" - "+mPercentFormat.format(value)+"%"
+        return mDecimalFormat.format(entry?.y)+" : "+mPercentFormat.format(value)+"%"
     }
 }
