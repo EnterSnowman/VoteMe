@@ -16,6 +16,7 @@ import android.R.attr.entries
 import android.app.ProgressDialog
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.graphics.Color
 import android.util.Log
 import android.view.*
 import android.widget.RadioButton
@@ -23,6 +24,7 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import com.example.android.voteme.utils.Constants
 import com.example.android.voteme.utils.MyPieChartValueFormatter
+import com.github.mikephil.charting.charts.Chart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.Entry
@@ -50,6 +52,7 @@ class VoteFragment : Fragment(),VoteContract.View {
     private var mPieChartData : ArrayList<PieEntry>? = null
     private var mPieDataSet: PieDataSet? = null
     private var mVote : Vote? = null
+    private var mData : PieData?= null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("VoteFragment","onCreate")
@@ -108,28 +111,25 @@ class VoteFragment : Fragment(),VoteContract.View {
             r.setText(v.key)
             vote_variants.addView(r)
         }
-        /*Log.d("FIREBASE isVoted", isVoted.toString().plus(" "+vote.id))
+        Log.d("FIREBASE isVoted", isVoted.toString().plus(" "+vote.id))
         Log.d("FIREBASE isOpen",mVote!!.isOpen.toString())
-        Log.d("FIREBASE isRevotable",mVote!!.isRevotable.toString())*/
+        Log.d("FIREBASE isRevotable",mVote!!.isRevotable.toString())
         mPieDataSet = PieDataSet(mPieChartData, "")
         mPieDataSet!!.colors = ColorTemplate.MATERIAL_COLORS.asList()
-        val data = PieData(mPieDataSet)
-        data.setValueTextSize(16f)
-        data.setValueFormatter(MyPieChartValueFormatter())
-        vote_stats_chart.setData(data)
-        vote_stats_chart.setEntryLabelColor(R.color.colorPrimaryDark)
-        vote_stats_chart.setEntryLabelTextSize(16f)
-        vote_stats_chart.legend.form = Legend.LegendForm.CIRCLE
-        vote_stats_chart.legend.textSize = 16f
-        vote_stats_chart.legend.position = Legend.LegendPosition.BELOW_CHART_CENTER
-        vote_stats_chart.layoutParams = RelativeLayout.LayoutParams(vote_stats_chart.width,vote_stats_chart.width)
+        mData = PieData(mPieDataSet)
+        mData?.setValueTextSize(16f)
+        mData?.setValueFormatter(MyPieChartValueFormatter())
+
         var d = Description()
         d.text = ""
+        val paint = vote_stats_chart.getPaint(Chart.PAINT_INFO)
+        paint.textSize = 40F
+        vote_stats_chart.setNoDataText(getString(R.string.make_choise))
+        vote_stats_chart.setNoDataTextColor(Color.BLACK)
         vote_stats_chart.description = d
-        vote_stats_chart.holeRadius = 100F
-        vote_stats_chart.transparentCircleRadius= 100F
-        hideVotingPanel(isVoted)
+        vote_stats_chart.invalidate()
         showPieChart(isVoted)
+        hideVotingPanel(isVoted)
         mProgressDialog?.hide()
     }
 
@@ -142,6 +142,13 @@ class VoteFragment : Fragment(),VoteContract.View {
 
     override fun showPieChart(isVoted: Boolean) {
         if(mVote!!.isOpen||isVoted){
+            vote_stats_chart.layoutParams = RelativeLayout.LayoutParams(vote_stats_chart.width,vote_stats_chart.width)
+            vote_stats_chart.setData(mData)
+            vote_stats_chart.setEntryLabelColor(R.color.colorPrimaryDark)
+            vote_stats_chart.setEntryLabelTextSize(16f)
+            vote_stats_chart.legend.form = Legend.LegendForm.CIRCLE
+            vote_stats_chart.legend.textSize = 16f
+            vote_stats_chart.legend.position = Legend.LegendPosition.BELOW_CHART_CENTER
             vote_stats_chart.holeRadius = 25F
             mPieDataSet!!.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
             vote_stats_chart.transparentCircleRadius= 30F
@@ -149,11 +156,6 @@ class VoteFragment : Fragment(),VoteContract.View {
             vote_stats_chart.centerText = ""
             vote_stats_chart.invalidate()
         }
-        else{
-            vote_stats_chart.centerText = getString(R.string.make_choise)
-            vote_stats_chart.setCenterTextSize(20F)
-        }
-
     }
 
     override fun updateVote(variant: String, newCount: Int) {
