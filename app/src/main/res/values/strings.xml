@@ -38,4 +38,6 @@
     <string name="open_results">Open results, even user didn\'t vote</string>
     <string name="make_choise">Select one of the options</string>
     <string name="select_option">Please, choose a variant</string>
+    <string name="input_valid_email">Input valid email</string>
+    <string name="input_valid_password">Password length must be 6 or bigger</string>
 </resources>

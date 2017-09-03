@@ -16,5 +16,9 @@ class Utils {
         public fun removeKeySuffix(list:HashMap<String,Int>):Map<String,Int>{
             return list.mapKeys { it.key.substring(0,it.key.length-4) }
         }
+
+        public fun isEmailValid(email:String):Boolean = if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) false else true
+
+        public fun isPasswordValid(password:String):Boolean = if (password.isEmpty() || password.length<6) false else true
     }
 }

@@ -13,6 +13,7 @@ import android.widget.Toast
 
 import com.example.android.voteme.R
 import com.example.android.voteme.base.BaseView
+import com.example.android.voteme.utils.Utils
 import com.example.android.voteme.votes.VotesActivity
 import kotlinx.android.synthetic.main.fragment_login_registration.*
 /**
@@ -66,14 +67,31 @@ class LoginRegistrationFragment : Fragment(),LoginRegistrationContract.View {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         login.setOnClickListener{
+            if (isValidInputData(emailEdit.text.toString(),passwordEdit.text.toString())){
             mPresenter?.signIn(emailEdit.text.toString(),passwordEdit.text.toString())
             showLoading(getString(R.string.signIn))
+            }
             //Toast.makeText(context,"Login click",Toast.LENGTH_SHORT).show()
         }
         registration.setOnClickListener{
-            mPresenter?.signUp(emailEdit.text.toString(),passwordEdit.text.toString())
-            showLoading(getString(R.string.signUp))
+            if (isValidInputData(emailEdit.text.toString(),passwordEdit.text.toString())) {
+                mPresenter?.signUp(emailEdit.text.toString(), passwordEdit.text.toString())
+                showLoading(getString(R.string.signUp))
+            }
         }
+    }
+
+    fun isValidInputData(email:String,password:String):Boolean{
+        var res = true;
+        if (!Utils.isEmailValid(email)){
+            emailEdit.error = getString(R.string.input_valid_email)
+            res = false
+        }
+        if (!Utils.isPasswordValid(password)){
+            passwordEdit.error = getString(R.string.input_valid_password)
+            res = false
+        }
+        return res
     }
 
     // TODO: Rename method, update argument and hook method into UI event
