@@ -8,8 +8,8 @@
     <string name="password">Password</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="section_format">Hello World from section: %1$d</string>
-    <string name="login">Login</string>
-    <string name="registration">Registration</string>
+    <string name="login">Sign In</string>
+    <string name="registration">Sign Up</string>
     <string name="signIn">Sign In...</string>
     <string name="signUp">Sign Up...</string>
     <string name="title_activity_votes">VotesActivity</string>
