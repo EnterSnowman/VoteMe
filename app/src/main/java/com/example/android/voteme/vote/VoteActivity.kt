@@ -7,15 +7,21 @@ import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.SyncStateContract
+import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.Window
+import android.widget.TextView
 import android.widget.Toast
 import com.example.android.voteme.R
 import com.example.android.voteme.data.UserRepository
 import com.example.android.voteme.loginregistration.LoginRegistrationFragment
 import com.example.android.voteme.loginregistration.LoginRegistrationPresenter
 import com.example.android.voteme.utils.Constants
+import kotlinx.android.synthetic.main.activity_vote.*
+import java.lang.reflect.AccessibleObject.setAccessible
+
+
 
 
 class VoteActivity : AppCompatActivity(),VoteFragment.OnFragmentInteractionListener {
@@ -25,6 +31,8 @@ class VoteActivity : AppCompatActivity(),VoteFragment.OnFragmentInteractionListe
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_vote)
+        setSupportActionBar(my_toolbar)
+        enableMarquee()
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         if (intent.getStringExtra(Constants.TITLE)!=null)
         supportActionBar?.title = intent.getStringExtra(Constants.TITLE)
@@ -46,6 +54,24 @@ class VoteActivity : AppCompatActivity(),VoteFragment.OnFragmentInteractionListe
 
     override fun showVoteTitle(title: String) {
         supportActionBar?.title = title
+    }
+
+    fun enableMarquee(){
+        try {
+            val f = my_toolbar.javaClass.getDeclaredField("mTitleTextView")
+            f.setAccessible(true)
+            val toolbarTextView = f.get(my_toolbar) as TextView
+            toolbarTextView.ellipsize = TextUtils.TruncateAt.MARQUEE
+            toolbarTextView.isFocusable = true
+            toolbarTextView.isFocusableInTouchMode = true
+            toolbarTextView.requestFocus()
+            toolbarTextView.setSingleLine(true)
+            toolbarTextView.isSelected = true
+            toolbarTextView.marqueeRepeatLimit = -1
+        } catch (e: NoSuchFieldException) {
+        } catch (e: IllegalAccessException) {
+        }
+
     }
 
 
