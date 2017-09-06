@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
+        android:fontFamily="@font/roboto_bolditalic"
         android:gravity="center_horizontal"
         android:textAppearance="?attr/textAppearanceListItem"
         android:textSize="20sp" />

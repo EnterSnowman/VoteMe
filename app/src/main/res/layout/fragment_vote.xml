@@ -20,6 +20,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_selector"
         android:text="@string/choose"
+        android:fontFamily="@font/roboto_medium"
         android:textColor="@color/white" />
     <RadioGroup
         android:layout_width="match_parent"

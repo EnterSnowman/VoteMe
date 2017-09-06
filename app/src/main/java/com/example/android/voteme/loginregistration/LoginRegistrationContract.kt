@@ -15,6 +15,8 @@ interface LoginRegistrationContract {
         fun hideLoading()
 
         fun goToVotesActivity()
+
+        fun showEmailVerificationMessage()
     }
     interface Presenter : BasePresenter<View>{
         fun signIn(email: String,password : String)

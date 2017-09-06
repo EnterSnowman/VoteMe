@@ -40,4 +40,6 @@
     <string name="select_option">Please, choose a variant</string>
     <string name="input_valid_email">Input valid email</string>
     <string name="input_valid_password">Password length must be 6 or bigger</string>
+    <string name="sign_up_completed">Sign Up completed!</string>
+    <string name="email_verif_msg">To verify your account, check your e-mail for verification letter.</string>
 </resources>

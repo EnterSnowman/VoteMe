@@ -30,6 +30,12 @@ class UserRepository private constructor(){
     fun signUp(email: String, password: String, callback: DataSource.SignUpCallback){
         mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener { task -> if (task.isSuccessful) callback.onSignUpCompleted() else callback.onSignUpFailure(task.exception) }
     }
+
+    fun sendVerificationEmail(callback: DataSource.EmailVerificationCallback){
+        if (mAuth.currentUser!=null)
+            mAuth.currentUser!!.sendEmailVerification()
+                    .addOnCompleteListener { task -> if(task.isSuccessful)  callback.onSended() else callback.onSendedFailure(task.exception)  }
+    }
     }
 
 

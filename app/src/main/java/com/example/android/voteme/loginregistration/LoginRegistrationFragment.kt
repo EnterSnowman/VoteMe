@@ -1,5 +1,6 @@
 package com.example.android.voteme.loginregistration
 
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -47,6 +48,15 @@ class LoginRegistrationFragment : Fragment(),LoginRegistrationContract.View {
     override fun hideLoading() {
         mProgressDialog?.hide()
     }
+
+    override fun showEmailVerificationMessage() {
+        var alertDialogBuilder =  AlertDialog.Builder(context)
+                .setTitle(R.string.sign_up_completed)
+                .setMessage(R.string.email_verif_msg)
+                .setPositiveButton(android.R.string.ok){dialogInterface, i ->  }
+            alertDialogBuilder.create().show()
+    }
+
 
     override fun makeToast(msg: String) {
         Toast.makeText(context,msg,Toast.LENGTH_SHORT).show()

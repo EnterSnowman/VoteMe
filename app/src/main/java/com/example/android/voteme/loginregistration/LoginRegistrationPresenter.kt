@@ -34,9 +34,18 @@ class LoginRegistrationPresenter(override var mView: LoginRegistrationContract.V
     override fun signUp(email: String, password: String) {
         mUserRepository?.signUp(email,password,object : DataSource.SignUpCallback{
             override fun onSignUpCompleted() {
-                mView.makeToast("New user registered")
-                mView.hideLoading()
-                mView.goToVotesActivity()
+                mUserRepository?.sendVerificationEmail(object : DataSource.EmailVerificationCallback{
+                    override fun onSended() {
+                        mView.makeToast("New user registered")
+                        mView.hideLoading()
+                        mView.showEmailVerificationMessage()
+                        //mView.goToVotesActivity()
+                    }
+                    override fun onSendedFailure(exception: Exception?) {
+
+                    }
+                })
+
             }
 
             override fun onSignUpFailure(exception: Exception?) {

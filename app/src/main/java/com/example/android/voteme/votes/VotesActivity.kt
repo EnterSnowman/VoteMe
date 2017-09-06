@@ -26,6 +26,7 @@ import android.widget.TextView
 import com.example.android.voteme.R
 import com.example.android.voteme.addvote.AddVoteActivity
 import com.example.android.voteme.data.UserRepository
+import com.example.android.voteme.loginregistration.LoginRegistrationActivity
 import com.example.android.voteme.utils.Constants
 import com.example.android.voteme.vote.VoteActivity
 import com.example.android.voteme.votes.dummy.DummyContent
@@ -113,6 +114,7 @@ class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInterac
                 {dialogInterface, i ->
                     UserRepository.getInstance().mAuth.signOut()
                     finish()
+                    startActivity(Intent(this,LoginRegistrationActivity::class.java))
                 }
                         .setNegativeButton(android.R.string.cancel){dialogInterface, i ->}
                 alertDialogBuilder.create().show()
@@ -195,7 +197,6 @@ class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInterac
         }
 
         override fun getCount(): Int {
-            // Show 3 total pages.
             return 2
         }
     }

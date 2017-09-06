@@ -19,6 +19,12 @@ interface DataSource {
         fun onSignUpFailure(exception : Exception?)
     }
 
+    interface EmailVerificationCallback{
+        fun onSended()
+
+        fun onSendedFailure(exception : Exception?)
+    }
+
     interface VoteAddedCallback{
         fun onComplete()
 
