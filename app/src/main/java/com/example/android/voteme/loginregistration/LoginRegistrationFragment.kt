@@ -53,7 +53,7 @@ class LoginRegistrationFragment : Fragment(),LoginRegistrationContract.View {
         var alertDialogBuilder =  AlertDialog.Builder(context)
                 .setTitle(R.string.sign_up_completed)
                 .setMessage(R.string.email_verif_msg)
-                .setPositiveButton(android.R.string.ok){dialogInterface, i ->  }
+                .setPositiveButton(android.R.string.ok){dialogInterface, i -> goToVotesActivity() }
             alertDialogBuilder.create().show()
     }
 

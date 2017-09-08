@@ -36,6 +36,14 @@ class UserRepository private constructor(){
             mAuth.currentUser!!.sendEmailVerification()
                     .addOnCompleteListener { task -> if(task.isSuccessful)  callback.onSended() else callback.onSendedFailure(task.exception)  }
     }
+
+    fun isUserVerified(callback : DataSource.IsVerifiedCallback)  {
+        if (!mAuth.currentUser!!.isEmailVerified)
+        mAuth.currentUser!!.reload().addOnCompleteListener { task ->         callback.onResult( mAuth.currentUser!!.isEmailVerified) }
+        else
+            callback.onResult(true)
+
+    }
     }
 
 

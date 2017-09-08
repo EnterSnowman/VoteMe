@@ -22,9 +22,11 @@ import android.view.ViewGroup
 import android.widget.EditText
 
 import android.widget.TextView
+import android.widget.Toast
 
 import com.example.android.voteme.R
 import com.example.android.voteme.addvote.AddVoteActivity
+import com.example.android.voteme.data.DataSource
 import com.example.android.voteme.data.UserRepository
 import com.example.android.voteme.loginregistration.LoginRegistrationActivity
 import com.example.android.voteme.utils.Constants
@@ -46,7 +48,7 @@ class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInterac
      */
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var mMyVotesPresenter : MyVotesPresenter? = null
-
+    private var mUserRepository = UserRepository.getInstance()
     /**
      * The [ViewPager] that will host the section contents.
      */
@@ -73,8 +75,18 @@ class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInterac
 
         val fab = findViewById<View>(R.id.fab) as FloatingActionButton
         fab.setOnClickListener { view ->
-            startActivity(Intent(this,AddVoteActivity::class.java))
-            //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show()
+            
+            mUserRepository.isUserVerified(object : DataSource.IsVerifiedCallback{
+                override fun onResult(isVerified: Boolean) {
+                    if (isVerified)
+                        startActivity(Intent(view.context,AddVoteActivity::class.java))
+                    else
+                        Toast.makeText(view.context,R.string.vote_creating_condition,Toast.LENGTH_LONG).show()
+                }
+            }
+
+            )
+
         }
         /*mMyVotesPresenter  = MyVotesPresenter(mSectionsPagerAdapter!!.getItem(1) as MyVotesContract.View)
 
