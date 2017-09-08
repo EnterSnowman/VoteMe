@@ -43,4 +43,6 @@
     <string name="sign_up_completed">Sign Up completed!</string>
     <string name="email_verif_msg">To verify your account, check your e-mail for verification letter.</string>
     <string name="vote_creating_condition">Verify your e-mail to create new vote</string>
+    <string name="empty_all_votes">Create new vote or join to existed</string>
+    <string name="empty_my_votes">Create new vote</string>
 </resources>

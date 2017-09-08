@@ -57,6 +57,10 @@ interface DataSource {
         fun onResult(isVoted: Boolean)
     }
 
+    interface NodeExistingCallback{
+        fun onExist(exists: Boolean)
+    }
+
     interface IsVerifiedCallback{
         fun onResult(isVerified: Boolean)
     }

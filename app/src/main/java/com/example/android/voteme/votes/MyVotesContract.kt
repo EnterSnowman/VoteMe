@@ -17,6 +17,10 @@ interface MyVotesContract {
         fun showAddedVote(vote: Vote)
 
         fun hideLoadingPanel()
+
+        fun showEmptyVotesPanel()
+
+        fun hideEmptyVotesPanel()
     }
 
     interface Presenter : BasePresenter<View> {

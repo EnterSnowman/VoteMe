@@ -9,7 +9,7 @@ import com.example.android.voteme.R
 import com.example.android.voteme.model.Vote
 
 import com.example.android.voteme.votes.AllVotesFragment.OnListFragmentInteractionListener
-import com.example.android.voteme.votes.dummy.DummyContent.DummyItem
+
 
 /**
  * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the

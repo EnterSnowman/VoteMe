@@ -46,17 +46,38 @@ class AllVotesPresenter(override var mView: AllVotesContract.View) : AllVotesCon
                 mView.showError(exception?.message)
             }
         })*/
+        mVotesRepository.isEmptyCreatedVotes(object : DataSource.NodeExistingCallback{
+            override fun onExist(exists: Boolean) {
+                if (!exists){
+                    mVotesRepository.isEmptyJoinedVotes(object : DataSource.NodeExistingCallback{
+                        override fun onExist(exists: Boolean) {
+                            if (!exists){
+                                mView.showEmptyVotesPanel()
+                                mView.hideLoadingPanel()
+                            }
+
+                        }
+                    })
+                    /*mView.showEmptyVotesPanel()
+                    mView.hideLoadingPanel()*/
+                }
+            }
+        })
+
+
 
         mVotesRepository.addChildEventListenerCreated(object : DataSource.ListRefreshCallback {
             override fun onVoteAdded(newVote: Vote) {
                 mView.showAddedVote(newVote)
                 mView.hideLoadingPanel()
+                mView.hideEmptyVotesPanel()
             }
         })
         mVotesRepository.addChildEventListenerJoined(object : DataSource.ListRefreshCallback {
             override fun onVoteAdded(newVote: Vote) {
                 mView.showAddedVote(newVote)
                 mView.hideLoadingPanel()
+                mView.hideEmptyVotesPanel()
             }
         })
     }

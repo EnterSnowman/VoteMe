@@ -17,8 +17,7 @@ import com.example.android.voteme.R
 import com.example.android.voteme.model.Vote
 import com.example.android.voteme.utils.Constants
 import com.example.android.voteme.vote.VoteActivity
-import com.example.android.voteme.votes.dummy.DummyContent
-import com.example.android.voteme.votes.dummy.DummyContent.DummyItem
+
 import kotlinx.android.synthetic.main.fragment_all_votes_list.*
 import com.example.android.voteme.R.id.fab
 //import com.sun.javaws.ui.SplashScreen.hide
@@ -38,9 +37,6 @@ import com.example.android.voteme.R.id.fab
  * fragment (e.g. upon screen orientation changes).
  */
 class AllVotesFragment : Fragment(),AllVotesContract.View {
-
-
-
     // TODO: Customize parameters
     private var mColumnCount = 1
     private var mListener: OnListFragmentInteractionListener? = null
@@ -69,6 +65,18 @@ class AllVotesFragment : Fragment(),AllVotesContract.View {
         if (loadingPanel.visibility == View.VISIBLE)
         loadingPanel.visibility = View.GONE
     }
+
+    override fun hideEmptyVotesPanel() {
+        if (empty_votesPanel.visibility == View.VISIBLE)
+            empty_votesPanel.visibility = View.GONE
+    }
+
+    override fun showEmptyVotesPanel() {
+        if (empty_votesPanel.visibility != View.VISIBLE)
+        empty_votesPanel.visibility = View.VISIBLE
+    }
+
+
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

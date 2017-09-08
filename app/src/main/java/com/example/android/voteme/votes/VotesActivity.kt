@@ -31,7 +31,6 @@ import com.example.android.voteme.data.UserRepository
 import com.example.android.voteme.loginregistration.LoginRegistrationActivity
 import com.example.android.voteme.utils.Constants
 import com.example.android.voteme.vote.VoteActivity
-import com.example.android.voteme.votes.dummy.DummyContent
 import kotlinx.android.synthetic.main.activity_votes.*
 
 class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInteractionListener,MyVotesFragment.OnListFragmentInteractionListener {
@@ -75,7 +74,7 @@ class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInterac
 
         val fab = findViewById<View>(R.id.fab) as FloatingActionButton
         fab.setOnClickListener { view ->
-            
+
             mUserRepository.isUserVerified(object : DataSource.IsVerifiedCallback{
                 override fun onResult(isVerified: Boolean) {
                     if (isVerified)

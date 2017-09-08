@@ -31,11 +31,20 @@ class MyVotesPresenter(override var mView: MyVotesContract.View) : MyVotesContra
                     mView.showError(exception?.message)
             }
         })*/
+        mVotesRepository.isEmptyCreatedVotes(object : DataSource.NodeExistingCallback{
+            override fun onExist(exists: Boolean) {
+                if (!exists){
+                    mView.showEmptyVotesPanel()
+                    mView.hideLoadingPanel()
+                }
+            }
+        })
 
         mVotesRepository.addChildEventListenerCreated(object : DataSource.ListRefreshCallback {
             override fun onVoteAdded(newVote: Vote) {
                 mView.showAddedVote(newVote)
                 mView.hideLoadingPanel()
+                mView.hideEmptyVotesPanel()
             }
         })
     }

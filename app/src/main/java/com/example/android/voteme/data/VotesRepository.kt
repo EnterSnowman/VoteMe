@@ -141,6 +141,8 @@ class VotesRepository private constructor(){
         })
     }
 
+
+
     fun isVoted(id:String,callback: DataSource.IsVotedCallback){
         mUserDatabaseVoted.child(id).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot?) {
@@ -194,6 +196,36 @@ class VotesRepository private constructor(){
         })
     }
 
+    fun isEmptyCreatedVotes(callback: DataSource.NodeExistingCallback){
+        mUserDatabase.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError?) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot?) {
+                if (p0 != null) {
+                    Log.d("FIREBASE LOG","isEmptyCreatedVotes ${p0.exists()} ")
+                    callback.onExist(p0.exists())
+                }
+            }
+        })
+    }
+
+    fun isEmptyJoinedVotes(callback: DataSource.NodeExistingCallback){
+        mUserDatabaseJoined.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError?) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot?) {
+                if (p0 != null) {
+                    Log.d("FIREBASE LOG","isEmptyJoinedVotes ${p0.exists()} ")
+                    callback.onExist(p0.exists())
+                }
+            }
+        })
+    }
+
     fun addChildEventListenerCreated(callback: DataSource.ListRefreshCallback){
         Log.d("FIREBASE","addChildEventListenerCreated ok")
         mChildEventListenerCreated!!.add(mUserDatabase.addChildEventListener(object : ChildEventListener {
@@ -214,7 +246,7 @@ class VotesRepository private constructor(){
                 Log.d("Child List Created","onChildAdded")
                 getVoteById(p0!!.key,object : DataSource.SingleVoteLoadCallback {
                     override fun onFailure(exception: Exception) {
-
+                        Log.d("FIREBASE_debug","${exception?.message} \n ${exception?.localizedMessage}")
                     }
 
                     override fun onLoad(vote:Vote) {

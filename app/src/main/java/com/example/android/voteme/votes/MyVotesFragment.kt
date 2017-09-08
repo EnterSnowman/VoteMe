@@ -47,6 +47,16 @@ class MyVotesFragment : Fragment() ,MyVotesContract.View{
         loadingPanel.visibility = View.GONE
     }
 
+    override fun showEmptyVotesPanel() {
+        if (empty_votesPanel.visibility != View.VISIBLE)
+            empty_votesPanel.visibility = View.VISIBLE
+    }
+
+    override fun hideEmptyVotesPanel() {
+        if (empty_votesPanel.visibility == View.VISIBLE)
+            empty_votesPanel.visibility = View.GONE
+    }
+
 
     override fun showVotes(votes: ArrayList<Vote>) {
         Log.d("VIEW","showVotes")
