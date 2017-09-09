@@ -24,5 +24,7 @@ interface LoginRegistrationContract {
         fun signUp(email: String,password : String)
 
         fun autoLogin()
+
+        fun sendRestorePasswordEmail(email:String)
     }
 }

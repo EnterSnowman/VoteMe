@@ -45,4 +45,7 @@
     <string name="vote_creating_condition">Verify your e-mail to create new vote</string>
     <string name="empty_all_votes">Create new vote or join to existed</string>
     <string name="empty_my_votes">Create new vote</string>
+    <string name="dont_remember_password">Don\'t remember password?</string>
+    <string name="restore_password">Restore password</string>
+    <string name="restore_password_msg">Input your account e-mail address, where resoration letter will be sended</string>
 </resources>

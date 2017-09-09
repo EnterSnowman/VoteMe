@@ -2,12 +2,15 @@ package com.example.android.voteme.loginregistration
 
 import com.example.android.voteme.data.DataSource
 import com.example.android.voteme.data.UserRepository
+import com.example.android.voteme.data.VotesRepository
 import java.lang.Exception
 
 /**
  * Created by Valentin on 15.07.2017.
  */
 class LoginRegistrationPresenter(override var mView: LoginRegistrationContract.View) : LoginRegistrationContract.Presenter{
+
+
     var mUserRepository : UserRepository? = null
     constructor(view: LoginRegistrationContract.View, userRepository: UserRepository) : this(view){
         view.setPresenter(this)
@@ -21,6 +24,7 @@ class LoginRegistrationPresenter(override var mView: LoginRegistrationContract.V
                 mView.makeToast("Login completed")
                 mView.hideLoading()
                 mView.goToVotesActivity()
+                VotesRepository.getInstance().reinitDatabaseReferences()
             }
 
             override fun onSignInFailure(exception: Exception?) {
@@ -39,6 +43,7 @@ class LoginRegistrationPresenter(override var mView: LoginRegistrationContract.V
                         mView.makeToast("New user registered")
                         mView.hideLoading()
                         mView.showEmailVerificationMessage()
+                        VotesRepository.getInstance().reinitDatabaseReferences()
                         //mView.goToVotesActivity()
                     }
                     override fun onSendedFailure(exception: Exception?) {
@@ -57,6 +62,10 @@ class LoginRegistrationPresenter(override var mView: LoginRegistrationContract.V
 
     override fun autoLogin() {
         if (mUserRepository?.getCurrentUser()!= null) mView.goToVotesActivity()
+    }
+
+    override fun sendRestorePasswordEmail(email: String) {
+        UserRepository.getInstance().mAuth.sendPasswordResetEmail(email).addOnCompleteListener { task -> if (task.isSuccessful) mView.makeToast("Restoration email was sended") else mView.makeToast("Error") }
     }
 
 

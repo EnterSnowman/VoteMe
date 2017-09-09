@@ -68,5 +68,11 @@
         android:fontFamily="@font/akzidenz_f"
         android:text="@string/registration"
         android:textSize="18sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/forget_password"
+        android:layout_marginTop="16dp"
+        android:text="@string/dont_remember_password"/>
 
 </LinearLayout>

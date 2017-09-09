@@ -42,6 +42,22 @@ class VotesRepository private constructor(){
         }
     }
 
+    fun reinitDatabaseReferences(){
+        mDatabase  = FirebaseDatabase.getInstance().getReference(Constants.VOTES)
+        mUserDatabase  = FirebaseDatabase.getInstance()
+                .getReference(Constants.USERS)
+                .child(FirebaseAuth.getInstance().currentUser?.uid)
+                .child(Constants.CREATED)
+        mUserDatabaseVoted  = FirebaseDatabase.getInstance()
+                .getReference(Constants.USERS)
+                .child(FirebaseAuth.getInstance().currentUser?.uid)
+                .child(Constants.VOTED)
+        mUserDatabaseJoined  = FirebaseDatabase.getInstance()
+                .getReference(Constants.USERS)
+                .child(FirebaseAuth.getInstance().currentUser?.uid)
+                .child(Constants.JOINED)
+    }
+
     fun addVote(title:String,variants: ArrayList<String>,isOpen:Boolean,isRevotable:Boolean,callback:DataSource.VoteAddedCallback){
         var id =  mDatabase.push().key
         var vote = HashMap<String,Any>()

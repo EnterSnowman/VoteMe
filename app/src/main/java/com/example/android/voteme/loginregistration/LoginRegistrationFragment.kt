@@ -7,14 +7,18 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 
 import com.example.android.voteme.R
 import com.example.android.voteme.base.BaseView
+import com.example.android.voteme.utils.Constants
 import com.example.android.voteme.utils.Utils
+import com.example.android.voteme.vote.VoteActivity
 import com.example.android.voteme.votes.VotesActivity
 import kotlinx.android.synthetic.main.fragment_login_registration.*
 /**
@@ -89,6 +93,30 @@ class LoginRegistrationFragment : Fragment(),LoginRegistrationContract.View {
                 showLoading(getString(R.string.signUp))
             }
         }
+        forget_password.setOnClickListener {
+            var alertDialogBuilder  = android.support.v7.app.AlertDialog.Builder(context)
+            alertDialogBuilder.setTitle(R.string.restore_password)
+            alertDialogBuilder.setView(R.layout.input_email_form)
+            alertDialogBuilder.setMessage(R.string.restore_password_msg)
+            alertDialogBuilder.setPositiveButton(android.R.string.ok)
+            {dialogInterface, i ->
+                var emailEdit2 = (dialogInterface as android.support.v7.app.AlertDialog).findViewById<EditText>(R.id.link_input)
+                /*emailEdit2?.text = emailEdit.text
+                Log.d("Firebase_user","First email ${emailEdit?.text.toString()}")*/
+                /*var intent  = Intent(context, VoteActivity::class.java)
+                intent.putExtra(Constants.VOTE_ID,linkEdit!!.text.toString())
+                startActivity(intent)*/
+                if (Utils.isEmailValid(emailEdit2?.text.toString())){
+                    mPresenter!!.sendRestorePasswordEmail(emailEdit2?.text.toString())
+                    Log.d("Firebase_user","try send email to ${emailEdit2?.text.toString()}}")
+                }
+                else
+                    emailEdit2?.error = getString(R.string.input_valid_email)
+            }
+                    .setNegativeButton(android.R.string.cancel){dialogInterface, i ->}
+            alertDialogBuilder.create().show()
+        }
+
     }
 
     fun isValidInputData(email:String,password:String):Boolean{
