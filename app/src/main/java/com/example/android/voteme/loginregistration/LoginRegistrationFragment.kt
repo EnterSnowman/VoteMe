@@ -120,7 +120,7 @@ class LoginRegistrationFragment : Fragment(),LoginRegistrationContract.View {
     }
 
     fun isValidInputData(email:String,password:String):Boolean{
-        var res = true;
+        var res = true
         if (!Utils.isEmailValid(email)){
             emailEdit.error = getString(R.string.input_valid_email)
             res = false

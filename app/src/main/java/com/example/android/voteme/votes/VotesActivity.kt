@@ -29,6 +29,7 @@ import com.example.android.voteme.addvote.AddVoteActivity
 import com.example.android.voteme.data.DataSource
 import com.example.android.voteme.data.UserRepository
 import com.example.android.voteme.loginregistration.LoginRegistrationActivity
+import com.example.android.voteme.settings.SettingsActivity
 import com.example.android.voteme.utils.Constants
 import com.example.android.voteme.vote.VoteActivity
 import kotlinx.android.synthetic.main.activity_votes.*
@@ -146,6 +147,11 @@ class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInterac
                 }
                         .setNegativeButton(android.R.string.cancel){dialogInterface, i ->}
                 alertDialogBuilder.create().show()
+                return true
+            }
+
+            R.id.settings ->{
+                startActivity(Intent(this,SettingsActivity::class.java))
                 return true
             }
 

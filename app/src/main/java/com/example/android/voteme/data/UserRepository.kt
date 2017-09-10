@@ -1,7 +1,6 @@
 package com.example.android.voteme.data
 
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.*
 
 /**
  * Created by Valentin on 15.07.2017.
@@ -43,6 +42,16 @@ class UserRepository private constructor(){
         else
             callback.onResult(true)
 
+    }
+
+    fun changePassword(oldPass:String,newPass:String,callback:DataSource.ChangePasswordCallback){
+        var cred = EmailAuthProvider.getCredential(mAuth.currentUser!!.email!!,oldPass)
+        mAuth.currentUser!!.reauthenticate(cred).addOnCompleteListener { task ->
+            if (task.isSuccessful)
+                mAuth.currentUser!!.updatePassword(newPass).addOnCompleteListener{task -> if (task.isSuccessful) callback.onSuccess() else callback.onFailure() }
+            else
+                callback.onWrongOldPassword()
+        }
     }
     }
 

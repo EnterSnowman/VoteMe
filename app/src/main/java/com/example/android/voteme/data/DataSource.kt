@@ -68,4 +68,12 @@ interface DataSource {
     interface ListRefreshCallback{
         fun onVoteAdded(newVote: Vote)
     }
+
+    interface ChangePasswordCallback {
+        fun onSuccess()
+
+        fun onWrongOldPassword()
+
+        fun onFailure()
+    }
 }
