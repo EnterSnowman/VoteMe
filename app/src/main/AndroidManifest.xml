@@ -28,7 +28,17 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".vote.VoteActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <!-- Include the host attribute if you want your app to respond
+                     only to URLs with your app's domain. -->
+                <data android:scheme="https" android:host="vote-me-80aab.firebaseio.com"  />
+                <category android:name="android.intent.category.DEFAULT" />
+                <!-- The BROWSABLE category is required to get links from web pages. -->
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </activity>
         <activity android:name=".settings.SettingsActivity"
             android:label="@string/action_settings"></activity>
     </application>

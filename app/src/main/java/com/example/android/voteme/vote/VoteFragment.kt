@@ -77,8 +77,8 @@ class VoteFragment : Fragment(),VoteContract.View {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mPresenter?.loadVote(mVoteId!!)
         mPresenter?.joinToVote(mVoteId!!)
+        mPresenter?.loadVote(mVoteId!!)
         vote_button.setOnClickListener{
             if(vote_variants.checkedRadioButtonId!=-1){
             var r  = vote_variants.findViewById<RadioButton>(vote_variants.checkedRadioButtonId)
@@ -180,7 +180,7 @@ class VoteFragment : Fragment(),VoteContract.View {
             }
             R.id.copy_link->{
                 var clipboard = activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                var clip = ClipData.newPlainText(getString(R.string.id),activity.intent.getStringExtra(Constants.VOTE_ID))
+                var clip = ClipData.newPlainText(getString(R.string.id),Constants.VOTES_URL.plus(activity.intent.getStringExtra(Constants.VOTE_ID)))
                 clipboard.setPrimaryClip(clip)
                 Toast.makeText(activity,"Link copied ot clipboard", Toast.LENGTH_SHORT).show()
                 return true

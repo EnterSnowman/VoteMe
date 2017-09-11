@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.SyncStateContract
 import android.text.TextUtils
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.Window
@@ -20,8 +21,7 @@ import com.example.android.voteme.loginregistration.LoginRegistrationPresenter
 import com.example.android.voteme.utils.Constants
 import kotlinx.android.synthetic.main.activity_vote.*
 import java.lang.reflect.AccessibleObject.setAccessible
-
-
+import java.net.URL
 
 
 class VoteActivity : AppCompatActivity(),VoteFragment.OnFragmentInteractionListener {
@@ -36,7 +36,19 @@ class VoteActivity : AppCompatActivity(),VoteFragment.OnFragmentInteractionListe
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         if (intent.getStringExtra(Constants.TITLE)!=null)
         supportActionBar?.title = intent.getStringExtra(Constants.TITLE)
-        var view = VoteFragment.newInstance(intent.getStringExtra(Constants.VOTE_ID))
+        val data = this.intent.data
+        var id = ""
+        if (data!=null){
+        Log.d("INTERNAL LINKS","scheme ${data.scheme}")
+            Log.d("INTERNAL LINKS","host ${data.host}")
+            Log.d("INTERNAL LINKS","path ${data.path}")
+            id = data.path.split("/").last()
+        }
+        else{
+            id = intent.getStringExtra(Constants.VOTE_ID).split("/").last()
+            Log.d("INTERNAL LINKS","in app link")
+        }
+        var view = VoteFragment.newInstance(id)
         supportFragmentManager.beginTransaction()
                 .add(R.id.vote_container,view)
                 .commit()
