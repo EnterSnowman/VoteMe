@@ -54,7 +54,7 @@ interface DataSource {
     }
 
     interface IsVotedCallback{
-        fun onResult(isVoted: Boolean)
+        fun onResult(isVoted: Boolean,variant:String?)
     }
 
     interface NodeExistingCallback{

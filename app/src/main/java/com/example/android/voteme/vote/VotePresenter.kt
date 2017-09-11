@@ -28,9 +28,9 @@ class VotePresenter(override var mView: VoteContract.View) : VoteContract.Presen
 
             override fun onLoad(vote: Vote) {
                 mVotesRepository.isVoted(id, object : DataSource.IsVotedCallback {
-                    override fun onResult(isVoted: Boolean) {
+                    override fun onResult(isVoted: Boolean,variant: String?) {
                         Log.d("FIREBASE","Voted? {$id} {$isVoted}")
-                        mView.showVote(vote,isVoted)
+                        mView.showVote(vote,isVoted,variant)
                         mVotesRepository.addChildListener(id,object : DataSource.RefreshVoteCallback{
                             override fun onVoteUpdated(varinat: String, newCount: Int) {
                                 mView.updateVote(varinat,newCount)

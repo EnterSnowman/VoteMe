@@ -33,7 +33,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <!-- Include the host attribute if you want your app to respond
                      only to URLs with your app's domain. -->
-                <data android:scheme="https" android:host="vote-me-80aab.firebaseio.com"  />
+                <data android:scheme="https" android:host="@string/host"  />
                 <category android:name="android.intent.category.DEFAULT" />
                 <!-- The BROWSABLE category is required to get links from web pages. -->
                 <category android:name="android.intent.category.BROWSABLE" />

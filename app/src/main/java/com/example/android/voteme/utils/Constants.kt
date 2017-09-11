@@ -15,7 +15,7 @@ class Constants {
         val JOINED = "joined"
         val IS_OPEN = "isOpen"
         val IS_REVOTABLE = "isRevotable"
-        val VOTES_URL = "https://vote-me-80aab.firebaseio.com/votes/"
+
         //error types
         val NON_UNIQUE_VARIANT  = 1
         val EMPTY_TITLE = 2

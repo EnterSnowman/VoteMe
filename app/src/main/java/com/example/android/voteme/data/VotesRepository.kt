@@ -163,7 +163,7 @@ class VotesRepository private constructor(){
         mUserDatabaseVoted.child(id).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot?) {
                 if (p0 != null) {
-                    if (p0.exists()) callback.onResult(true) else callback.onResult(false)
+                    if (p0.exists()) callback.onResult(true,p0.getValue(String::class.java)!!.substring(0, p0.getValue(String::class.java)!!.length-Constants.KEY.length)) else callback.onResult(false,null)
 
                 }
             }

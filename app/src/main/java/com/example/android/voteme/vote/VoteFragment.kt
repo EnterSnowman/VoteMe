@@ -101,7 +101,11 @@ class VoteFragment : Fragment(),VoteContract.View {
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    override fun showVote(vote: Vote,isVoted:Boolean) {
+    override fun showVote(vote: Vote, isVoted: Boolean, choosenVariant: String?) {
+        if (choosenVariant!=null)
+        Log.d("FIREBASE choosen ", choosenVariant)
+        else
+            Log.d("FIREBASE choosen ", "NOPE")
         mVote = vote
         mListener?.showVoteTitle(mVote!!.title)
         mPieChartData = ArrayList<PieEntry>()
@@ -110,6 +114,8 @@ class VoteFragment : Fragment(),VoteContract.View {
             val r  = activity.layoutInflater.inflate(R.layout.custom_radiobutton,null) as RadioButton
             r.setText(v.key)
             vote_variants.addView(r)
+            if (isVoted&&v.key.equals(choosenVariant))
+                vote_variants.check(r.id)
         }
         Log.d("FIREBASE isVoted", isVoted.toString().plus(" "+vote.id))
         Log.d("FIREBASE isOpen",mVote!!.isOpen.toString())
@@ -180,7 +186,10 @@ class VoteFragment : Fragment(),VoteContract.View {
             }
             R.id.copy_link->{
                 var clipboard = activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                var clip = ClipData.newPlainText(getString(R.string.id),Constants.VOTES_URL.plus(activity.intent.getStringExtra(Constants.VOTE_ID)))
+                var clip = ClipData.newPlainText(getString(R.string.id),getString(R.string.scheme)
+                        .plus(getString(R.string.host))
+                        .plus(getString(R.string.path))
+                        .plus(activity.intent.getStringExtra(Constants.VOTE_ID)))
                 clipboard.setPrimaryClip(clip)
                 Toast.makeText(activity,"Link copied ot clipboard", Toast.LENGTH_SHORT).show()
                 return true
