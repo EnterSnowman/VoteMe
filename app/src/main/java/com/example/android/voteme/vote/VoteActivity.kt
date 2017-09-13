@@ -1,8 +1,10 @@
 package com.example.android.voteme.vote
 
+import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -16,6 +18,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.android.voteme.R
 import com.example.android.voteme.data.UserRepository
+import com.example.android.voteme.loginregistration.LoginRegistrationActivity
 import com.example.android.voteme.loginregistration.LoginRegistrationFragment
 import com.example.android.voteme.loginregistration.LoginRegistrationPresenter
 import com.example.android.voteme.utils.Constants
@@ -25,7 +28,7 @@ import java.net.URL
 
 
 class VoteActivity : AppCompatActivity(),VoteFragment.OnFragmentInteractionListener {
-
+    var id : String = ""
     var mPresenter: VotePresenter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,23 +40,44 @@ class VoteActivity : AppCompatActivity(),VoteFragment.OnFragmentInteractionListe
         if (intent.getStringExtra(Constants.TITLE)!=null)
         supportActionBar?.title = intent.getStringExtra(Constants.TITLE)
         val data = this.intent.data
-        var id = ""
+        id = ""
         if (data!=null){
-        Log.d("INTERNAL LINKS","scheme ${data.scheme}")
+            Log.d("INTERNAL LINKS","scheme ${data.scheme}")
             Log.d("INTERNAL LINKS","host ${data.host}")
             Log.d("INTERNAL LINKS","path ${data.path}")
             id = data.path.split("/").last()
+            if(UserRepository.getInstance().isCurrentUserExists()){
+            addFragment()
+            }
+            else{
+                startActivityForResult(Intent(this,LoginRegistrationActivity::class.java),Constants.LOGIN_BEFORE_JOIN_TO_VOTE)
+            }
         }
         else{
             id = intent.getStringExtra(Constants.VOTE_ID).split("/").last()
             Log.d("INTERNAL LINKS","in app link")
+            addFragment()
         }
+
+
+    }
+
+    override fun startActivityForResult(intent: Intent?, requestCode: Int) {
+        intent?.putExtra("requestCode", requestCode)
+        super.startActivityForResult(intent, requestCode)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode== Activity.RESULT_OK)
+            addFragment()
+    }
+
+    fun addFragment(){
         var view = VoteFragment.newInstance(id)
         supportFragmentManager.beginTransaction()
                 .add(R.id.vote_container,view)
-                .commit()
+                .commitAllowingStateLoss()
         mPresenter = VotePresenter(view)
-
     }
 
 /*    override fun showLoadingBar() {

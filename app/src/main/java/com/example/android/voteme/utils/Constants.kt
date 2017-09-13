@@ -22,7 +22,8 @@ class Constants {
         val NOT_FULL_LIST  = 3
         val  KEY = "_key"
 
-
+        //codes
+        val LOGIN_BEFORE_JOIN_TO_VOTE = 10
     }
 
 }

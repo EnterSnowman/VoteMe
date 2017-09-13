@@ -1,5 +1,6 @@
 package com.example.android.voteme.loginregistration
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
@@ -67,8 +68,11 @@ class LoginRegistrationFragment : Fragment(),LoginRegistrationContract.View {
     }
 
     override fun goToVotesActivity() {
-        startActivity(Intent(context,VotesActivity::class.java))
-        activity.finish()
+        if (activity.intent.getIntExtra("requestCode",-111)==Constants.LOGIN_BEFORE_JOIN_TO_VOTE)
+            activity.setResult(Activity.RESULT_OK)
+        else
+            startActivity(Intent(context,VotesActivity::class.java))
+            activity.finish()
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,

@@ -41,8 +41,8 @@ class UserRepository private constructor(){
         mAuth.currentUser!!.reload().addOnCompleteListener { task ->         callback.onResult( mAuth.currentUser!!.isEmailVerified) }
         else
             callback.onResult(true)
-
     }
+    fun isCurrentUserExists() : Boolean = mAuth.currentUser!=null
 
     fun changePassword(oldPass:String,newPass:String,callback:DataSource.ChangePasswordCallback){
         var cred = EmailAuthProvider.getCredential(mAuth.currentUser!!.email!!,oldPass)
