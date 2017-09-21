@@ -51,7 +51,7 @@
     <string name="empty_my_votes">Create new vote</string>
     <string name="dont_remember_password">Don\'t remember password?</string>
     <string name="restore_password">Restore password</string>
-    <string name="restore_password_msg">Input your account e-mail address, where resoration letter will be sended</string>
+    <string name="restore_password_msg">Input your account e-mail address, where restoration letter will be sended</string>
     <string name="change_password">Change password</string>
     <string name="old_password">Old password</string>
     <string name="new_password">New password</string>

@@ -6,6 +6,10 @@ import com.example.android.voteme.utils.Constants
 import com.example.android.voteme.utils.Utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import okhttp3.Response
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
 import java.lang.Exception
 import kotlin.concurrent.fixedRateTimer
 
@@ -28,9 +32,11 @@ class VotesRepository private constructor(){
             .child(Constants.JOINED)
     var mChildEventListener : ChildEventListener? = null
     var mChildEventListenerCreated : ArrayList<ChildEventListener>?
+    var mCloudFunctionsInterface : CloudFunctionsInterface
     var mChildEventListenerJoined : ChildEventListener? = null
     init {
         mChildEventListenerCreated = ArrayList<ChildEventListener>()
+        mCloudFunctionsInterface = CloudFunctionsInterface.create()
     }
     companion object {
         private var repository : VotesRepository? = null
@@ -58,7 +64,7 @@ class VotesRepository private constructor(){
                 .child(Constants.JOINED)
     }
 
-    fun addVote(title:String,variants: ArrayList<String>,isOpen:Boolean,isRevotable:Boolean,callback:DataSource.VoteAddedCallback){
+   /* fun addVote(title:String,variants: ArrayList<String>,isOpen:Boolean,isRevotable:Boolean,callback:DataSource.VoteAddedCallback){
         var id =  mDatabase.push().key
         var vote = HashMap<String,Any>()
         vote.put(Constants.TITLE,title)
@@ -74,9 +80,9 @@ class VotesRepository private constructor(){
             callback.onComplete()
             mUserDatabase.child(id).setValue(Constants.CREATED)
         }
-        else callback.onFailure(task.exception) }
+        else callback.onFailure() }
 
-    }
+    }*/
 
     fun getVotesJoinedByUser(callback: DataSource.VotesCallback){
         mUserDatabaseJoined.addListenerForSingleValueEvent(object : ValueEventListener{
@@ -349,6 +355,28 @@ class VotesRepository private constructor(){
                 }
             }
         })
+
+    }
+
+    fun createVote(title:String,variants: ArrayList<String>,isOpen:Boolean,isRevotable:Boolean,callback:DataSource.VoteAddedCallback){
+        var body = HashMap<String,Any>()
+        var newVars = Utils.addKeySuffix(variants)
+        body.put("title",title)
+        body.put("isOpen",isOpen)
+        body.put("isRevotable",isRevotable)
+        body.put("variants",newVars)
+        UserRepository.getInstance().mAuth.currentUser!!.getIdToken(false).addOnCompleteListener { task ->
+            mCloudFunctionsInterface.createVote(body,task.result.token!!).enqueue(object : Callback<ResponseBody> {
+                override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
+                    callback.onFailure()
+                }
+
+                override fun onResponse(call: Call<ResponseBody>?, response: retrofit2.Response<ResponseBody>?) {
+                    callback.onComplete()
+                }
+
+            })
+        }
 
     }
 

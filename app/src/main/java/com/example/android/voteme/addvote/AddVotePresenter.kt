@@ -25,7 +25,7 @@ class AddVotePresenter(override var mView: AddVoteContract.View) : AddVoteContra
             else{
                 mView.showLoading()
                 //var vars = variants.map {it.plus(Constants.KEY)} as ArrayList
-                mVotesRepository.addVote(title,variants,isOpen,isRevotable,object : DataSource.VoteAddedCallback{
+                mVotesRepository.createVote(title,variants,isOpen,isRevotable,object : DataSource.VoteAddedCallback{
                     override fun onComplete() {
                         mView.hideLoading()
                         mView.finish()

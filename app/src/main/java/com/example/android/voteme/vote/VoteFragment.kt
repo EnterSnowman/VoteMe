@@ -53,6 +53,8 @@ class VoteFragment : Fragment(),VoteContract.View {
     private var mPieDataSet: PieDataSet? = null
     private var mVote : Vote? = null
     private var mData : PieData?= null
+    private var isVotesExists : Boolean? = null
+    private var mIsVoted : Boolean? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("VoteFragment","onCreate")
@@ -77,6 +79,7 @@ class VoteFragment : Fragment(),VoteContract.View {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        isVotesExists = false
         mPresenter?.joinToVote(mVoteId!!)
         mPresenter?.loadVote(mVoteId!!)
         vote_button.setOnClickListener{
@@ -88,7 +91,7 @@ class VoteFragment : Fragment(),VoteContract.View {
                 Toast.makeText(context,R.string.select_option,Toast.LENGTH_SHORT).show()
 
         }
-        mProgressDialog?.show()
+        loadingPanel.visibility = View.VISIBLE
     }
 
     override fun showProgressBar() {
@@ -107,10 +110,14 @@ class VoteFragment : Fragment(),VoteContract.View {
         else
             Log.d("FIREBASE choosen ", "NOPE")
         mVote = vote
+        mIsVoted=  isVoted
         mListener?.showVoteTitle(mVote!!.title)
         mPieChartData = ArrayList<PieEntry>()
         for (v in vote.variants.entries) {
+            if (v.value!=0){
             mPieChartData!!.add(PieEntry(v.value.toFloat(), v.key))
+            isVotesExists = true
+            }
             val r  = activity.layoutInflater.inflate(R.layout.custom_radiobutton,null) as RadioButton
             r.setText(v.key)
             vote_variants.addView(r)
@@ -136,7 +143,8 @@ class VoteFragment : Fragment(),VoteContract.View {
         vote_stats_chart.invalidate()
         showPieChart(isVoted)
         hideVotingPanel(isVoted)
-        mProgressDialog?.hide()
+        loadingPanel.visibility = View.GONE
+        content.visibility = View.VISIBLE
     }
 
     override fun hideVotingPanel(isVoted:Boolean) {
@@ -147,7 +155,8 @@ class VoteFragment : Fragment(),VoteContract.View {
     }
 
     override fun showPieChart(isVoted: Boolean) {
-        if(mVote!!.isOpen||isVoted){
+        if((mVote!!.isOpen||isVoted)&&isVotesExists!!){
+            mIsVoted = isVoted
             vote_stats_chart.layoutParams = RelativeLayout.LayoutParams(vote_stats_chart.width,vote_stats_chart.width)
             vote_stats_chart.setData(mData)
             vote_stats_chart.setEntryLabelColor(R.color.colorPrimaryDark)
@@ -168,11 +177,16 @@ class VoteFragment : Fragment(),VoteContract.View {
         mVote?.variants?.put(variant,newCount)
         mPieChartData?.clear()
         for (v in mVote?.variants?.entries!!){
+            if (v.value!=0){
             mPieChartData!!.add(PieEntry(v.value.toFloat(),v.key))
+            isVotesExists = true
+            }
         }
+        if (mIsVoted!!){
         vote_stats_chart.data.notifyDataChanged()
         vote_stats_chart.notifyDataSetChanged()
         vote_stats_chart.invalidate()
+        }
     }
     override fun setPresenter(presenter: VoteContract.Presenter) {
         mPresenter = presenter

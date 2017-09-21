@@ -28,7 +28,7 @@ interface DataSource {
     interface VoteAddedCallback{
         fun onComplete()
 
-        fun onFailure(exception : Exception?)
+        fun onFailure()
     }
 
     interface VotesCallback{
