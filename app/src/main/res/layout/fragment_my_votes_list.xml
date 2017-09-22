@@ -33,5 +33,5 @@
     android:layout_height="match_parent"
     app:layoutManager="LinearLayoutManager"
     tools:context="com.example.android.voteme.votes.MyVotesFragment"
-    tools:listitem="@layout/fragment_my_votes" />
+    tools:listitem="@layout/vote_item" />
 </RelativeLayout>
