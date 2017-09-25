@@ -55,6 +55,7 @@ class VoteFragment : Fragment(),VoteContract.View {
     private var mData : PieData?= null
     private var isVotesExists : Boolean? = null
     private var mIsVoted : Boolean? = null
+    private var mTotalVotes : Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("VoteFragment","onCreate")
@@ -115,6 +116,7 @@ class VoteFragment : Fragment(),VoteContract.View {
         mPieChartData = ArrayList<PieEntry>()
         for (v in vote.variants.entries) {
             if (v.value!=0){
+                mTotalVotes+=v.value
             mPieChartData!!.add(PieEntry(v.value.toFloat(), v.key))
             isVotesExists = true
             }
@@ -168,7 +170,7 @@ class VoteFragment : Fragment(),VoteContract.View {
             mPieDataSet!!.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
             vote_stats_chart.transparentCircleRadius= 30F
             vote_stats_chart.setUsePercentValues(true)
-            vote_stats_chart.centerText = ""
+            vote_stats_chart.centerText = getString(R.string.totalVotes).plus(mTotalVotes.toString())
             vote_stats_chart.invalidate()
         }
     }
@@ -176,13 +178,16 @@ class VoteFragment : Fragment(),VoteContract.View {
     override fun updateVote(variant: String, newCount: Int) {
         mVote?.variants?.put(variant,newCount)
         mPieChartData?.clear()
+        mTotalVotes = 0
         for (v in mVote?.variants?.entries!!){
             if (v.value!=0){
+                mTotalVotes+=v.value
             mPieChartData!!.add(PieEntry(v.value.toFloat(),v.key))
             isVotesExists = true
             }
         }
         if (mIsVoted!!){
+            vote_stats_chart.centerText = getString(R.string.totalVotes).plus(mTotalVotes.toString())
         vote_stats_chart.data.notifyDataChanged()
         vote_stats_chart.notifyDataSetChanged()
         vote_stats_chart.invalidate()
