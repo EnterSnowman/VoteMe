@@ -57,4 +57,5 @@
     <string name="new_password">New password</string>
     <string name="repeat_password">Repeat password</string>
     <string name="password_changed">Password changed</string>
+    <string name="variants">variants</string>
 </resources>

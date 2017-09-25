@@ -31,7 +31,7 @@ class AddVotePresenter(override var mView: AddVoteContract.View) : AddVoteContra
                         mView.finish()
                     }
 
-                    override fun onFailure(exception: Exception?) {
+                    override fun onFailure() {
                         mView.hideLoading()
                     }
                 })

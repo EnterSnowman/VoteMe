@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_thin"
             android:text="4 variants"
+            android:textSize="16sp"
             android:textColor="@color/colorPrimary"
             android:id="@+id/numberOfVariants"/>
 
@@ -32,6 +33,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
+            android:textSize="16sp"
             android:fontFamily="@font/roboto_thin"
             android:text="21.12.2016" />
     </RelativeLayout>

@@ -365,6 +365,7 @@ class VotesRepository private constructor(){
         body.put("isOpen",isOpen)
         body.put("isRevotable",isRevotable)
         body.put("variants",newVars)
+        body.put("timestamp", ServerValue.TIMESTAMP)
         UserRepository.getInstance().mAuth.currentUser!!.getIdToken(false).addOnCompleteListener { task ->
             mCloudFunctionsInterface.createVote(body,task.result.token!!).enqueue(object : Callback<ResponseBody> {
                 override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {

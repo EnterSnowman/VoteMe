@@ -45,7 +45,7 @@ class AllVotesFragment : Fragment(),AllVotesContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         var presenter = AllVotesPresenter(this)
-        mAdapter = AllVotesRecyclerViewAdapter(ArrayList<Vote>(),object : AllVotesFragment.OnVoteClickListener {
+        mAdapter = AllVotesRecyclerViewAdapter(context,ArrayList<Vote>(),object : AllVotesFragment.OnVoteClickListener {
             override fun onClick(id:String,title:String) {
                 var intent = Intent(context, VoteActivity::class.java)
                 intent.putExtra(Constants.VOTE_ID,id)

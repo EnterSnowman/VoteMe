@@ -1,5 +1,6 @@
 package com.example.android.voteme.votes
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +8,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.android.voteme.R
 import com.example.android.voteme.model.Vote
+import com.example.android.voteme.utils.Utils
 
 import com.example.android.voteme.votes.AllVotesFragment.OnListFragmentInteractionListener
+
 
 
 /**
@@ -16,7 +19,7 @@ import com.example.android.voteme.votes.AllVotesFragment.OnListFragmentInteracti
  * specified [OnListFragmentInteractionListener].
  * TODO: Replace the implementation with code for your data type.
  */
-class AllVotesRecyclerViewAdapter(var mVotes: ArrayList<Vote>, private val mListener: AllVotesFragment.OnVoteClickListener?) : RecyclerView.Adapter<AllVotesRecyclerViewAdapter.ViewHolder>() {
+class AllVotesRecyclerViewAdapter(var mContext: Context,var mVotes: ArrayList<Vote>, private val mListener: AllVotesFragment.OnVoteClickListener?) : RecyclerView.Adapter<AllVotesRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -27,7 +30,8 @@ class AllVotesRecyclerViewAdapter(var mVotes: ArrayList<Vote>, private val mList
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.mItem = mVotes[position]
         holder.mContentView.text = mVotes[position].title
-
+        holder.mCountOfVariants.text = mVotes[position].variants.size.toString().plus(" ") + mContext.getString(R.string.variants)
+        holder.mDate.text = Utils.getReadableDate(mVotes[position].timestamp)
         holder.mView.setOnClickListener {
             mListener?.onClick(mVotes.get(position).id,mVotes.get(position).title)
         }
@@ -40,10 +44,13 @@ class AllVotesRecyclerViewAdapter(var mVotes: ArrayList<Vote>, private val mList
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val mContentView: TextView
         var mItem: Vote? = null
-
+        val mCountOfVariants : TextView
+        val mDate : TextView
         init {
             //mIdView = mView.findViewById<TextView>(R.id.id) //as TextView
+            mCountOfVariants = mView.findViewById<TextView>(R.id.numberOfVariants)
             mContentView = mView.findViewById<TextView>(R.id.content) //as TextView
+            mDate =  mView.findViewById<TextView>(R.id.date)
         }
 
         override fun toString(): String {
