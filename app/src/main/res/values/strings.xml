@@ -59,4 +59,9 @@
     <string name="password_changed">Password changed</string>
     <string name="variants">variants</string>
     <string name="totalVotes">Total votes :</string>
+    <string name="send_confirmation_letter">Send confirmation letter</string>
+    <string name="do_you_want_send_confirm_email">Do you want send a letter?</string>
+    <string name="email_verif_title">Email verification</string>
+    <string name="success_email_verif">Letter successfully sended. Check your e-mail</string>
+    <string name="failure_email_verif">Failure sending</string>
 </resources>

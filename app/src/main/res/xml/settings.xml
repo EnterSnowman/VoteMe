@@ -3,7 +3,13 @@
 
     <PreferenceCategory android:title="@string/account">
         <com.example.android.voteme.settings.ChangePasswordDialog
+            android:key="change_pass"
             android:title="@string/change_password">
         </com.example.android.voteme.settings.ChangePasswordDialog>
+        <com.example.android.voteme.settings.EmailVerificationDialog
+            android:key="user_email"
+            android:title="@string/send_confirmation_letter"
+            ></com.example.android.voteme.settings.EmailVerificationDialog>
     </PreferenceCategory>
+
 </PreferenceScreen>

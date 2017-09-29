@@ -23,7 +23,7 @@ class ChangePasswordDialog(context: Context?, attrs: AttributeSet?) : DialogPref
     var repeatPassEdit: EditText? = null
     var loadingBar: ProgressBar? = null
     init {
-        setPersistent(false);
+        setPersistent(false)
         setDialogLayoutResource(R.layout.change_password_form);
     }
 
