@@ -10,16 +10,11 @@ import java.lang.Exception
  * Created by Valentin on 28.07.2017.
  */
 class VotePresenter(override var mView: VoteContract.View) : VoteContract.Presenter {
-
-
-
     var mVotesRepository : VotesRepository
-
     init {
         mView.setPresenter(this)
         mVotesRepository = VotesRepository.getInstance()
     }
-
     override fun loadVote(id: String) {
         mVotesRepository.getVoteById(id,object : DataSource.SingleVoteLoadCallback{
             override fun onFailure(exception: Exception) {
@@ -49,14 +44,15 @@ class VotePresenter(override var mView: VoteContract.View) : VoteContract.Presen
         mView.showProgressBar()
         mVotesRepository.makeElect(voteId,variant,object : DataSource.ElectCallback{
             override fun onElected() {
-                mView.hideProgressBar()
-                mView.hideVotingPanel(true)
-                mView.showPieChart(true)
+
+                mView?.hideProgressBar()
+                mView?.hideVotingPanel(true)
+                mView?.showPieChart(true)
                 Log.d("FIREBASE","VARIANT ELECTED")
             }
 
             override fun onFailure(exception: Exception) {
-                mView.hideProgressBar()
+                mView?.hideProgressBar()
             }
         })
     }

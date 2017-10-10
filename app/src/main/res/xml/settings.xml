@@ -11,5 +11,11 @@
             android:title="@string/send_confirmation_letter"
             ></com.example.android.voteme.settings.EmailVerificationDialog>
     </PreferenceCategory>
+    <PreferenceCategory android:title="@string/info">
+        <com.example.android.voteme.settings.InfoDialog
+            android:key="app_info"
+            android:title="@string/info_title">
 
+        </com.example.android.voteme.settings.InfoDialog>
+    </PreferenceCategory>
 </PreferenceScreen>

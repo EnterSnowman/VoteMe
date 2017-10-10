@@ -13,7 +13,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:id="@+id/voteTitleEdit"
-        android:fontFamily="@font/roboto_bolditalic"
+        android:fontFamily="@font/roboto_bold"
         android:layout_centerHorizontal="true"
         android:hint="@string/input_vote_title"/>
     <android.support.v7.widget.RecyclerView

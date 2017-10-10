@@ -17,6 +17,7 @@ import android.app.ProgressDialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.graphics.Color
+import android.support.v4.content.res.ResourcesCompat
 import android.util.Log
 import android.view.*
 import android.widget.RadioButton
@@ -130,7 +131,8 @@ class VoteFragment : Fragment(),VoteContract.View {
         Log.d("FIREBASE isOpen",mVote!!.isOpen.toString())
         Log.d("FIREBASE isRevotable",mVote!!.isRevotable.toString())
         mPieDataSet = PieDataSet(mPieChartData, "")
-        mPieDataSet!!.colors = ColorTemplate.MATERIAL_COLORS.asList()
+        mPieDataSet!!.colors = ColorTemplate.MATERIAL_COLORS.toList()
+        mPieDataSet!!.colors.addAll(ColorTemplate.JOYFUL_COLORS.toList())
         mData = PieData(mPieDataSet)
         mData?.setValueTextSize(16f)
         mData?.setValueFormatter(MyPieChartValueFormatter())
@@ -163,14 +165,17 @@ class VoteFragment : Fragment(),VoteContract.View {
             vote_stats_chart.setData(mData)
             vote_stats_chart.setEntryLabelColor(R.color.colorPrimaryDark)
             vote_stats_chart.setEntryLabelTextSize(16f)
+            vote_stats_chart.setEntryLabelTypeface(ResourcesCompat.getFont(context,R.font.roboto_bold))
             vote_stats_chart.legend.form = Legend.LegendForm.CIRCLE
             vote_stats_chart.legend.textSize = 16f
+            vote_stats_chart.legend.typeface = ResourcesCompat.getFont(context,R.font.roboto_bold)
             vote_stats_chart.legend.position = Legend.LegendPosition.BELOW_CHART_CENTER
             vote_stats_chart.holeRadius = 25F
             mPieDataSet!!.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
             vote_stats_chart.transparentCircleRadius= 30F
             vote_stats_chart.setUsePercentValues(true)
             vote_stats_chart.centerText = getString(R.string.totalVotes).plus(mTotalVotes.toString())
+            vote_stats_chart.setCenterTextTypeface(ResourcesCompat.getFont(context,R.font.roboto_thin_italic))
             vote_stats_chart.invalidate()
         }
     }
@@ -186,7 +191,8 @@ class VoteFragment : Fragment(),VoteContract.View {
             isVotesExists = true
             }
         }
-        if (mIsVoted!!){
+        showPieChart(mIsVoted!!)
+        if (mIsVoted!!||mVote!!.isOpen){
             vote_stats_chart.centerText = getString(R.string.totalVotes).plus(mTotalVotes.toString())
         vote_stats_chart.data.notifyDataChanged()
         vote_stats_chart.notifyDataSetChanged()

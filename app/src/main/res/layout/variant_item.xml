@@ -10,7 +10,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="10dp"
         android:layout_toLeftOf="@+id/deleteVariantButton"
         android:layout_toStartOf="@+id/deleteVariantButton"
         android:fontFamily="@font/roboto_medium"

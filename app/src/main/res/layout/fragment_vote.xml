@@ -29,19 +29,22 @@
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/vote_stats_chart"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
     </com.github.mikephil.charting.charts.PieChart>
 
     <Button
+        android:layout_marginTop="12dp"
         android:id="@+id/vote_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/vote_stats_chart"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_selector"
+        android:fontFamily="@font/roboto_regular"
         android:text="@string/choose"
-        android:fontFamily="@font/roboto_medium"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="16sp" />
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -57,6 +60,7 @@
         android:layout_toEndOf="@+id/vote_button"
         android:layout_toRightOf="@+id/vote_button"
         android:indeterminate="true"
+        android:layout_margin="8dp"
         android:visibility="gone" />
 </RelativeLayout>
 </RelativeLayout>
