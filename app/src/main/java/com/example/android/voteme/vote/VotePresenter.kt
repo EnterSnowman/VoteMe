@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.android.voteme.data.DataSource
 import com.example.android.voteme.data.VotesRepository
 import com.example.android.voteme.model.Vote
+import com.example.android.voteme.utils.Utils
 import java.lang.Exception
 
 /**
@@ -44,7 +45,6 @@ class VotePresenter(override var mView: VoteContract.View) : VoteContract.Presen
         mView.showProgressBar()
         mVotesRepository.makeElect(voteId,variant,object : DataSource.ElectCallback{
             override fun onElected() {
-
                 mView?.hideProgressBar()
                 mView?.hideVotingPanel(true)
                 mView?.showPieChart(true)
@@ -52,7 +52,8 @@ class VotePresenter(override var mView: VoteContract.View) : VoteContract.Presen
             }
 
             override fun onFailure(exception: Exception) {
-                mView?.hideProgressBar()
+                mView.showError(Utils.handleException(exception!!))
+                mView.hideProgressBar()
             }
         })
     }

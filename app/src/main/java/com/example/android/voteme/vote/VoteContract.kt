@@ -20,6 +20,8 @@ interface VoteContract {
         fun hideVotingPanel(isVoted: Boolean)
 
         fun showPieChart(isVoted: Boolean)
+
+        fun showError(errorCode:String)
     }
 
     interface Presenter : BasePresenter<View>{

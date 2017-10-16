@@ -1,25 +1,25 @@
 <resources>
     <!-- System -->
-    <string name="scheme">https://</string>
-    <string name="host">vote-me.com</string>
-    <string name="path">/votes/</string>
+    <string name="scheme" translatable="false">https://</string>
+    <string name="host" translatable="false">vote-me.com</string>
+    <string name="path" translatable="false">/votes/</string>
     <string name="app_name">VoteMe</string>
     <string name="action_settings">Settings</string>
     <string name="account">Account</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="email">E-mail</string>
     <string name="password">Password</string>
-    <string name="title_activity_main2">Main2Activity</string>
-    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_main2" translatable="false">Main2Activity</string>
+    <string name="section_format" translatable="false">Hello World from section: %1$d</string>
     <string name="login">Sign In</string>
     <string name="registration">Sign Up</string>
     <string name="signIn">Sign In...</string>
     <string name="signUp">Sign Up...</string>
-    <string name="title_activity_votes">VotesActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="tab_text_3">Tab 3</string>
+    <string name="title_activity_votes" translatable="false">VotesActivity</string>
+    <string name="tab_text_1" translatable="false">Tab 1</string>
+    <string name="tab_text_2" translatable="false">Tab 2</string>
+    <string name="tab_text_3" translatable="false">Tab 3</string>
     <string name="logout">Log Out</string>
     <string name="signOut">Sign Out</string>
     <string name="all_votes">All votes</string>
@@ -36,7 +36,7 @@
     <string name="confirm_logout">Do you want logout?</string>
     <string name="input_link">Input vote link</string>
     <string name="copy_link">Copy link</string>
-    <string name="id">ID</string>
+    <string name="id" translatable="false">ID</string>
     <string name="set_up_a_vote">Set up a vote</string>
     <string name="vote_again">Users can vote again</string>
     <string name="open_results">Open results, even user didn\'t vote</string>
@@ -46,7 +46,7 @@
     <string name="input_valid_password">Password length must be 6 or bigger</string>
     <string name="sign_up_completed">Sign Up completed!</string>
     <string name="email_verif_msg">To verify your account, check your e-mail for verification letter.</string>
-    <string name="vote_creating_condition">Verify your e-mail to create new vote</string>
+    <string name="vote_creating_condition">Verify your account to create new vote</string>
     <string name="empty_all_votes">Create new vote or join to existed</string>
     <string name="empty_my_votes">Create new vote</string>
     <string name="dont_remember_password">Don\'t remember password?</string>
@@ -66,7 +66,7 @@
     <string name="failure_email_verif">Failure sending</string>
     <string name="info">Info</string>
     <string name="version">Version  </string>
-    <string name="number_of_version">1.0</string>
+    <string name="number_of_version" translatable="false">1.0</string>
     <string name="info_title">About application</string>
     <!-- Errors -->
     <string name="error_wrong_password">Wrong password</string>

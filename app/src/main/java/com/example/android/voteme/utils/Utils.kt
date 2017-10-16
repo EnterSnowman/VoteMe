@@ -1,7 +1,11 @@
 package com.example.android.voteme.utils
 
 import android.content.Context
+import android.util.Log
 import com.example.android.voteme.R
+import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.auth.FirebaseAuthException
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -40,6 +44,23 @@ class Utils {
                 "ERROR_EMAIL_ALREADY_IN_USE" ->return context.getString(R.string.error_email_already_in_use)
                 else -> return "unknown error"
             }
+        }
+
+        fun handleException(exception:Exception):String{
+            var errorCode = ""
+            Log.d("Exception",exception.message)
+            when(exception){
+                is FirebaseNetworkException ->{
+                    Log.d("Network",exception.message)
+                    errorCode = "NETWORK_ERROR"
+                }
+                is FirebaseAuthException ->{
+                    Log.d("Login",exception .errorCode)
+                    Log.d("Login",exception.message)
+                    errorCode = exception.errorCode
+                }
+            }
+            return errorCode
         }
     }
 }

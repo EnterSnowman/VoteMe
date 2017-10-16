@@ -25,6 +25,7 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import com.example.android.voteme.utils.Constants
 import com.example.android.voteme.utils.MyPieChartValueFormatter
+import com.example.android.voteme.utils.Utils
 import com.github.mikephil.charting.charts.Chart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.Legend
@@ -99,6 +100,10 @@ class VoteFragment : Fragment(),VoteContract.View {
     override fun showProgressBar() {
         electing_progressBar.visibility = View.VISIBLE
 
+    }
+
+    override fun showError(errorCode: String) {
+        Toast.makeText(context,Utils.getErrorText(errorCode,context),Toast.LENGTH_LONG).show()
     }
 
     override fun hideProgressBar() {

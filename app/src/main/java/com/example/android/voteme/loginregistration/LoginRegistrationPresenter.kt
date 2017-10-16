@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.android.voteme.data.DataSource
 import com.example.android.voteme.data.UserRepository
 import com.example.android.voteme.data.VotesRepository
+import com.example.android.voteme.utils.Utils
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuthException
 import java.lang.Exception
@@ -31,7 +32,7 @@ class LoginRegistrationPresenter(override var mView: LoginRegistrationContract.V
             }
 
             override fun onSignInFailure(exception: Exception?) {
-                handleException(exception!!)
+                mView.showError(Utils.handleException(exception!!))
                 mView.makeToast("Login failure")
                 mView.hideLoading()
             }
@@ -39,22 +40,6 @@ class LoginRegistrationPresenter(override var mView: LoginRegistrationContract.V
         })
     }
 
-    fun handleException(exception: Exception){
-        var errorCode = ""
-        Log.d("Exception",exception.message)
-        when(exception){
-            is FirebaseNetworkException ->{
-                Log.d("Network",exception.message)
-                errorCode = "NETWORK_ERROR"
-            }
-            is FirebaseAuthException ->{
-                Log.d("Login",exception .errorCode)
-                Log.d("Login",exception.message)
-                errorCode = exception.errorCode
-            }
-        }
-        mView.showError(errorCode)
-    }
 
     override fun signUp(email: String, password: String) {
         mUserRepository?.signUp(email,password,object : DataSource.SignUpCallback{
@@ -68,14 +53,15 @@ class LoginRegistrationPresenter(override var mView: LoginRegistrationContract.V
                         //mView.goToVotesActivity()
                     }
                     override fun onSendedFailure(exception: Exception?) {
-                        handleException(exception!!)
+                        mView.showError(Utils.handleException(exception!!))
+                        //handleException(exception!!)
                     }
                 })
 
             }
 
             override fun onSignUpFailure(exception: Exception?) {
-                handleException(exception!!)
+                mView.showError(Utils.handleException(exception!!))
                 mView.makeToast("Sign up failed")
                 mView.hideLoading()
             }
