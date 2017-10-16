@@ -369,11 +369,14 @@ class VotesRepository private constructor(){
         UserRepository.getInstance().mAuth.currentUser!!.getIdToken(false).addOnCompleteListener { task ->
             mCloudFunctionsInterface.createVote(body,task.result.token!!).enqueue(object : Callback<ResponseBody> {
                 override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
-                    callback.onFailure()
+                    callback.onFailure("NETWORK_ERROR")
                 }
 
                 override fun onResponse(call: Call<ResponseBody>?, response: retrofit2.Response<ResponseBody>?) {
+                    if (response!!.isSuccessful)
                     callback.onComplete()
+                    else
+                        callback.onFailure(response.code().toString())
                 }
 
             })

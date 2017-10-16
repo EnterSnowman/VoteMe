@@ -1,5 +1,6 @@
 package com.example.android.voteme.addvote
 
+import android.util.Log
 import com.example.android.voteme.data.DataSource
 import com.example.android.voteme.data.VotesRepository
 import com.example.android.voteme.utils.Constants
@@ -31,7 +32,9 @@ class AddVotePresenter(override var mView: AddVoteContract.View) : AddVoteContra
                         mView.finish()
                     }
 
-                    override fun onFailure() {
+                    override fun onFailure(s:String) {
+                        Log.d("Add new Vote",s)
+                        mView.showConnectivityError(s)
                         mView.hideLoading()
                     }
                 })

@@ -22,6 +22,8 @@ interface AddVoteContract {
 
         fun showError(type : Int)
 
+        fun showConnectivityError(errorCode: String)
+
         fun finish()
     }
 

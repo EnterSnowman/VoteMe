@@ -17,6 +17,7 @@ import com.example.android.voteme.R
 import com.example.android.voteme.utils.Constants
 import kotlinx.android.synthetic.main.fragment_add_vote.*
 import android.support.v4.view.MenuItemCompat
+import com.example.android.voteme.utils.Utils
 
 
 /**
@@ -43,6 +44,10 @@ class AddVoteFragment : Fragment(), AddVoteContract.View {
             Constants.EMPTY_TITLE -> voteTitleEdit.error = getString(R.string.please_input_vote_title)
             Constants.NOT_FULL_LIST -> Toast.makeText(context,R.string.two_variants,Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun showConnectivityError(errorCode: String) {
+        Toast.makeText(context,Utils.getErrorText(errorCode,context),Toast.LENGTH_LONG).show()
     }
 
     override fun isVariantExists(variant: String): Boolean  = mAdapter!!.mVariants.contains(variant)
