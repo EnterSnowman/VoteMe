@@ -45,6 +45,10 @@ class LoginRegistrationFragment : Fragment(),LoginRegistrationContract.View {
 
     }
 
+    override fun showError(errorCode: String) {
+        makeToast(Utils.getErrorText(errorCode,context))
+    }
+
     override fun showLoading( msg : String) {
         mProgressDialog?.setMessage(msg)
         mProgressDialog?.show()

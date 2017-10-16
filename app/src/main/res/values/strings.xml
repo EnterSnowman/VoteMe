@@ -68,4 +68,9 @@
     <string name="version">Version  </string>
     <string name="number_of_version">1.0</string>
     <string name="info_title">About application</string>
+    <!-- Errors -->
+    <string name="error_wrong_password">Wrong password</string>
+    <string name="error_user_not_found">User with given email doesn\'t exist</string>
+    <string name="error_network">Network error. Check your connection and try again</string>
+    <string name="error_email_already_in_use">Another account uses this email. Try another address</string>
 </resources>

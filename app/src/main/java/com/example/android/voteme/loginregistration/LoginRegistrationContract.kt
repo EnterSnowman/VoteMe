@@ -14,6 +14,8 @@ interface LoginRegistrationContract {
 
         fun hideLoading()
 
+        fun showError(errorCode:String)
+
         fun goToVotesActivity()
 
         fun showEmailVerificationMessage()

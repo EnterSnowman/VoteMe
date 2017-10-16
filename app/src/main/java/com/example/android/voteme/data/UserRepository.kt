@@ -23,6 +23,7 @@ class UserRepository private constructor(){
     fun signIn(email: String, password: String, callback: DataSource.SignInCallback){
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener {
             task -> if (task.isSuccessful) callback.onSignInCompleted() else callback.onSignInFailure(task.exception)
+
             }
         }
 

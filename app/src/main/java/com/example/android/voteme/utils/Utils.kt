@@ -1,5 +1,7 @@
 package com.example.android.voteme.utils
 
+import android.content.Context
+import com.example.android.voteme.R
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,6 +30,16 @@ class Utils {
             var date = Date(mills)
             var sdf = SimpleDateFormat("dd.MM.yyyy")
             return sdf.format(date)
+        }
+
+        fun getErrorText(errorCode:String,context: Context): String{
+            when(errorCode){
+                "ERROR_WRONG_PASSWORD"->return context.getString(R.string.error_wrong_password)
+                "ERROR_USER_NOT_FOUND" -> return context.getString(R.string.error_user_not_found)
+                "NETWORK_ERROR" -> return context.getString(R.string.error_network)
+                "ERROR_EMAIL_ALREADY_IN_USE" ->return context.getString(R.string.error_email_already_in_use)
+                else -> return "unknown error"
+            }
         }
     }
 }
