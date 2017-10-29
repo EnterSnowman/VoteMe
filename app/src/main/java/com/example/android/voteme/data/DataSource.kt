@@ -72,8 +72,8 @@ interface DataSource {
     interface ChangePasswordCallback {
         fun onSuccess()
 
-        fun onWrongOldPassword()
+        fun onWrongOldPassword(exception: Exception?)
 
-        fun onFailure()
+        fun onFailure(exception: Exception?)
     }
 }

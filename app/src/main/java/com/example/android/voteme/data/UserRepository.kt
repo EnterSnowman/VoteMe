@@ -49,9 +49,9 @@ class UserRepository private constructor(){
         var cred = EmailAuthProvider.getCredential(mAuth.currentUser!!.email!!,oldPass)
         mAuth.currentUser!!.reauthenticate(cred).addOnCompleteListener { task ->
             if (task.isSuccessful)
-                mAuth.currentUser!!.updatePassword(newPass).addOnCompleteListener{task -> if (task.isSuccessful) callback.onSuccess() else callback.onFailure() }
+                mAuth.currentUser!!.updatePassword(newPass).addOnCompleteListener{task -> if (task.isSuccessful) callback.onSuccess() else callback.onFailure(task.exception) }
             else
-                callback.onWrongOldPassword()
+                callback.onWrongOldPassword(task.exception)
         }
     }
     }

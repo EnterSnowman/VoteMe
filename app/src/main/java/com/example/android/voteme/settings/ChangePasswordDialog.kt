@@ -13,6 +13,8 @@ import android.widget.Toast
 import com.example.android.voteme.R
 import com.example.android.voteme.data.DataSource
 import com.example.android.voteme.data.UserRepository
+import com.example.android.voteme.utils.Utils
+import java.lang.Exception
 
 /**
  * Created by Valentin on 10.09.2017.
@@ -59,14 +61,18 @@ class ChangePasswordDialog(context: Context?, attrs: AttributeSet?) : DialogPref
                                     Toast.makeText(context,R.string.password_changed,Toast.LENGTH_SHORT).show()
                                 }
 
-                                override fun onWrongOldPassword() {
-                                    oldPassEdit!!.error = "Wrong password"
+                                override fun onWrongOldPassword(exception:Exception?) {
+                                    if (Utils.handleException(exception!!).equals("ERROR_WRONG_PASSWORD"))
+                                    oldPassEdit!!.error = context.getString(R.string.error_wrong_password)
+                                    else
+                                    Toast.makeText(context,Utils.getErrorText(Utils.handleException(exception!!),context),Toast.LENGTH_SHORT).show()
                                     loadingBar!!.visibility = View.GONE
                                 }
 
-                                override fun onFailure() {
+                                override fun onFailure(exception:Exception?) {
                                     loadingBar!!.visibility = View.GONE
                                     Log.d("FIREBASE_user","Changing password failure")
+                                    Toast.makeText(context,Utils.getErrorText(Utils.handleException(exception!!),context),Toast.LENGTH_SHORT).show()
                                 }
 
                             })
