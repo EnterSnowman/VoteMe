@@ -46,7 +46,7 @@ class LoginRegistrationFragment : Fragment(),LoginRegistrationContract.View {
     }
 
     override fun showError(errorCode: String) {
-        makeToast(Utils.getErrorText(errorCode,context))
+        makeToast(Utils.getErrorText(errorCode,activity.applicationContext))
     }
 
     override fun showLoading( msg : String) {
@@ -108,21 +108,26 @@ class LoginRegistrationFragment : Fragment(),LoginRegistrationContract.View {
             alertDialogBuilder.setMessage(R.string.restore_password_msg)
             alertDialogBuilder.setPositiveButton(android.R.string.ok)
             {dialogInterface, i ->
-                var emailEdit2 = (dialogInterface as android.support.v7.app.AlertDialog).findViewById<EditText>(R.id.link_input)
-                /*emailEdit2?.text = emailEdit.text
-                Log.d("Firebase_user","First email ${emailEdit?.text.toString()}")*/
-                /*var intent  = Intent(context, VoteActivity::class.java)
-                intent.putExtra(Constants.VOTE_ID,linkEdit!!.text.toString())
-                startActivity(intent)*/
-                if (Utils.isEmailValid(emailEdit2?.text.toString())){
-                    mPresenter!!.sendRestorePasswordEmail(emailEdit2?.text.toString())
-                    Log.d("Firebase_user","try send email to ${emailEdit2?.text.toString()}}")
-                }
-                else
-                    emailEdit2?.error = getString(R.string.input_valid_email)
+
             }
                     .setNegativeButton(android.R.string.cancel){dialogInterface, i ->}
-            alertDialogBuilder.create().show()
+            //alertDialogBuilder.create().show()
+            var dialog = alertDialogBuilder.create()
+            dialog.setOnShowListener{dialog ->
+                var button = (dialog as android.support.v7.app.AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
+                button.setOnClickListener{
+                    v ->
+                    var emailEdit2 = (dialog as android.support.v7.app.AlertDialog).findViewById<EditText>(R.id.link_input)
+                    if (Utils.isEmailValid(emailEdit2?.text.toString())){
+                        mPresenter!!.sendRestorePasswordEmail(emailEdit2?.text.toString())
+                        dialog.dismiss()
+                        Log.d("Firebase_user","try send email to ${emailEdit2?.text.toString()}}")
+                    }
+                    else
+                        emailEdit2?.error = getString(R.string.input_valid_email)
+                }
+            }
+            dialog.show()
         }
 
     }

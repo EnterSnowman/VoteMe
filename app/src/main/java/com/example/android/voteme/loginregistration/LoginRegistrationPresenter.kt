@@ -25,7 +25,6 @@ class LoginRegistrationPresenter(override var mView: LoginRegistrationContract.V
 
 
             override fun onSignInCompleted() {
-                mView.makeToast("Login completed")
                 mView.hideLoading()
                 mView.goToVotesActivity()
                 VotesRepository.getInstance().reinitDatabaseReferences()
@@ -33,7 +32,6 @@ class LoginRegistrationPresenter(override var mView: LoginRegistrationContract.V
 
             override fun onSignInFailure(exception: Exception?) {
                 mView.showError(Utils.handleException(exception!!))
-                mView.makeToast("Login failure")
                 mView.hideLoading()
             }
 
@@ -73,7 +71,12 @@ class LoginRegistrationPresenter(override var mView: LoginRegistrationContract.V
     }
 
     override fun sendRestorePasswordEmail(email: String) {
-        UserRepository.getInstance().mAuth.sendPasswordResetEmail(email).addOnCompleteListener { task -> if (task.isSuccessful) mView.makeToast("Restoration email was sended") else mView.makeToast("Error") }
+        UserRepository.getInstance().mAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) mView.makeToast("Restoration email was sended") else {
+                        mView.showError(Utils.handleException(task.exception!!))
+                    }
+                }
     }
 
 

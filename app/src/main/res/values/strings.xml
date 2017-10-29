@@ -73,4 +73,5 @@
     <string name="error_user_not_found">User with given email doesn\'t exist</string>
     <string name="error_network">Network error. Check your connection and try again</string>
     <string name="error_email_already_in_use">Another account uses this email. Try another address</string>
+    <string name="different_passwords">Different passwords</string>
 </resources>

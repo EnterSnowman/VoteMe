@@ -41,7 +41,15 @@ class ChangePasswordDialog(context: Context?, attrs: AttributeSet?) : DialogPref
         (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
                 .setOnClickListener{view ->
                 loadingBar!!.visibility = View.VISIBLE
-                if (newPassEdit!!.text.toString().equals(repeatPassEdit!!.text.toString()))
+                if(oldPassEdit!!.text.toString().length<6){
+                    oldPassEdit!!.error = context.getString(R.string.input_valid_password)
+                    loadingBar!!.visibility = View.GONE
+                }
+                else if (newPassEdit!!.text.toString().length<6) {
+                    newPassEdit!!.error = context.getString(R.string.input_valid_password)
+                    loadingBar!!.visibility = View.GONE
+                }
+                    else if (newPassEdit!!.text.toString().equals(repeatPassEdit!!.text.toString()))
                     UserRepository.getInstance().changePassword(oldPassEdit!!.text.toString(),newPassEdit!!.text.toString(),
                             object : DataSource.ChangePasswordCallback {
                                 override fun onSuccess() {
@@ -64,7 +72,7 @@ class ChangePasswordDialog(context: Context?, attrs: AttributeSet?) : DialogPref
                             })
                 else{
                     loadingBar!!.visibility = View.GONE
-                    newPassEdit!!.error = "Different passwords"
+                    newPassEdit!!.error = context.getString(R.string.different_passwords)
 
                 } }
     }

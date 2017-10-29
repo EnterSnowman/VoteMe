@@ -3,6 +3,7 @@ package com.example.android.voteme.utils
 import android.content.Context
 import android.util.Log
 import com.example.android.voteme.R
+import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuthException
 import java.lang.Exception
@@ -49,15 +50,23 @@ class Utils {
         fun handleException(exception:Exception):String{
             var errorCode = ""
             Log.d("Exception",exception.message)
+
+            Log.d("Exception",exception.javaClass.simpleName)
             when(exception){
                 is FirebaseNetworkException ->{
                     Log.d("Network",exception.message)
                     errorCode = "NETWORK_ERROR"
                 }
                 is FirebaseAuthException ->{
-                    Log.d("Login",exception .errorCode)
+                    Log.d("Login",exception.errorCode)
                     Log.d("Login",exception.message)
                     errorCode = exception.errorCode
+                }
+                is FirebaseException ->{
+                    if (exception.message!!.contains("Network Error"))
+                    errorCode = "NETWORK_ERROR"
+                    Log.d("Login",exception.message)
+                    //errorCode = exception.errorCode
                 }
             }
             return errorCode

@@ -59,4 +59,5 @@
     <string name="error_user_not_found">Пользователя с указаным адресом не существует</string>
     <string name="error_network">Ошибка сети. Проверьте свое подключение и попробуйте снова</string>
     <string name="error_email_already_in_use">Другой аккаунт использует эту электронную почту. Попробуйте иную</string>
+    <string name="different_passwords">Разные пароли</string>
 </resources>

@@ -59,4 +59,5 @@
     <string name="error_user_not_found">Користувача з вказаною адресою не існує</string>
     <string name="error_network">Помилка мережі. Перевірте з\'єднання та спробуйте ще раз</string>
     <string name="error_email_already_in_use">Інший акаунт використовує цю електронну пошту. Спробуйте іншу</string>
+    <string name="different_passwords">Різні паолі</string>
 </resources>
