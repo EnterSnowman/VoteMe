@@ -74,4 +74,6 @@
     <string name="error_network">Network error. Check your connection and try again</string>
     <string name="error_email_already_in_use">Another account uses this email. Try another address</string>
     <string name="different_passwords">Different passwords</string>
+    <string name="unique_option">Please, input unique option</string>
+    <string name="link_copied">Link copied ot clipboard</string>
 </resources>

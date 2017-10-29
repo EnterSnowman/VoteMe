@@ -60,4 +60,6 @@
     <string name="error_network">Помилка мережі. Перевірте з\'єднання та спробуйте ще раз</string>
     <string name="error_email_already_in_use">Інший акаунт використовує цю електронну пошту. Спробуйте іншу</string>
     <string name="different_passwords">Різні паолі</string>
+    <string name="unique_option">Введіть унікальний варіант</string>
+    <string name="link_copied">Посилання скопійоване в буфер обміну</string>
 </resources>

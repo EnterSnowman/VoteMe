@@ -40,7 +40,7 @@ class AddVoteFragment : Fragment(), AddVoteContract.View {
     private var mRevotable:Boolean = true
     override fun showError(type: Int) {
         when (type){
-            Constants.NON_UNIQUE_VARIANT -> variantEdit.error = "Please, input unique option"
+            Constants.NON_UNIQUE_VARIANT -> variantEdit.error = getString(R.string.unique_option)
             Constants.EMPTY_TITLE -> voteTitleEdit.error = getString(R.string.please_input_vote_title)
             Constants.NOT_FULL_LIST -> Toast.makeText(context,R.string.two_variants,Toast.LENGTH_SHORT).show()
         }

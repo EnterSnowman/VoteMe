@@ -221,7 +221,7 @@ class VoteFragment : Fragment(),VoteContract.View {
                         .plus(getString(R.string.path))
                         .plus(activity.intent.getStringExtra(Constants.VOTE_ID)))
                 clipboard.setPrimaryClip(clip)
-                Toast.makeText(activity,"Link copied ot clipboard", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity,context.getString(R.string.link_copied), Toast.LENGTH_SHORT).show()
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
