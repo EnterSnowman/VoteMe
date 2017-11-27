@@ -72,12 +72,20 @@ class AllVotesPresenter(override var mView: AllVotesContract.View) : AllVotesCon
                 mView.hideLoadingPanel()
                 mView.hideEmptyVotesPanel()
             }
+
+            override fun onVoteReoved(id: String) {
+                mView?.removeVote(id)
+            }
         })
         mVotesRepository.addChildEventListenerJoined(object : DataSource.ListRefreshCallback {
             override fun onVoteAdded(newVote: Vote) {
                 mView.showAddedVote(newVote)
                 mView.hideLoadingPanel()
                 mView.hideEmptyVotesPanel()
+            }
+
+            override fun onVoteReoved(id: String) {
+                mView?.removeVote(id)
             }
         })
     }

@@ -2,6 +2,7 @@ package com.example.android.voteme.vote
 
 import com.example.android.voteme.base.BasePresenter
 import com.example.android.voteme.base.BaseView
+import com.example.android.voteme.data.DataSource
 import com.example.android.voteme.model.Vote
 
 /**
@@ -22,6 +23,8 @@ interface VoteContract {
         fun showPieChart(isVoted: Boolean)
 
         fun showError(errorCode:String)
+
+        fun leaveVote()
     }
 
     interface Presenter : BasePresenter<View>{
@@ -32,6 +35,10 @@ interface VoteContract {
         fun removeChildListener(id: String)
 
         fun joinToVote(id:String)
+
+        fun leaveVote(id : String)
+
+
     }
 
 

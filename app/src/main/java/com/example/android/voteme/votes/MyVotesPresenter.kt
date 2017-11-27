@@ -46,6 +46,9 @@ class MyVotesPresenter(override var mView: MyVotesContract.View) : MyVotesContra
                 mView.hideLoadingPanel()
                 mView.hideEmptyVotesPanel()
             }
+            override fun onVoteReoved(id: String) {
+                mView?.removeVote(id)
+            }
         })
     }
 }

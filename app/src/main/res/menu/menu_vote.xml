@@ -7,5 +7,9 @@
     android:icon="@mipmap/ic_content_copy"
     app:showAsAction="always" />
 
-
+    <item android:id="@+id/leave"
+        android:orderInCategory="101"
+        android:title="@string/leave_vote"
+        android:icon="@mipmap/ic_close"
+        app:showAsAction="always" />
 </menu>

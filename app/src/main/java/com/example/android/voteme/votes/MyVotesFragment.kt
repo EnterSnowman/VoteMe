@@ -73,6 +73,10 @@ class MyVotesFragment : Fragment() ,MyVotesContract.View{
         mAdapter?.notifyDataSetChanged()
     }
 
+    override fun removeVote(id: String) {
+        mAdapter?.mVotes?.filter { !it.id.equals(id) }
+        mAdapter?.notifyDataSetChanged()
+    }
     override fun showError(msg: String?) {
         Toast.makeText(context,msg,Toast.LENGTH_LONG).show()
     }

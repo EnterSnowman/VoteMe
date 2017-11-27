@@ -15,6 +15,8 @@ interface AllVotesContract {
 
         fun showAddedVote(vote: Vote)
 
+        fun removeVote(id:String)
+
         fun hideLoadingPanel()
 
         fun hideEmptyVotesPanel()

@@ -76,4 +76,5 @@
     <string name="different_passwords">Different passwords</string>
     <string name="unique_option">Please, input unique option</string>
     <string name="link_copied">Link copied ot clipboard</string>
+    <string name="leave_vote">Leave vote</string>
 </resources>

@@ -279,7 +279,8 @@ class VotesRepository private constructor(){
             }
 
             override fun onChildRemoved(p0: DataSnapshot?) {
-
+                Log.d("FIREBASE","Child removed ${p0!!.key}")
+                callback.onVoteReoved(p0!!.key)
             }
         }))
     }
@@ -314,7 +315,7 @@ class VotesRepository private constructor(){
             }
 
             override fun onChildRemoved(p0: DataSnapshot?) {
-
+                callback.onVoteReoved(p0!!.key)
             }
         })
     }
@@ -356,6 +357,29 @@ class VotesRepository private constructor(){
             }
         })
 
+    }
+
+    fun leaveVote(id: String,callback: DataSource.LeaveVoteCallback){
+        mUserDatabase.child(id).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError?) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot?) {
+                if (!p0!!.exists()){
+                    mUserDatabaseJoined.child(id).addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onCancelled(p0: DatabaseError?) {            }
+
+                        override fun onDataChange(p0: DataSnapshot?) {
+                                p0!!.ref.setValue(null).addOnCompleteListener { task -> if (task.isSuccessful) callback.onLeave() }
+                        }
+                    })
+                }
+                else{
+                    p0!!.ref.setValue(null).addOnCompleteListener { task -> if (task.isSuccessful) callback.onLeave() }
+                }
+            }
+        })
     }
 
     fun createVote(title:String,variants: ArrayList<String>,isOpen:Boolean,isRevotable:Boolean,callback:DataSource.VoteAddedCallback){

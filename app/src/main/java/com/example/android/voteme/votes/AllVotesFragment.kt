@@ -21,6 +21,7 @@ import com.example.android.voteme.vote.VoteActivity
 import kotlinx.android.synthetic.main.fragment_all_votes_list.*
 import com.example.android.voteme.R.id.fab
 import java.util.*
+import java.util.function.Predicate
 import kotlin.collections.ArrayList
 
 //import com.sun.javaws.ui.SplashScreen.hide
@@ -119,6 +120,11 @@ class AllVotesFragment : Fragment(),AllVotesContract.View {
     override fun showAddedVote(vote: Vote) {
         mAdapter?.mVotes?.add(vote)
         mAdapter!!.mVotes.sortByDescending { it.timestamp }
+        mAdapter?.notifyDataSetChanged()
+    }
+
+    override fun removeVote(id: String) {
+        mAdapter?.mVotes = mAdapter?.mVotes?.filter { !it.id.equals(id) } as ArrayList<Vote>
         mAdapter?.notifyDataSetChanged()
     }
 

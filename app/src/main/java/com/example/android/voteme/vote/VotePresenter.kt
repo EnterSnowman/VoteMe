@@ -26,7 +26,7 @@ class VotePresenter(override var mView: VoteContract.View) : VoteContract.Presen
                 mVotesRepository.isVoted(id, object : DataSource.IsVotedCallback {
                     override fun onResult(isVoted: Boolean,variant: String?) {
                         Log.d("FIREBASE","Voted? {$id} {$isVoted}")
-                        mView.showVote(vote,isVoted,variant)
+                        mView?.showVote(vote,isVoted,variant)
                         mVotesRepository.addChildListener(id,object : DataSource.RefreshVoteCallback{
                             override fun onVoteUpdated(varinat: String, newCount: Int) {
                                 if (mView!=null)
@@ -42,7 +42,7 @@ class VotePresenter(override var mView: VoteContract.View) : VoteContract.Presen
     }
 
     override fun chooseVariant(voteId: String, variant: String) {
-        mView.showProgressBar()
+        mView?.showProgressBar()
         mVotesRepository.makeElect(voteId,variant,object : DataSource.ElectCallback{
             override fun onElected() {
                 mView?.hideProgressBar()
@@ -52,8 +52,8 @@ class VotePresenter(override var mView: VoteContract.View) : VoteContract.Presen
             }
 
             override fun onFailure(exception: Exception) {
-                mView.showError(Utils.handleException(exception!!))
-                mView.hideProgressBar()
+                mView?.showError(Utils.handleException(exception!!))
+                mView?.hideProgressBar()
             }
         })
     }
@@ -64,5 +64,18 @@ class VotePresenter(override var mView: VoteContract.View) : VoteContract.Presen
 
     override fun joinToVote(id: String) {
         mVotesRepository.joinToVote(id)
+    }
+
+    override fun leaveVote(id: String) {
+        mVotesRepository.leaveVote(id, object : DataSource.LeaveVoteCallback {
+            override fun onLeave() {
+                mView?.leaveVote()
+            }
+
+            override fun onFailure() {
+
+            }
+
+        })
     }
 }

@@ -61,12 +61,20 @@ interface DataSource {
         fun onExist(exists: Boolean)
     }
 
+    interface LeaveVoteCallback{
+        fun onLeave()
+
+        fun onFailure()
+    }
+
     interface IsVerifiedCallback{
         fun onResult(isVerified: Boolean)
     }
 
     interface ListRefreshCallback{
         fun onVoteAdded(newVote: Vote)
+
+        fun onVoteReoved(id:String)
     }
 
     interface ChangePasswordCallback {

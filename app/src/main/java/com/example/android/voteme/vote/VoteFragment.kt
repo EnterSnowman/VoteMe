@@ -224,8 +224,17 @@ class VoteFragment : Fragment(),VoteContract.View {
                 Toast.makeText(activity,context.getString(R.string.link_copied), Toast.LENGTH_SHORT).show()
                 return true
             }
+
+            R.id.leave ->{
+                mPresenter?.leaveVote(mVoteId!!)
+                return true
+            }
             else -> return super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun leaveVote() {
+        activity.finish()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?,  inflater:MenuInflater) {
