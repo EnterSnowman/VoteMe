@@ -69,6 +69,7 @@ class MyVotesFragment : Fragment() ,MyVotesContract.View{
 
     override fun showAddedVote(vote: Vote) {
         mAdapter?.mVotes?.add(vote)
+        mAdapter!!.mVotes.sortByDescending { it.timestamp }
         mAdapter?.notifyDataSetChanged()
     }
 
