@@ -62,4 +62,6 @@
     <string name="different_passwords">Різні паолі</string>
     <string name="unique_option">Введіть унікальний варіант</string>
     <string name="link_copied">Посилання скопійоване в буфер обміну</string>
+    <string name="leave_vote">Покинути голосування</string>
+    <string name="leave_vote_title">Покинути голосування?</string>
 </resources>

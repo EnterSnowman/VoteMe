@@ -35,6 +35,8 @@
 
     <Button
         android:layout_marginTop="12dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
         android:id="@+id/vote_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

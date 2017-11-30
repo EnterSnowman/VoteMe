@@ -16,13 +16,17 @@ import android.R.attr.entries
 import android.app.ProgressDialog
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Intent
 import android.graphics.Color
 import android.support.v4.content.res.ResourcesCompat
+import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.*
 import android.widget.RadioButton
 import android.widget.RelativeLayout
 import android.widget.Toast
+import com.example.android.voteme.data.UserRepository
+import com.example.android.voteme.loginregistration.LoginRegistrationActivity
 import com.example.android.voteme.utils.Constants
 import com.example.android.voteme.utils.MyPieChartValueFormatter
 import com.example.android.voteme.utils.Utils
@@ -226,8 +230,16 @@ class VoteFragment : Fragment(),VoteContract.View {
             }
 
             R.id.leave ->{
-                mPresenter?.leaveVote(mVoteId!!)
+                var alertDialogBuilder  = AlertDialog.Builder(context)
+                alertDialogBuilder.setTitle(R.string.leave_vote_title)
+                alertDialogBuilder.setPositiveButton(android.R.string.ok)
+                {dialogInterface, i ->
+                    mPresenter?.leaveVote(mVoteId!!)
+                }
+                        .setNegativeButton(android.R.string.cancel){dialogInterface, i ->}
+                alertDialogBuilder.create().show()
                 return true
+
             }
             else -> return super.onOptionsItemSelected(item)
         }
