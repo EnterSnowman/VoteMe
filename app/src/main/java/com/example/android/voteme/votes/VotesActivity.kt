@@ -32,6 +32,8 @@ import com.example.android.voteme.loginregistration.LoginRegistrationActivity
 import com.example.android.voteme.settings.SettingsActivity
 import com.example.android.voteme.utils.Constants
 import com.example.android.voteme.vote.VoteActivity
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import kotlinx.android.synthetic.main.activity_votes.*
 
 class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInteractionListener,MyVotesFragment.OnListFragmentInteractionListener {
@@ -49,6 +51,7 @@ class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInterac
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var mMyVotesPresenter : MyVotesPresenter? = null
     private var mUserRepository = UserRepository.getInstance()
+    private var  mAdView : AdView? = null
     /**
      * The [ViewPager] that will host the section contents.
      */
@@ -88,6 +91,9 @@ class VotesActivity : AppCompatActivity(),AllVotesFragment.OnListFragmentInterac
             )
 
         }
+        val adRequest = AdRequest.Builder().build()
+        adView.loadAd(adRequest)
+
         /*mMyVotesPresenter  = MyVotesPresenter(mSectionsPagerAdapter!!.getItem(1) as MyVotesContract.View)
 
         Log.d("VIEW",(mSectionsPagerAdapter!!.getItem(1) as MyVotesContract.View).toString())*/
